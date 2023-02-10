@@ -1,0 +1,4 @@
+{
+    "tab":[["Dashboard","/"],["Menu","/menu"],["Rooms","/room"],["Restaurant","/restaurant"],["Stock Management","/stockmanagement"],["Housekeeping","housekeeping"],["Finance Report","/finance"],["Assets","/assetandexpenses"],["Vendors","/vendor"],["Setting","/setting"]],
+    "secondary":[["Dashboard","/"],["View Menu","/menu"],["Book Room","/room"],["Order","/restaurant"],["Stock Management","/stockmanagement"],["Housekeeping","housekeeping"],["Finance Report","/finance"],["Vendors","/vendor"],["Setting","/setting"]]
+}

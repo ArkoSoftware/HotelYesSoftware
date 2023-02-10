@@ -1,0 +1,21 @@
+
+const [customerName, setCustomerName] = React.useState();
+  const [phoneNumber, setPhoneNumber] = React.useState();
+  const [nationality, setNationality] = React.useState();
+  const [idNo, setIdNo] = useState();
+  const [address, setAddress] = useState();
+  const [email, setEmail] = useState();
+  const [checkInDate, setCheckInDate] = useState(new Date());
+  const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [noOfNights, setNoOfNights] = useState();
+  const [arrivedFrom, setArrivedFrom] = useState();
+  const [goingTo, setGoingTo] = useState();
+  const [purpose, setPurpose] = useState();
+  const [occupation, setOccupation] = useState();
+  const [method, setMethod] = useState();
+  const [billNo, setBillNo] = useState();
+  const [vehicleNo, setVehicleNo] = useState();
+  const [roomRate, setRoomRate] = useState();
+  const [advance, setAdvance] = useState();
+  const [roomRateType, setRoomRateType] = useState();
+  const [noOfGuests, setNoOfGuests] = useState();

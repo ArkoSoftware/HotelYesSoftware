@@ -8,7 +8,6 @@ import { extreSmallFont, largeFont, mediumFont, smallFont } from "../../theme";
 const Sidebar = () => {
   const value = React.useContext(UserContext).admin;
   const setValue = React.useContext(UserContext).setAdmin;
-  
 
   return (
     <div className=" w-60 h-screen dark:overflow-auto overflow-auto bg-gray-100 fixed border-t">

@@ -32,36 +32,37 @@ const AssetAndExpenses = () => {
     getAllData();
   }, []);
   return (
-    <ModalProvider>
-      <div className="w-full h-full">
-        <div className="p-8">
-          <div className="text-2xl tracking-tighter">Manage Assets</div>
-          <div className="flex flex-row">
-            <button
-              onClick={toggleModal}
-              className="rounded-xl bg-blue-800 text-white text-sm py-2 px-8 mt-10 mx-4"
-            >
-              Add To Stock
-            </button>
-            <button
-              onClick={toggleModal2}
-              className="rounded-xl border border-gray-300 text-black text-sm py-2 px-8 mt-10 mx-4"
-            >
-              Add New Entry
-            </button>
-          </div>
+    <div className="w-full h-full">
+      <div className="p-8">
+        <div className="text-2xl tracking-tighter">Manage Assets</div>
+        <div className="flex flex-row">
+          <button
+            type="button"
+            onClick={toggleModal}
+            className="rounded-xl bg-blue-800 text-white text-sm py-2 px-8 mt-10 mx-4"
+          >
+            Add To Stock
+          </button>
+          <button
+            onClick={toggleModal2}
+            className="rounded-xl border border-gray-300 text-black text-sm py-2 px-8 mt-10 mx-4"
+          >
+            Add New Entry
+          </button>
         </div>
-        <div className="px-12 pb-8">
-          <DataFrame data={stockData} title={title} />
-        </div>
+      </div>
+      <div className="px-12 pb-8">
+        <DataFrame data={stockData} title={title} />
+      </div>
+      <ModalProvider>
         <ModalView isOpen={isOpen} toggleModal={toggleModal} />
         <ModalViewNewEntry
           setIsOpen={setIsOpenNew}
           isOpen={isOpenNew}
           toggleModal={toggleModal2}
         />
-      </div>
-    </ModalProvider>
+      </ModalProvider>
+    </div>
   );
 };
 

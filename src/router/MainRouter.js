@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Sidebar from "../components/main/Sidebar";
@@ -6,16 +6,25 @@ import * as TabPage from "../page/main";
 import * as LowPage from "../page/secondary";
 import { useState } from "react";
 import { UserContext } from "../contexts/context";
+import Navbar from "../components/main/Navbar";
+import { NavContext } from "../contexts/NavProvider";
 const MainRouter = () => {
   const value = React.useContext(UserContext).admin;
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
   return (
     <div className="">
       <BrowserRouter basename="/">
-        <div className="flex flex-row">
-          <div className="w-60">
-            <Sidebar />
-          </div>
+        <Navbar />
+        <div className="flex flex-row duration-500">
+          {sideBarOn && (
+            <>
+              <div onClick={()=>setSideBarOn(!sideBarOn)} className="bg-black absolute top-0 bottom-0 left-0 right-0 opacity-30 -z-10"></div>
+              <div className="w-60">
+                <Sidebar />
+              </div>
+            </>
+          )}
           <div className="flex-1 ">
             {value ? (
               <Routes>

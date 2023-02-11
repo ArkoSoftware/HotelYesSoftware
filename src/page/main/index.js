@@ -1,4 +1,5 @@
 export { default as Dashboard } from "./Dashboard";
+export { default as HierarchyManagement } from "./HierarchyManagement";
 export { default as Room } from "./Room";
 export { default as Kitchen } from "./Kitchen";
 export { default as StockManagement } from "./Stock";

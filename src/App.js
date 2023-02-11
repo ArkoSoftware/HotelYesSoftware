@@ -5,6 +5,7 @@ import AuthRouter from "./router/AuthRouter";
 import MainRouter from "./router/MainRouter";
 import { UserContext } from "./contexts/context";
 import "./App.css";
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const [userState, setUserState] = useState(0);
@@ -36,6 +37,7 @@ const App = () => {
         }}
       >
         <MainRouter />
+        <Toaster />
       </UserContext.Provider>
     );
   }

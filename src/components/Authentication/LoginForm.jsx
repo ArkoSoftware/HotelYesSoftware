@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signIn } from "./functions/function";
 import { extreSmallFont, smallFont } from "../../theme";
+import toast from 'react-hot-toast';
+
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const submitForm = () => {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const submitForm = (event) => {
+    event.preventDefault()
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value; 
     if (email != "" && password != "") {
-      signIn(email, password);
+      signIn(email, password)
     }
   };
   return (
@@ -22,6 +28,7 @@ const LoginForm = () => {
         >
           Enter with correct credentials to avoid getting locked out
         </p>
+        <form className=" flex flex-col space-y-6" onSubmit={(e)=>submitForm(e)}>
         <div className="">
           <div className="flex flex-row">
             <p
@@ -35,8 +42,8 @@ const LoginForm = () => {
           <input
             type="text"
             name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            // value={email}
+            // onChange={(e) => setEmail(e.target.value)}
             id=""
             className="p-2 border border-gray-300 rounded mx-auto w-full"
             style={{ fontSize: smallFont }}
@@ -55,23 +62,23 @@ const LoginForm = () => {
           <input
             type="text"
             name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            // value={password}
+            // onChange={(e) => setPassword(e.target.value)}
             id=""
             className="p-2 border border-gray-300 rounded mx-auto w-full"
             style={{ fontSize: smallFont }}
           />
         </div>
 
-        <button
-          onClick={() => {
-            submitForm();
-          }}
+        <button 
           className="bg-[#632F56] p-3 rounded-lg"
           style={{ fontSize: smallFont }}
         >
           <p className="text-white">Submit</p>
         </button>
+
+        </form>
+
         <div className=" border-t pt-3">
           <Link to="/signup">
             <button className="mx-auto w-full mb-3">

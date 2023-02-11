@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { FaBars, FaUserCircle, FaTimes } from "react-icons/fa";
 import { NavContext } from "../../contexts/NavProvider";
 import { Link } from "react-router-dom";
+import { signOutFromAccount } from "../Authentication/functions/function";
 
 const Navbar = () => {
   const { sideBarOn, setSideBarOn,user } = useContext(NavContext);
@@ -37,9 +38,9 @@ const Navbar = () => {
               className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52"
             >
               <div className="flex flex-col gap-1 relative">
-                <p>{user?.email}</p>
                 <p>User Info</p>
-                <button className="bg-red-700 hover:bg-red-800 border-none text-white text-center py-1 rounded-md">
+                <p className="text-xs">{user?.email}</p>
+                <button  onClick={() => signOutFromAccount()} className="bg-red-700 hover:bg-red-800 border-none text-white text-center py-1 rounded-md">
                   Logout
                 </button>
               </div>

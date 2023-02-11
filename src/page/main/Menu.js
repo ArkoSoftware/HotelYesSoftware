@@ -25,7 +25,7 @@ const Menu = () => {
   const [dataList, setDataList] = useState([]);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [openAddCategory, setAddCategory] = useState(false);
-  function toggleModal3(e) {
+  function toggleModal3(e) { 
     setOpenPurchaseBill(!openPurchaseBill);
   }
   function toggleModal2(e) {

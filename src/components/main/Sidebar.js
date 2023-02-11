@@ -12,7 +12,7 @@ const Sidebar = () => {
 
   return (
     <div className=" w-60 h-screen dark:overflow-auto overflow-auto bg-gray-100 fixed border-t">
-      <div className="my-5"> 
+      <div className="my-5">
         <div className="flex gap-2 px-4">
           <button
             className="p-3 bg-green-600 text-white mx-auto rounded my-2 w-[50%]"

@@ -5,7 +5,8 @@ import { NavContext } from "../../contexts/NavProvider";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+  const { sideBarOn, setSideBarOn,user } = useContext(NavContext);
+  console.log(user)
 
   return (
     <section className="bg-gray-100 z-20 sticky top-0">
@@ -23,16 +24,27 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex items-center">
-          {/* tesing code for user button */}
-          <FaUserCircle />
-          <select className="bg-transparent">
-            <option disabled selected>
-              User Name
-            </option>
-            <option>
-              <a href="/google.com">asdf</a>
-            </option>
-          </select>
+          <div className="dropdown dropdown-end">
+            <label
+              tabIndex={0}
+              className="flex items-center gap-1 cursor-pointer"
+            >
+              <FaUserCircle className="text-lg" />
+              <p className="text-sm">{user?.email.split('@')[0]}</p>
+            </label>
+            <div
+              tabIndex={0}
+              className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52"
+            >
+              <div className="flex flex-col gap-1 relative">
+                <p>{user?.email}</p>
+                <p>User Info</p>
+                <button className="bg-red-700 hover:bg-red-800 border-none text-white text-center py-1 rounded-md">
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

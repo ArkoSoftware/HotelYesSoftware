@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Sidebar from "../components/main/Sidebar";
 import * as TabPage from "../page/main";
 import * as LowPage from "../page/secondary";
-import { useState } from "react";
 import { UserContext } from "../contexts/context";
 import Navbar from "../components/main/Navbar";
 import { NavContext } from "../contexts/NavProvider";
+
+
 const MainRouter = () => {
   const value = React.useContext(UserContext).admin;
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
@@ -29,6 +29,7 @@ const MainRouter = () => {
                 {value ? (
                   <Routes>
                     <Route path="/" element={<TabPage.Dashboard />} />
+                    <Route path="/hierarchymanagement" element={<TabPage.HierarchyManagement />} />
                     <Route path="/menu" element={<TabPage.Menu />} />
                     <Route path="/dashboard" element={<TabPage.Dashboard />} />
                     <Route path="/room" element={<TabPage.Room />} />

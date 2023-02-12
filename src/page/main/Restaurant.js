@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ModalProvider } from "styled-react-modal";
 import ModalView from "./components/Restaurant/ModalView";
 import { RestaurantTab } from "./components/Restaurant/RestaurantTab";
 import { extreSmallFont, largeFont } from "../../theme";
+import { NavContext } from "../../contexts/NavProvider";
 
 const Restaurant = () => {
   const [rerender, setRerender] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   function toggleModal(e) {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   }
   return (
     <ModalProvider>

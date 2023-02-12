@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ModalProvider } from "styled-react-modal";
 import NewMenuEntry from "./components/Menu/NewMenuEntry";
 import NewCategory from "./components/Menu/NewCategory";
@@ -7,6 +7,7 @@ import DataFrame from "./components/Menu/DataFrame";
 import { collection, doc, getDocs } from "firebase/firestore/lite";
 import { db } from "../../config/adminFirebase";
 import { extreSmallFont, largeFont } from "../../theme";
+import { NavContext } from "../../contexts/NavProvider";
 
 let data = [
   { productId: 10248, productName: "VINET", quantity: 190 },
@@ -25,11 +26,15 @@ const Menu = () => {
   const [dataList, setDataList] = useState([]);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [openAddCategory, setAddCategory] = useState(false);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   function toggleModal3(e) { 
     setOpenPurchaseBill(!openPurchaseBill);
+    setSideBarOn(!sideBarOn)
   }
   function toggleModal2(e) {
     setAddCategory(!openAddCategory);
+    setSideBarOn(!sideBarOn)
   }
   const getMenuData = async () => {
     const doc1 = collection(db, "menu");

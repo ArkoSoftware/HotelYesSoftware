@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ModalProvider } from "styled-react-modal";
 
 import { RoomTab } from "./components/HouseKeeping/RoomTab";
 import NewPurchaseBill from "./components/HouseKeeping/NewPurchaseBill";
 import DataFrame from "./components/HouseKeeping/DataFrame";
+import { NavContext } from "../../contexts/NavProvider";
 let data = [
   {
     billId: 210,
@@ -59,8 +60,11 @@ const roomdata = [
 
 const HouseKeeping = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   function toggleModal(e) {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   }
   return (
     <ModalProvider>

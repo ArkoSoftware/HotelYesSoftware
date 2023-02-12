@@ -15,7 +15,7 @@ const MainRouter = () => {
     <div className="">
       <BrowserRouter basename="/">
         <Navbar />
-        <div className="drawer drawer-mobile">
+        <div className={`drawer ${sideBarOn && "drawer-mobile"} `}>
           <input
             id="sidebar-drawer"
             type="checkbox"
@@ -106,7 +106,7 @@ const MainRouter = () => {
               onClick={() => setSideBarOn(!sideBarOn)}
               className="drawer-overlay"
             ></label>
-            <ul className="menu w-60 bg-base-100 text-base-content">
+            <ul className="menu w-60 bg-transparent text-base-content">
               {/*  <!-- Sidebar content here --> */}
               <Sidebar />
             </ul>

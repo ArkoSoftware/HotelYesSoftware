@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RoomTab } from "./components/Room/RoomTab";
 import { ModalProvider } from "styled-react-modal";
 
@@ -6,13 +6,16 @@ import ModalView from "./components/Room/ModalView";
 import { extreSmallFont, largeFont } from "../../theme";
 import { getRoomList } from "./components/Room/functions/function";
 import { useEffect } from "react";
+import { NavContext } from "../../contexts/NavProvider";
 
 const Room = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [rerender, setRerender] = useState(false);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
   function toggleModal(e) {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   }
 
   const [roomdata, setRoomData] = useState([]);

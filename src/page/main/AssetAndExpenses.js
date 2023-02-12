@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ModalProvider } from "styled-react-modal";
 import ModalView from "./components/Assets/ModalView";
 import ModalViewNewEntry from "./components/Assets/ModalViewNewEntry";
 import { getItemList } from "./components/Assets/functions/function";
 import { useEffect } from "react";
 import DataFrame from "./components/Assets/DataFrame";
+import { NavContext } from "../../contexts/NavProvider";
 
 let title = ["Name", "Quantity"];
 const AssetAndExpenses = () => {
@@ -12,12 +13,15 @@ const AssetAndExpenses = () => {
   const [isOpenNew, setIsOpenNew] = useState(false);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [stockData, setStockData] = useState([]);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
   function toggleModal(e) {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   }
   function toggleModal2(e) {
     setIsOpenNew(!isOpenNew);
+    setSideBarOn(!sideBarOn)
   }
   function toggleModal3(e) {
     setOpenPurchaseBill(!openPurchaseBill);

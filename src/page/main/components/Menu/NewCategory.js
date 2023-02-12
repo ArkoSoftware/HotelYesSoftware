@@ -19,7 +19,7 @@ const NewCategory = ({
       onBackgroundClick={toggleModal}
       onEscapeKeydown={toggleModal}
     >
-      <div className="bg-white rounded-xl p-5 w-1/3">
+      <div className="bg-white rounded-xl p-5 w-1/3 z-50">
         <div className="flex">
           <span className="text-xl tracking-tighter">Add New Category</span>
           <div className="ml-auto">

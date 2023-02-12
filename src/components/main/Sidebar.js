@@ -10,7 +10,7 @@ const Sidebar = () => {
   const setValue = React.useContext(UserContext).setAdmin;
 
   return (
-    <div className=" w-60 h-screen dark:overflow-auto overflow-auto bg-gray-100 fixed border-t">
+    <div className=" w-60 h-screen dark:overflow-auto overflow-auto bg-gray-100 fixed border-t z-10">
       <div className="my-5">
         <div className="flex gap-2 px-4">
           <button

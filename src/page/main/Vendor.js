@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ModalProvider } from "styled-react-modal";
 import DataFrame from "../main/components/Vendor/DataFrame";
 import NewPurchaseBill from "../main/components/Stock/NewPurchaseBill";
 import ModalView from "./components/Vendor/ModalView";
 import { useEffect } from "react";
 import { getVendorList } from "./components/Vendor/functions/function";
+import { NavContext } from "../../contexts/NavProvider";
 
 let title = ["Vendor Name", "Company", "Address"];
 const Vendor = (props) => {
@@ -12,14 +13,18 @@ const Vendor = (props) => {
   const [isOpenNew, setIsOpenNew] = useState(false);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [data, setData] = useState([]);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   function toggleModal(e) {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   }
   function toggleModal2(e) {
     setIsOpenNew(!isOpenNew);
   }
   function toggleModal3(e) {
     setOpenPurchaseBill(!openPurchaseBill);
+    setSideBarOn(!sideBarOn)
   }
   const getAllData = async () => {
     const arr = await getVendorList();

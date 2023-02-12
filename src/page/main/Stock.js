@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ModalProvider } from "styled-react-modal";
 import ModalView from "./components/Stock/ModalView";
 import ModalViewNewEntry from "./components/Stock/ModalViewNewEntry";
@@ -6,6 +6,7 @@ import NewPurchaseBill from "./components/Stock/NewPurchaseBill";
 import { getItemList } from "./components/Stock/functions/function";
 import { useEffect } from "react";
 import DataFrame from "./components/Stock/DataFrame";
+import { NavContext } from "../../contexts/NavProvider";
 
 let data = [
   { productId: 10248, productName: "VINET", quantity: 190 },
@@ -22,15 +23,19 @@ const Stock = () => {
   const [isOpenNew, setIsOpenNew] = useState(false);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [stockData, setStockData] = useState([]);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
   function toggleModal(e) {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   }
   function toggleModal2(e) {
     setIsOpenNew(!isOpenNew);
+    setSideBarOn(!sideBarOn)
   }
   function toggleModal3(e) {
     setOpenPurchaseBill(!openPurchaseBill);
+    setSideBarOn(!sideBarOn)
   }
 
   const getAllData = async () => {

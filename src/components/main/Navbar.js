@@ -9,7 +9,7 @@ const Navbar = () => {
   const { sideBarOn, setSideBarOn, user } = useContext(NavContext);
 
   return (
-    <section className="bg-gray-100 z-20 sticky top-0">
+    <section className={`bg-gray-100 z-20 sticky top-0 block duration-300 ${!sideBarOn && "hidden"}`}>
       <div className="flex items-center justify-between mx-5 py-4">
         <div className="flex items-center gap-4">
           <label

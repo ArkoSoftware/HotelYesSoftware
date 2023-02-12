@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ModalProvider } from "styled-react-modal";
 import BankTransfer from "./components/Finance/components/BankTransfer";
 import AddBankInfo from "./components/Finance/components/AddBankInfo";
 import SahakariTransfer from "./components/Finance/components/SahakariTransfer";
 import { Link } from "react-router-dom";
+import { NavContext } from "../../contexts/NavProvider";
 
 const Finance = () => {
   const [isBankOpen, setIsBankOpen] = useState(false);
   const [isAddBankOpen, setIsAddBankOpen] = useState(false);
-  const [isSahakariOpen, setIsSahakariOpen] = useState(false);
+  const [isSahakariOpen, setIsSahakariOpen] = useState(false); 
+
   return (
     <ModalProvider>
       <div className="p-5">

@@ -21,7 +21,7 @@ const MainRouter = () => {
             type="checkbox"
             className="drawer-toggle"
           />
-          <div className="drawer-content">
+          <div className="drawer-content z-50">
             {/* <!-- Page content here --> */}
             <div className="flex flex-row duration-500 relative h-full">
               {value ? (

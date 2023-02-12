@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "styled-react-modal";
 import InputView from "../../InputView";
 import {
@@ -11,6 +11,7 @@ import {
 import ErrorMessage from "../../../../ErrorMessage";
 import SelectView from "../SelectView";
 import SelectView2 from "../SelectView2";
+import { NavContext } from "../../../../../contexts/NavProvider";
 
 const BankTransfer = ({ isOpen, setIsOpen }) => {
   const [number, setNumber] = useState("");
@@ -19,8 +20,10 @@ const BankTransfer = ({ isOpen, setIsOpen }) => {
   const [sahakariList, setSahakariList] = useState([]);
   const [depositType, setDepositType] = useState("");
   const [account, setAccount] = useState("");
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
   const toggleModal = () => {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   };
   const validate = function () {
     console.log(number, account, depositType);

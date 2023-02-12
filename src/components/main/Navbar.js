@@ -6,8 +6,7 @@ import { Link } from "react-router-dom";
 import { signOutFromAccount } from "../Authentication/functions/function";
 
 const Navbar = () => {
-  const { sideBarOn, setSideBarOn,user } = useContext(NavContext);
-  console.log(user)
+  const { sideBarOn, setSideBarOn, user } = useContext(NavContext);
 
   return (
     <section className="bg-gray-100 z-20 sticky top-0">
@@ -31,7 +30,7 @@ const Navbar = () => {
               className="flex items-center gap-1 cursor-pointer"
             >
               <FaUserCircle className="text-lg" />
-              <p className="text-sm">{user?.email.split('@')[0]}</p>
+              <p className="text-sm">{user?.email.split("@")[0]}</p>
             </label>
             <div
               tabIndex={0}
@@ -40,7 +39,10 @@ const Navbar = () => {
               <div className="flex flex-col gap-1 relative">
                 <p>User Info</p>
                 <p className="text-xs">{user?.email}</p>
-                <button  onClick={() => signOutFromAccount()} className="bg-red-700 hover:bg-red-800 border-none text-white text-center py-1 rounded-md">
+                <button
+                  onClick={() => signOutFromAccount()}
+                  className="bg-red-700 hover:bg-red-800 border-none text-white text-center py-1 rounded-md"
+                >
                   Logout
                 </button>
               </div>

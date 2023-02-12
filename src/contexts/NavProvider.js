@@ -9,6 +9,16 @@ export const NavContext = createContext();
 const NavProvider = ({ children }) => {
   const [sideBarOn, setSideBarOn] = useState(true);
   const [user, setUser] = useState(null);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(()=>{
+    setIsDark(JSON.parse(localStorage.getItem('colorTheme') || false))
+  },[])
+
+  const themeToggleHandler = ()=>{
+    setIsDark(!isDark)
+    localStorage.setItem('colorTheme', JSON.stringify(!isDark))
+  }
 
   // code for get the logged in user
   useEffect(() => {
@@ -19,7 +29,7 @@ const NavProvider = ({ children }) => {
     return () => unsubscribe();
   }, [user]);
 
-  const navInfo = { sideBarOn, setSideBarOn,user };
+  const navInfo = { sideBarOn, setSideBarOn, user, isDark, themeToggleHandler };
   return <NavContext.Provider value={navInfo}>{children}</NavContext.Provider>;
 };
 

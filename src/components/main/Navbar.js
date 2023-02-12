@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { signOutFromAccount } from "../Authentication/functions/function";
 
 const Navbar = () => {
-  const { sideBarOn, setSideBarOn, user } = useContext(NavContext);
+  const { sideBarOn, setSideBarOn, user,isDark } = useContext(NavContext);
 
   return (
-    <section className={`bg-gray-100 z-20 sticky top-0 block duration-300 ${!sideBarOn && "hidden"}`}>
+    <section className={`${isDark?"bg-slate-800":"bg-gray-100"}  z-20 sticky top-0 block duration-300 ${!sideBarOn && "hidden"}`}>
       <div className="flex items-center justify-between mx-5 py-4">
         <div className="flex items-center gap-4">
           <label
@@ -20,14 +20,14 @@ const Navbar = () => {
             {sideBarOn ? <FaBars /> : <FaTimes />}
           </label>
           <Link to="/">
-            <div className="text-2xl font-bold tracking-tighter">Nyano</div>
+            <div className={`text-2xl font-bold tracking-tighter ${isDark?"text-white":"text-slate-900"}`}>Nyano</div>
           </Link>
         </div>
         <div className="flex items-center">
           <div className="dropdown dropdown-end">
             <label
               tabIndex={0}
-              className="flex items-center gap-1 cursor-pointer"
+              className={`flex items-center gap-1 cursor-pointer ${isDark?"text-white":"text-slate-900"}`}
             >
               <FaUserCircle className="text-lg" />
               <p className="text-sm">{user?.email.split("@")[0]}</p>

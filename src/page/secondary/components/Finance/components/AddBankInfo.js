@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "styled-react-modal";
 import InputView from "../../InputView";
 import { addBankInfo } from "../function/function";
 import ErrorMessage from "../../../../ErrorMessage";
+import { NavContext } from "../../../../../contexts/NavProvider";
 
 const AddBankInfo = ({ isOpen, setIsOpen }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [showError, setShowError] = useState(false);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
   const toggleModal = () => {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   };
   const validate = function () {
     if (number == "" || name == "") {

@@ -4,14 +4,36 @@ import { Link } from "react-router-dom";
 import { signOutFromAccount } from "../Authentication/functions/function";
 import { UserContext } from "../../contexts/context";
 import { extreSmallFont, largeFont, mediumFont, smallFont } from "../../theme";
+import { useContext } from "react";
+import { NavContext } from "../../contexts/NavProvider";
 
 const Sidebar = () => {
   const value = React.useContext(UserContext).admin;
   const setValue = React.useContext(UserContext).setAdmin;
+  const { isDark, themeToggleHandler } = useContext(NavContext);
 
   return (
-    <div className=" w-60 h-screen dark:overflow-auto overflow-auto bg-gray-100 fixed border-t z-10">
+    <div
+      className={`w-60 h-screen dark:overflow-auto overflow-auto duration-300 border-t ${
+        isDark ? "bg-slate-800 border-slate-700" : "bg-gray-100"
+      } fixed z-10`}
+    >
       <div className="my-5">
+        <div className="px-4 flex items-center gap-2">
+          <input
+            onChange={themeToggleHandler}
+            type="checkbox"
+            className="toggle toggle-sm"
+            id="toggleBtn"
+            checked={isDark}
+          />
+          <label
+            htmlFor="toggleBtn"
+            className={`cursor-pointer text-sm ${isDark ? "text-white" : "text-slate-800"}`}
+          >
+            {isDark ? "Dark" : "Light"} Theme
+          </label>
+        </div>
         <div className="flex gap-2 px-4">
           <button
             className="p-3 bg-green-600 text-white mx-auto rounded my-2 w-[50%]"
@@ -30,10 +52,14 @@ const Sidebar = () => {
         </div>
         {value ? (
           <>
-            {sidebar.tab.map((val) => (
-              <Link to={val[1]}>
+            {sidebar.tab.map((val, idx) => (
+              <Link to={val[1]} key={idx}>
                 <div
-                  className=" mx-4 rounded px-3 py-3 hover:bg-gray-300 tracking-tighter text-gray-700"
+                  className={` mx-4 rounded px-3 py-3  tracking-tighter ${
+                    isDark
+                      ? "text-white hover:bg-gray-700"
+                      : "hover:bg-gray-300 text-gray-700"
+                  } `}
                   style={{ fontSize: extreSmallFont }}
                 >
                   {val[0]}

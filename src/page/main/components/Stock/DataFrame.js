@@ -23,11 +23,23 @@ const DataFrame = ({ data, title }) => {
           <div className="flex-1 border border-gray-100 p-3">
             {t[1].category}
           </div>
-          <div className="flex-1 border border-gray-100 flex">
+          <div className="flex-1 border border-gray-100 flex items-center justify-between">
             <div className=" p-3">{t[1].quantity}</div>
-            <button className="ml-auto bg-black rounded m-1 px-2">
-              <IoChevronDown size={12} color="#fff" />
-            </button>
+            <div className="dropdown dropdown-left">
+              <button tabIndex={0} className="ml-auto bg-black rounded m-1 p-2">
+                <IoChevronDown size={12} color="#fff" />
+              </button>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-20"
+              >
+                <li>
+                  <button className="py-2 bg-red-700 hover:bg-red-800 text-white text-center">
+                    Delete
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       ))}

@@ -9,7 +9,23 @@ import { NavContext } from "../../contexts/NavProvider";
 const Finance = () => {
   const [isBankOpen, setIsBankOpen] = useState(false);
   const [isAddBankOpen, setIsAddBankOpen] = useState(false);
-  const [isSahakariOpen, setIsSahakariOpen] = useState(false); 
+  const [isSahakariOpen, setIsSahakariOpen] = useState(false);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
+  const transferModal = () => {
+    setIsBankOpen(!isBankOpen);
+    setSideBarOn(!sideBarOn);
+  };
+  
+  const addBankInfoModal = ()=>{
+    setSideBarOn(!sideBarOn);
+    setIsAddBankOpen(!isAddBankOpen)
+  }
+  
+  const enterSahakariInfo = () => {
+    setSideBarOn(!sideBarOn);
+    setIsSahakariOpen(!isSahakariOpen)
+  }
 
   return (
     <ModalProvider>
@@ -17,21 +33,21 @@ const Finance = () => {
         <div className="text-xl">Financial Entry</div>
         <div className="py-5 flex ">
           <button
-            onClick={() => setIsBankOpen(!isBankOpen)}
+            onClick={transferModal}
             className="rounded-xl bg-blue-800 text-white text-sm py-2 px-8 mt-10 mx-4"
             style={{ fontSize: 12 }}
           >
             Transfer
           </button>
           <button
-            onClick={() => setIsAddBankOpen(!isAddBankOpen)}
+            onClick={addBankInfoModal}
             className="rounded-xl bg-blue-800 text-white text-sm py-2 px-8 mt-10 mx-4"
             style={{ fontSize: 12 }}
           >
             Add Bank Information
           </button>
           <button
-            onClick={() => setIsSahakariOpen(!isSahakariOpen)}
+            onClick={enterSahakariInfo}
             className="rounded-xl bg-blue-800 text-white text-sm py-2 px-8 mt-10 mx-4"
             style={{ fontSize: 12 }}
           >
@@ -46,6 +62,7 @@ const Finance = () => {
           Daily Book
         </Link>
       </div>
+      
       <BankTransfer isOpen={isBankOpen} setIsOpen={setIsBankOpen} />
       <AddBankInfo isOpen={isAddBankOpen} setIsOpen={setIsAddBankOpen} />
       <SahakariTransfer isOpen={isSahakariOpen} setIsOpen={setIsSahakariOpen} />

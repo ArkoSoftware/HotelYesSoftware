@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { signIn } from "./functions/function";
-import { extreSmallFont, smallFont } from "../../theme";
-import toast from 'react-hot-toast';
+import { extreSmallFont, smallFont } from "../../theme"; 
 
 const LoginForm = () => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const submitForm = (event) => {
     event.preventDefault()
     const form = event.target;
@@ -42,8 +39,6 @@ const LoginForm = () => {
           <input
             type="text"
             name="email"
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
             id=""
             className="p-2 border border-gray-300 rounded mx-auto w-full"
             style={{ fontSize: smallFont }}
@@ -62,8 +57,6 @@ const LoginForm = () => {
           <input
             type="text"
             name="password"
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
             id=""
             className="p-2 border border-gray-300 rounded mx-auto w-full"
             style={{ fontSize: smallFont }}

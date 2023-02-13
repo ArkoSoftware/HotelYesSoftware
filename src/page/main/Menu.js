@@ -46,9 +46,28 @@ const Menu = () => {
     });
     setDataList(arr);
   };
+
   useEffect(() => {
     getMenuData();
   }, [rerender]);
+
+  const searchHandler = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const searchField = form.searchField.value;
+    const searchedData = dataList.filter(
+      (data) =>
+        data.foodName.toLowerCase().includes(searchField.toLowerCase()) ||
+        data.category.toLowerCase().includes(searchField.toLowerCase())
+    );
+    const restData = dataList.filter(
+      (data) =>
+        !(data.foodName.toLowerCase().includes(searchField.toLowerCase()) ||
+        data.category.toLowerCase().includes(searchField.toLowerCase()))
+    ); 
+    setDataList([...searchedData,...restData]);
+  };
+
   return (
     <ModalProvider>
       <div className="w-full h-full">
@@ -76,13 +95,16 @@ const Menu = () => {
                 New Category
               </button>
             </div>
-            <form className="mr-5 flex">
+            <form onSubmit={searchHandler} className="mr-5 flex">
               <input
                 type="text"
                 placeholder="Search here"
+                name="searchField"
                 className="input input-bordered border-green-600 input-sm w-full max-w-xs rounded-tr-none rounded-br-none"
               />
-              <button className="bg-green-600 px-2 text-white rounded-tr rounded-br"><CiSearch/></button>
+              <button className="bg-green-600 px-2 text-white rounded-tr rounded-br">
+                <CiSearch />
+              </button>
             </form>
           </div>
         </div>

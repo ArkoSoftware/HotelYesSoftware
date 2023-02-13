@@ -42,7 +42,7 @@ const Menu = () => {
     const snap = await getDocs(doc1);
     const arr = [];
     snap.forEach((docs) => {
-      arr.push(docs.data());
+      arr.push({ ...docs.data(), id: docs.id });
     });
     setDataList(arr);
   };
@@ -62,10 +62,12 @@ const Menu = () => {
     );
     const restData = dataList.filter(
       (data) =>
-        !(data.foodName.toLowerCase().includes(searchField.toLowerCase()) ||
-        data.category.toLowerCase().includes(searchField.toLowerCase()))
-    ); 
-    setDataList([...searchedData,...restData]);
+        !(
+          data.foodName.toLowerCase().includes(searchField.toLowerCase()) ||
+          data.category.toLowerCase().includes(searchField.toLowerCase())
+        )
+    );
+    setDataList([...searchedData, ...restData]);
   };
 
   return (
@@ -109,7 +111,12 @@ const Menu = () => {
           </div>
         </div>
         <div className="px-12 pb-8">
-          <DataFrame data={dataList} title={title} />
+          <DataFrame
+            data={dataList}
+            setRerender={setRerender}
+            rerender={rerender}
+            title={title}
+          />
         </div>
 
         <NewMenuEntry

@@ -21,8 +21,7 @@ const ModalViewNewEntry = ({ isOpen, toggleModal, setIsOpen }) => {
       const data = docs.data()["category"];
       arr.push(data);
     });
-    setCategoryList(arr);
-    console.log(arr);
+    setCategoryList(arr); 
   };
   useEffect(() => {
     getAllData();

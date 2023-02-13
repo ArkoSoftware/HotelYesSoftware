@@ -98,18 +98,14 @@ const HierarchyManagement = () => {
                   {data.name}
                 </td>
                 <td className="w-24 border border-gray-200 p-2 text-[10px]">
-                  {data.role ? (
-                    data.role
-                  ) : (
-                    <select onChange={(e) => setRole(e.target.value)}>
-                      <option selected disabled>
-                        Null
-                      </option>
-                      <option value="Admin">Admin</option>
-                      <option value="Waiter">Waiter</option>
-                      <option value="Chef">Chef</option>
-                    </select>
-                  )}
+                  <select onChange={(e) => setRole(e.target.value)}>
+                    <option selected disabled>
+                      {data.role}
+                    </option>
+                    <option value="Admin">Admin</option>
+                    <option value="Waiter">Waiter</option>
+                    <option value="Chef">Chef</option>
+                  </select>
                 </td>
                 <td className="w-24 border border-gray-200 p-2 text-[10px]">
                   siddharthaghimire@gmail.com

@@ -2,8 +2,23 @@ import React from "react";
 import { IoChevronDown } from "react-icons/io5";
 import { extreSmallFont } from "../../../../theme";
 import { Puff } from "react-loader-spinner";
+import { deleteDoc, doc } from "firebase/firestore/lite";
+import { db } from "../../../../config/adminFirebase";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
-const DataFrame = ({ data, title }) => {
+const DataFrame = ({ data, title, rerender, setRerender }) => {
+  const [onDeleteBtn, setOnDeleteBtn] = useState(true);
+  const deleteMenuHandler = async (id) => {
+    await deleteDoc(doc(db, "menu", id))
+      .then(() => {
+        setRerender(!rerender);
+        toast.success("Menu deleted Successfully");
+        setOnDeleteBtn(false)
+      })
+      .catch((err) => toast.error("Menu delete failed!"));
+  };
+
   return (
     <div className="w-full border border-gray-300 flex flex-col">
       <div className="w-full bg-gray-300 p-2" style={{ display: "flex" }}>
@@ -66,21 +81,25 @@ const DataFrame = ({ data, title }) => {
 
               <div className="dropdown dropdown-left">
                 <button
+                onClick={()=> setOnDeleteBtn(true)}
                   tabIndex={0}
                   className="ml-auto bg-black rounded m-1 p-2"
                 >
                   <IoChevronDown size={12} color="#fff" />
                 </button>
-                <ul
+                {onDeleteBtn && <ul
                   tabIndex={0}
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-20"
                 >
                   <li>
-                    <button className="py-2 bg-red-700 hover:bg-red-800 text-white text-center">
+                    <button
+                      onClick={() => deleteMenuHandler(t.id)}
+                      className="py-2 bg-red-700 hover:bg-red-800 text-white text-center"
+                    >
                       Delete
                     </button>
                   </li>
-                </ul>
+                </ul>}
               </div>
             </div>
           </div>

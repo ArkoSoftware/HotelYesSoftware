@@ -6,12 +6,12 @@ const DataFrame = ({ data, title }) => {
     <div className="w-full border border-gray-300 flex flex-col">
       <div className="w-full bg-gray-300 p-2" style={{ display: "flex" }}>
         <div className="w-24">S.N.</div>
-        {title.map((t) => (
-          <div className="flex-1 text-center">{t}</div>
+        {title.map((t,idx) => (
+          <div key={idx} className="flex-1 text-center">{t}</div>
         ))}
       </div>
       {data.map((t, index) => (
-        <div className="w-full" style={{ display: "flex", fontSize: 12 }}>
+        <div key={index} className="w-full" style={{ display: "flex", fontSize: 12 }}>
           <div className="w-24 border border-gray-100 p-3">{index + 1}</div>
           <div className="flex-1 border border-gray-100 p-3">
             {t[1].itemName}

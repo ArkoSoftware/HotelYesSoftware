@@ -10,6 +10,7 @@ const NavProvider = ({ children }) => {
   const [sideBarOn, setSideBarOn] = useState(true);
   const [user, setUser] = useState(null);
   const [isDark, setIsDark] = useState(false);
+  console.log(sideBarOn);
 
   useEffect(()=>{
     setIsDark(JSON.parse(localStorage.getItem('colorTheme') || false))

@@ -29,7 +29,9 @@ const Sidebar = () => {
           />
           <label
             htmlFor="toggleBtn"
-            className={`cursor-pointer text-sm ${isDark ? "text-white" : "text-slate-800"}`}
+            className={`cursor-pointer select-none text-sm ${
+              isDark ? "text-white" : "text-slate-800"
+            }`}
           >
             {isDark ? "Dark" : "Light"} Theme
           </label>
@@ -69,10 +71,14 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            {sidebar.secondary.map((val) => (
-              <Link to={val[1]}>
+            {sidebar.secondary.map((val, idx) => (
+              <Link to={val[1]} key={idx}>
                 <div
-                  className=" mx-4 rounded px-3 py-3 text-sm hover:bg-gray-300 tracking-tighter text-gray-700"
+                  className={`mx-4 rounded px-3 py-3 text-sm  tracking-tighter ${
+                    isDark
+                      ? "text-white hover:bg-gray-700"
+                      : "hover:bg-gray-300 text-gray-700"
+                  } `}
                   style={{ fontSize: extreSmallFont }}
                 >
                   {val[0]}

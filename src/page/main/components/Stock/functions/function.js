@@ -22,7 +22,7 @@ export const getItemList = async function () {
   snap.forEach((docs) => {
     const data = docs.data();
     arr.push([docs.id, data]);
-  });
+  }); 
   return arr;
 };
 export const getCategoryItem = async function () {

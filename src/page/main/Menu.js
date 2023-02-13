@@ -8,6 +8,7 @@ import { collection, doc, getDocs } from "firebase/firestore/lite";
 import { db } from "../../config/adminFirebase";
 import { extreSmallFont, largeFont } from "../../theme";
 import { NavContext } from "../../contexts/NavProvider";
+import { CiSearch } from "react-icons/ci";
 
 let data = [
   { productId: 10248, productName: "VINET", quantity: 190 },
@@ -28,26 +29,47 @@ const Menu = () => {
   const [openAddCategory, setAddCategory] = useState(false);
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
-  function toggleModal3(e) { 
+  function toggleModal3(e) {
     setOpenPurchaseBill(!openPurchaseBill);
-    setSideBarOn(!sideBarOn)
+    setSideBarOn(!sideBarOn);
   }
   function toggleModal2(e) {
     setAddCategory(!openAddCategory);
-    setSideBarOn(!sideBarOn)
+    setSideBarOn(!sideBarOn);
   }
   const getMenuData = async () => {
     const doc1 = collection(db, "menu");
     const snap = await getDocs(doc1);
     const arr = [];
     snap.forEach((docs) => {
-      arr.push(docs.data());
+      arr.push({ ...docs.data(), id: docs.id });
     });
     setDataList(arr);
   };
+
   useEffect(() => {
     getMenuData();
   }, [rerender]);
+
+  const searchHandler = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const searchField = form.searchField.value;
+    const searchedData = dataList.filter(
+      (data) =>
+        data.foodName.toLowerCase().includes(searchField.toLowerCase()) ||
+        data.category.toLowerCase().includes(searchField.toLowerCase())
+    );
+    const restData = dataList.filter(
+      (data) =>
+        !(
+          data.foodName.toLowerCase().includes(searchField.toLowerCase()) ||
+          data.category.toLowerCase().includes(searchField.toLowerCase())
+        )
+    );
+    setDataList([...searchedData, ...restData]);
+  };
+
   return (
     <ModalProvider>
       <div className="w-full h-full">
@@ -58,25 +80,43 @@ const Menu = () => {
           >
             Manage Menu
           </div>
-          <div className="flex flex-row">
-            <button
-              onClick={toggleModal3}
-              className="rounded-xl border bg-green-700 text-white text-sm py-1 px-8 mt-10 mx-4"
-              style={{ fontSize: extreSmallFont }}
-            >
-              New Entry
-            </button>
-            <button
-              onClick={toggleModal2}
-              className="rounded-xl border border-green-700 text-green-700 text-sm py-1 px-8 mt-10 mx-4"
-              style={{ fontSize: extreSmallFont }}
-            >
-              New Category
-            </button>
+          <div className="flex items-center justify-between mt-10">
+            <div>
+              <button
+                onClick={toggleModal3}
+                className="rounded border bg-green-600 text-white text-sm py-1 px-8 mx-4"
+                style={{ fontSize: extreSmallFont }}
+              >
+                New Entry
+              </button>
+              <button
+                onClick={toggleModal2}
+                className="rounded border duration-500 border-green-600 hover:bg-green-600 text-green-600 hover:text-white text-sm py-1 px-8 mx-4"
+                style={{ fontSize: extreSmallFont }}
+              >
+                New Category
+              </button>
+            </div>
+            <form onSubmit={searchHandler} className="mr-5 flex">
+              <input
+                type="text"
+                placeholder="Search here"
+                name="searchField"
+                className="input input-bordered border-green-600 input-sm w-full max-w-xs rounded-tr-none rounded-br-none"
+              />
+              <button className="bg-green-600 px-2 text-white rounded-tr rounded-br">
+                <CiSearch />
+              </button>
+            </form>
           </div>
         </div>
         <div className="px-12 pb-8">
-          <DataFrame data={dataList} title={title} />
+          <DataFrame
+            data={dataList}
+            setRerender={setRerender}
+            rerender={rerender}
+            title={title}
+          />
         </div>
 
         <NewMenuEntry

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { getRoomList } from "./functions/function";
@@ -9,6 +9,7 @@ import {
   mediumFont,
   smallFont,
 } from "../../../../theme";
+import { NavContext } from "../../../../contexts/NavProvider";
 export const RoomTab = ({
   available,
   booked,
@@ -20,8 +21,11 @@ export const RoomTab = ({
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState([]);
   const [type, setType] = useState();
-  const toggleModal = function () {
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
+  const toggleModal = () => {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   };
 
   return (
@@ -31,8 +35,8 @@ export const RoomTab = ({
           Available Room
         </div>
         <div className="flex flex-wrap">
-          {available.map((item) => (
-            <div className="p-4">
+          {available.map((item, idx) => (
+            <div className="p-4" key={idx} onClick={()=> setSideBarOn(!sideBarOn)}>
               <RoomCard
                 item={item}
                 setState={setRoomInfo}
@@ -42,8 +46,8 @@ export const RoomTab = ({
               />
             </div>
           ))}
-          {reserved.map((item) => (
-            <div className="p-4">
+          {reserved.map((item, idx) => (
+            <div className="p-4" key={idx} onClick={()=> setSideBarOn(!sideBarOn)}>
               <RoomCardReserved
                 state={item}
                 item={item}
@@ -54,8 +58,8 @@ export const RoomTab = ({
               />
             </div>
           ))}
-          {booked.map((item) => (
-            <div className="p-4">
+          {booked.map((item, idx) => (
+            <div className="p-4" key={idx}>
               <RoomCardBooked
                 state={item}
                 item={item}
@@ -71,8 +75,8 @@ export const RoomTab = ({
           Dirty Room
         </div>
         <div className="flex flex-row flex-wrap">
-          {dirty.map((item) => (
-            <div className="p-4">
+          {dirty.map((item, idx) => (
+            <div className="p-4" key={idx}>
               <RoomCardDirty item={item} />
             </div>
           ))}

@@ -17,8 +17,9 @@ const SelectView = ({ label, data, setValue }) => {
         }}
         className="p-2 border border-gray-400 rounded w-full text-sm"
       >
-        {data.map((d1) => (
+        {data.map((d1, idx) => (
           <option
+            key={idx}
             className="capitalize"
             value={d1}
             style={{ fontSize: smallFont }}

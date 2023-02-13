@@ -76,7 +76,6 @@ const HierarchyManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {/* this is static table | need to get users data from firebase */}
             {usersList?.map((data, idx) => (
               <tr key={idx}>
                 <td className="w-24 border border-gray-200 p-2 text-[10px]">

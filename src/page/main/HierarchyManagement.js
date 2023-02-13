@@ -1,5 +1,6 @@
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   getFirestore,
@@ -10,7 +11,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { db } from "../../config/adminFirebase";
-import { Bars } from 'react-loader-spinner'
+import { Bars } from "react-loader-spinner";
 
 const HierarchyManagement = () => {
   const [usersList, setUsersList] = useState([]);
@@ -29,11 +30,10 @@ const HierarchyManagement = () => {
 
   useEffect(() => {
     getUsersData();
-  }, []);
+  }, [loading]);
 
   const roleHandler = (id) => {
     setLoading(true);
-    const db = getFirestore();
     const docRef = doc(db, "usersList", id);
     const data = {
       role: role,
@@ -46,6 +46,19 @@ const HierarchyManagement = () => {
       })
       .catch((err) => {
         toast.error("role adding failed");
+        setLoading(false);
+      });
+  };
+
+  const deleteRoleHandler = async (id) => {
+    setLoading(true);
+    await deleteDoc(doc(db, "usersList", id))
+      .then(() => {
+        toast.success("Role deleted successfully");
+        setLoading(false);
+      })
+      .catch((err) => {
+        toast.error("Role isn't Deleted");
         setLoading(false);
       });
   };
@@ -102,27 +115,32 @@ const HierarchyManagement = () => {
                   siddharthaghimire@gmail.com
                 </td>
                 <td className="w-24 border border-gray-200 p-2 text-[10px]">
-                  <div className="flex justify-center gap-2">
-                    <button
-                      onClick={() => roleHandler(data.id)}
-                      className="text-white bg-green-600  hover:bg-green-700 px-2 py-2 rounded"
-                    >
-                      {loading ? (
-                        <Bars
-                          height="30"
-                          width="30"
-                          color="#fff"
-                          ariaLabel="bars-loading" 
-                          visible={true}
-                        />
-                      ) :
-                      "Give Access"
-                      }
-                    </button>
-                    <button className="text-white bg-red-600 hover:bg-red-700 px-2 py-2 rounded">
-                      Decline
-                    </button>
-                  </div>
+                  {loading ? (
+                    <div className="my-2 mx-3">
+                      <Bars
+                        height="30"
+                        width="80"
+                        color="#16a34a"
+                        ariaLabel="bars-loading"
+                        visible={true}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex justify-center gap-2">
+                      <button
+                        onClick={() => roleHandler(data.id)}
+                        className="text-white bg-green-600  hover:bg-green-700 px-2 py-2 rounded"
+                      >
+                        Give Access
+                      </button>
+                      <button
+                        onClick={() => deleteRoleHandler(data.id)}
+                        className="text-white bg-red-600 hover:bg-red-700 px-2 py-2 rounded"
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}

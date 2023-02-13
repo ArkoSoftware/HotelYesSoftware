@@ -29,7 +29,7 @@ const Sidebar = () => {
           />
           <label
             htmlFor="toggleBtn"
-            className={`cursor-pointer text-sm ${isDark ? "text-white" : "text-slate-800"}`}
+            className={`cursor-pointer select-none text-sm ${isDark ? "text-white" : "text-slate-800"}`}
           >
             {isDark ? "Dark" : "Light"} Theme
           </label>

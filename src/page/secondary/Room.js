@@ -14,6 +14,7 @@ const Room = () => {
   const [reserved, setReserved] = useState([]);
   const [dirty, setDirty] = useState([]);
   const [selectDate, setSelectDate] = useState(new Date().getTime());
+  
   const getAllData = async () => {
     const arr = await getRoomList(selectDate);
     setAvailable(arr.arr);

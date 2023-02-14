@@ -47,6 +47,7 @@ const Stock = () => {
     getAllData();
   }, []);
   return (
+    
     <ModalProvider>
       <div className="w-full h-full">
         <div className="p-8">

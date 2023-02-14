@@ -5,7 +5,7 @@ import { auth } from "../config/adminFirebase";
 
 export const NavContext = createContext();
 
-// It's used for store all states of navbars
+// It's used for store all states of navbar
 const NavProvider = ({ children }) => {
   const [sideBarOn, setSideBarOn] = useState(true);
   const [user, setUser] = useState(null);

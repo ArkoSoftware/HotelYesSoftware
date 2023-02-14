@@ -2,12 +2,17 @@ import React, { useState } from "react";
 
 import ModalView from "./ModalView";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { useContext } from "react";
+import { NavContext } from "../../../../contexts/NavProvider";
 
 export const TabData = ({ tableData, rerender, setRerender }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tableInfo, setTableInfo] = useState([]);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   const toggleModal = function () {
     setIsOpen(!isOpen);
+    setSideBarOn(!sideBarOn)
   };
 
   return (

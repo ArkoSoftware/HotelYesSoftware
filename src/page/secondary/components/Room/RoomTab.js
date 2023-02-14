@@ -25,7 +25,7 @@ export const RoomTab = ({
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
-    setSideBarOn(!sideBarOn)
+    setSideBarOn(!sideBarOn);
   };
 
   return (
@@ -36,7 +36,7 @@ export const RoomTab = ({
         </div>
         <div className="flex flex-wrap">
           {available.map((item, idx) => (
-            <div className="p-4" key={idx} onClick={()=> setSideBarOn(!sideBarOn)}>
+            <div className="p-4" key={idx}>
               <RoomCard
                 item={item}
                 setState={setRoomInfo}
@@ -47,7 +47,11 @@ export const RoomTab = ({
             </div>
           ))}
           {reserved.map((item, idx) => (
-            <div className="p-4" key={idx} onClick={()=> setSideBarOn(!sideBarOn)}>
+            <div
+              className="p-4"
+              key={idx}
+              onClick={() => setSideBarOn(!sideBarOn)}
+            >
               <RoomCardReserved
                 state={item}
                 item={item}
@@ -100,45 +104,59 @@ export const RoomTab = ({
 };
 
 export const RoomCard = ({ item, setState, setIsOpen, isOpen, setType }) => {
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
   return (
-    <button
-      onClick={() => {
-        setState(item);
-        setIsOpen(!isOpen);
-        setType("NewRoom");
-      }}
-      className="bg-gray-200 w-36 h-36 rounded-2xl flex flex-col p-4"
-    >
-      <div className="ml-auto">
-        <IoEllipsisVertical size={10} />
+    <div className="relative">
+      <div className="dropdown dropdown-left absolute right-3 top-1">
+        <button tabIndex={0} className="border duration-500 border-transparent hover:border-green-600 hover:bg-green-500 hover:text-white p-1 rounded-full">
+          <IoEllipsisVertical size={10} />
+        </button>
+        <div
+          tabIndex={0}
+          className="dropdown-content menu bg-base-100 p-2 shadow rounded-box w-20 mr-4"
+        >
+            <button className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center">
+              Delete
+            </button>
+        </div>
       </div>
-      <div
-        className="text-2xl text-center my-3 mx-auto"
-        style={{ fontSize: mediumFont }}
+      <button
+        onClick={() => {
+          setState(item);
+          setIsOpen(!isOpen);
+          setType("NewRoom");
+          setSideBarOn(!sideBarOn);
+        }}
+        className="bg-gray-200 w-36 h-36 rounded-2xl flex flex-col p-4"
       >
-        {item.roomNumber}
-      </div>
-      {item.type == "Premium" ? (
         <div
-          className="capitalize mt-auto bg-yellow-500 px-3 py-1 rounded-xl "
-          style={{ alignSelf: "flex-start", fontSize: 8 }}
+          className="text-2xl text-center my-3 mx-auto"
+          style={{ fontSize: mediumFont }}
         >
-          {item.type}
+          {item.roomNumber}
         </div>
-      ) : (
-        <div
-          className="capitalize mt-auto bg-white text-black px-3 py-1 rounded-xl"
-          style={{ alignSelf: "flex-start", fontSize: 8 }}
-        >
-          {item.type}
-        </div>
-      )}
+        {item.type == "Premium" ? (
+          <div
+            className="capitalize mt-auto bg-yellow-500 px-3 py-1 rounded-xl "
+            style={{ alignSelf: "flex-start", fontSize: 8 }}
+          >
+            {item.type}
+          </div>
+        ) : (
+          <div
+            className="capitalize mt-auto bg-white text-black px-3 py-1 rounded-xl"
+            style={{ alignSelf: "flex-start", fontSize: 8 }}
+          >
+            {item.type}
+          </div>
+        )}
 
-      <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
-        <div className="mr-2 ">Price:</div>
-        <div className="">Rs.{item.price}</div>
-      </div>
-    </button>
+        <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
+          <div className="mr-2 ">Price:</div>
+          <div className="">Rs.{item.price}</div>
+        </div>
+      </button>
+    </div>
   );
 };
 export const RoomCardReserved = ({

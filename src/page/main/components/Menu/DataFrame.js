@@ -34,20 +34,7 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
           </div>
         ))}
       </div>
-      {!data.length ? (
-        <div className="flex justify-center py-2">
-          <Puff
-            height="30"
-            width="30"
-            radius={1}
-            color="#4fa94d"
-            ariaLabel="puff-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
-        </div>
-      ) : (
+      {
         data.map((t, index) => (
           <div className="w-full" style={{ display: "flex", fontSize: 12 }}>
             <div
@@ -104,7 +91,7 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
             </div>
           </div>
         ))
-      )}
+      }
     </div>
   );
 };

@@ -17,7 +17,7 @@ const EntryRow = ({
 }) => {
   const [name, setName] = useState(data[0]);
   const [quantity, setQuantity] = useState(data[1] || 1);
-  const [foodList, setFoodList] = React.useState([]);
+  const [foodList, setFoodList] = React.useState([]); 
   const getAllData = async () => {
     const arr = [];
     const temp = await getMenuItem();
@@ -65,7 +65,7 @@ const EntryRow = ({
           {index + 1}
         </span>
       </button>
-      <select
+      {/* <select
         onChange={(e) => {
           setName(e.target.value);
 
@@ -73,14 +73,23 @@ const EntryRow = ({
         }}
         className="p-2 flex-1 border border-gray-200 w-full text-sm"
         style={{ fontSize: 10 }}
-      >
+      > 
         <option className="capitalize"></option>
         {foodList.map((d1) => (
           <option className="capitalize" value={d1.foodName}>
             {d1.foodName}
           </option>
         ))}
-      </select>
+      </select> */}
+
+      <input list="foodNames" name="foodName" className="text-sm pl-2 w-[34%]" />
+      <datalist id="foodNames">
+      {foodList.map((d1) => (
+          <option value={d1.foodName}>
+            {d1.foodName}
+          </option>
+        ))}
+      </datalist>
 
       <input
         value={quantity}

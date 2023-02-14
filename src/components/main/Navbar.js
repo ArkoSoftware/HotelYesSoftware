@@ -15,7 +15,7 @@ const Navbar = () => {
           <label
             htmlFor="sidebar-drawer"
             onClick={() => setSideBarOn(!sideBarOn)}
-            className="text-black block lg:hidden"
+            className={`${isDark?"text-white":"text-black"} block lg:hidden`}
           >
             {sideBarOn ? <FaBars /> : <FaTimes />}
           </label>

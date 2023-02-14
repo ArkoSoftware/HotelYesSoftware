@@ -13,6 +13,7 @@ const MainRouter = () => {
 
   return (
     <div className="">
+      {/* <BrowserRouter basename="/"> */}
       <HashRouter basename="/">
         <Navbar />
         <div className={`drawer ${sideBarOn && "drawer-mobile"} `}>

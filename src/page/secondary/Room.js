@@ -22,11 +22,17 @@ const Room = () => {
     setReserved(arr.arr2);
     setDirty(arr.arr4);
   };
-  console.log(selectDate);
-  console.log(available);
+  // console.log(selectDate);
+  // console.log(available);
 
-  const getSearchedData = async () => { 
-    setAvailable([...available.filter(data => data.time.seconds === selectDate)]);
+  const getSearchedData = async () => {
+    // setAvailable([...available.filter(data => new Date(data.time.seconds) === new Date(selectDate))]);
+    // available.forEach((data) => {
+    //   const sec = data.time.seconds;
+    //   const time = new Date(sec);
+    //   console.log(time);
+    // });
+    console.log(new Date(selectDate));
     // setBooked(arr.arr3);
     // setReserved(arr.arr2);
     // setDirty(arr.arr4);

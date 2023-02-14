@@ -24,9 +24,11 @@ const OccupiedModalView = ({
   const [value, setValue] = useState();
   const [guests, setGuests] = useState();
   const [billNo, setBillNo] = useState();
+
   const fixData = () => {
     setGuests(state.form ? state.form.guests : "");
   };
+  
   useEffect(() => {
     fixData();
   }, []);

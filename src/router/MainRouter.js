@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Sidebar from "../components/main/Sidebar";
 import * as TabPage from "../page/main";
 import * as LowPage from "../page/secondary";
@@ -13,7 +13,8 @@ const MainRouter = () => {
 
   return (
     <div className="">
-      <BrowserRouter basename="/">
+      {/* <BrowserRouter basename="/"> */}
+      <HashRouter basename="/">
         <Navbar />
         <div className={`drawer ${sideBarOn && "drawer-mobile"} `}>
           <input
@@ -112,7 +113,7 @@ const MainRouter = () => {
             </ul>
           </div>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 };

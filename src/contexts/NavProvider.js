@@ -5,12 +5,11 @@ import { auth } from "../config/adminFirebase";
 
 export const NavContext = createContext();
 
-// It's used for store all states of navbars
+// It's used for store all states of navbar
 const NavProvider = ({ children }) => {
   const [sideBarOn, setSideBarOn] = useState(true);
   const [user, setUser] = useState(null);
-  const [isDark, setIsDark] = useState(false);
-  console.log(sideBarOn);
+  const [isDark, setIsDark] = useState(false); 
 
   useEffect(()=>{
     setIsDark(JSON.parse(localStorage.getItem('colorTheme') || false))

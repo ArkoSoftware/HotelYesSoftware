@@ -14,7 +14,7 @@ const Room = () => {
   const [reserved, setReserved] = useState([]);
   const [dirty, setDirty] = useState([]);
   const [selectDate, setSelectDate] = useState(new Date().getTime());
-  
+
   const getAllData = async () => {
     const arr = await getRoomList(selectDate);
     setAvailable(arr.arr);
@@ -22,10 +22,26 @@ const Room = () => {
     setReserved(arr.arr2);
     setDirty(arr.arr4);
   };
+  // console.log(selectDate);
+  // console.log(available);
+
+  const getSearchedData = async () => {
+    // setAvailable([...available.filter(data => new Date(data.time.seconds) === new Date(selectDate))]);
+    // available.forEach((data) => {
+    //   const sec = data.time.seconds;
+    //   const time = new Date(sec);
+    //   console.log(time);
+    // });
+    console.log(new Date(selectDate));
+    // setBooked(arr.arr3);
+    // setReserved(arr.arr2);
+    // setDirty(arr.arr4);
+  };
 
   useEffect(() => {
     getAllData();
   }, [rerender]);
+
   return (
     <ModalProvider>
       <div className="w-full h-full overflow-y-scroll">
@@ -41,7 +57,7 @@ const Room = () => {
             </div>
             <div className=" flex-1">
               <button
-                onClick={() => getAllData()}
+                onClick={() => getSearchedData()}
                 className="bg-green-600 rounded-xl px-8 h-10 mt-auto text-sm text-white"
               >
                 Search

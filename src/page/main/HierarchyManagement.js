@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { db } from "../../config/adminFirebase";
-import { Bars } from "react-loader-spinner";
+import { Bars, RotatingLines } from "react-loader-spinner";
 
 const HierarchyManagement = () => {
   const [usersList, setUsersList] = useState([]);
@@ -68,80 +68,92 @@ const HierarchyManagement = () => {
       <h2 className="text-lg p-8 tracking-tighter">Hierarchy Management</h2>
 
       <div className="overflow-x-auto px-12 pb-8">
-        <table className="w-full">
-          <thead>
-            <tr className="border">
-              <td className="w-24 text-[10px] text-left rounded-none bg-gray-300 p-2 font-medium">
-                S.N.
-              </td>
-              <td className="text-center text-[10px] bg-gray-300 p-2 font-medium">
-                Name
-              </td>
-              <td className="text-center text-[10px] bg-gray-300 p-2 font-medium">
-                Role
-              </td>
-              <td className="text-center text-[10px] rounded-none bg-gray-300 p-2 font-medium">
-                Email
-              </td>
-              <td className="text-center text-[10px] rounded-none bg-gray-300 p-2 font-medium">
-                Actions
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            {usersList?.map((data, idx) => (
-              <tr key={idx}>
-                <td className="w-24 border border-gray-200 p-2 text-[10px]">
-                  {idx + 1}
+        {!usersList.length ? (
+          <div className="absolute top-[30%] left-0 right-0 mx-auto flex justify-center">
+            <RotatingLines
+              strokeColor="#00af41"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="76"
+              visible={true}
+            />
+          </div>
+        ) : (
+          <table className="w-full">
+            <thead>
+              <tr className="border">
+                <td className="w-24 text-[10px] text-left rounded-none bg-gray-300 p-2 font-medium">
+                  S.N.
                 </td>
-                <td className="w-24 border border-gray-200 p-2 text-[10px]">
-                  {data.name}
+                <td className="text-center text-[10px] bg-gray-300 p-2 font-medium">
+                  Name
                 </td>
-                <td className="w-24 border border-gray-200 p-2 text-[10px]">
-                  <select onChange={(e) => setRole(e.target.value)}>
-                    <option selected disabled>
-                      {data.role}
-                    </option>
-                    <option value="Admin">Admin</option>
-                    <option value="Waiter">Waiter</option>
-                    <option value="Chef">Chef</option>
-                  </select>
+                <td className="text-center text-[10px] bg-gray-300 p-2 font-medium">
+                  Role
                 </td>
-                <td className="w-24 border border-gray-200 p-2 text-[10px]">
-                  siddharthaghimire@gmail.com
+                <td className="text-center text-[10px] rounded-none bg-gray-300 p-2 font-medium">
+                  Email
                 </td>
-                <td className="w-24 border border-gray-200 p-2 text-[10px]">
-                  {loading ? (
-                    <div className="my-2 mx-3">
-                      <Bars
-                        height="30"
-                        width="80"
-                        color="#16a34a"
-                        ariaLabel="bars-loading"
-                        visible={true}
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex justify-center gap-2">
-                      <button
-                        onClick={() => roleHandler(data.id)}
-                        className="text-white bg-green-600  hover:bg-green-700 px-2 py-2 rounded"
-                      >
-                        Give Access
-                      </button>
-                      <button
-                        onClick={() => deleteRoleHandler(data.id)}
-                        className="text-white bg-red-600 hover:bg-red-700 px-2 py-2 rounded"
-                      >
-                        Decline
-                      </button>
-                    </div>
-                  )}
+                <td className="text-center text-[10px] rounded-none bg-gray-300 p-2 font-medium">
+                  Actions
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {usersList?.map((data, idx) => (
+                <tr key={idx}>
+                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                    {idx + 1}
+                  </td>
+                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                    {data.name}
+                  </td>
+                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                    <select onChange={(e) => setRole(e.target.value)}>
+                      <option selected disabled>
+                        {data.role}
+                      </option>
+                      <option value="Admin">Admin</option>
+                      <option value="Waiter">Waiter</option>
+                      <option value="Chef">Chef</option>
+                    </select>
+                  </td>
+                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                    siddharthaghimire@gmail.com
+                  </td>
+                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                    {loading ? (
+                      <div className="my-2 mx-3">
+                        <Bars
+                          height="30"
+                          width="80"
+                          color="#16a34a"
+                          ariaLabel="bars-loading"
+                          visible={true}
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => roleHandler(data.id)}
+                          className="text-white bg-green-600  hover:bg-green-700 px-2 py-2 rounded"
+                        >
+                          Give Access
+                        </button>
+                        <button
+                          onClick={() => deleteRoleHandler(data.id)}
+                          className="text-white bg-red-600 hover:bg-red-700 px-2 py-2 rounded"
+                        >
+                          Decline
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

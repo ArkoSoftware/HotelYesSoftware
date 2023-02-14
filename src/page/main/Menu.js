@@ -9,6 +9,7 @@ import { db } from "../../config/adminFirebase";
 import { extreSmallFont, largeFont } from "../../theme";
 import { NavContext } from "../../contexts/NavProvider";
 import { CiSearch } from "react-icons/ci";
+import { RotatingLines } from "react-loader-spinner";
 
 let data = [
   { productId: 10248, productName: "VINET", quantity: 190 },
@@ -110,14 +111,26 @@ const Menu = () => {
             </form>
           </div>
         </div>
-        <div className="px-12 pb-8">
-          <DataFrame
-            data={dataList}
-            setRerender={setRerender}
-            rerender={rerender}
-            title={title}
-          />
-        </div>
+        {!dataList.length ? (
+          <div className="absolute top-[30%] left-0 right-0 mx-auto flex justify-center">
+            <RotatingLines
+              strokeColor="#00af41"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="76"
+              visible={true}
+            />
+          </div>
+        ) : (
+          <div className="px-12 pb-8">
+            <DataFrame
+              data={dataList}
+              setRerender={setRerender}
+              rerender={rerender}
+              title={title}
+            />
+          </div>
+        )}
 
         <NewMenuEntry
           rerender={rerender}

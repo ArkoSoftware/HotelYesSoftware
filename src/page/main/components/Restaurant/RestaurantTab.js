@@ -6,8 +6,7 @@ import { extreSmallFont, mediumFont } from "../../../../theme";
 export const RestaurantTab = ({ rerender }) => {
   const [tableData, setTableData] = React.useState([]);
   const getAllData = async () => {
-    const arr = await getTableList();
-    console.log(arr);
+    const arr = await getTableList(); 
     setTableData(arr);
   };
 

@@ -65,7 +65,11 @@ const EntryRow = ({
           {index + 1}
         </span>
       </button>
-      {/* <select
+      {/*
+      ------------------------------------
+      previous dropdown without search bar
+      ------------------------------------
+       <select
         onChange={(e) => {
           setName(e.target.value);
 

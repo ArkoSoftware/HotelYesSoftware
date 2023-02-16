@@ -4,8 +4,10 @@ import { RoomTab } from "./components/Room/RoomTab";
 import { useEffect } from "react";
 import { getRoomList } from "./components/Room/functions/function";
 import { useState } from "react";
-import { largeFont } from "../../theme";
 import DatePicker from "./components/Room/components/DatePicker";
+import { deleteDoc, doc } from "firebase/firestore/lite";
+import { db } from "../../config/adminFirebase";
+import toast from "react-hot-toast";
 
 const Room = () => {
   const [rerender, setRerender] = useState(false);
@@ -14,6 +16,7 @@ const Room = () => {
   const [reserved, setReserved] = useState([]);
   const [dirty, setDirty] = useState([]);
   const [selectDate, setSelectDate] = useState(new Date().getTime());
+  const [loading, setLoading] = useState(false);
 
   const getAllData = async () => {
     const arr = await getRoomList(selectDate);
@@ -38,9 +41,22 @@ const Room = () => {
     // setDirty(arr.arr4);
   };
 
+  const deleteRoom = async (id) => {
+    setLoading(true);
+    await deleteDoc(doc(db, "roomList", id))
+      .then(() => {
+        toast.success("Room Deleted Successfully.");
+        setLoading(false);
+      })
+      .catch((err) => {
+        toast.error("Room isn't Deleted");
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     getAllData();
-  }, [rerender]);
+  }, [rerender, loading]);
 
   return (
     <ModalProvider>
@@ -72,6 +88,7 @@ const Room = () => {
             booked={booked}
             reserved={reserved}
             dirty={dirty}
+            deleteRoom={deleteRoom}
           />
         </div>
       </div>

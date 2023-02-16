@@ -72,7 +72,7 @@ export const getRoomList = async function () {
   const snap = await getDocs(q);
   snap.forEach((docs) => {
     const data = docs.data();
-    arr.push(data); 
+    arr.push({ ...data, id: docs.id });
   });
 
   return { arr, arr3, arr2, arr4 };

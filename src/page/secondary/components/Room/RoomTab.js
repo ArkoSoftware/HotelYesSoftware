@@ -1,14 +1,7 @@
 import React, { useContext, useState } from "react";
-import { useEffect } from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
-import { getRoomList } from "./functions/function";
 import ModalView from "./ModalView";
-import {
-  extreSmallFont,
-  largeFont,
-  mediumFont,
-  smallFont,
-} from "../../../../theme";
+import { mediumFont } from "../../../../theme";
 import { NavContext } from "../../../../contexts/NavProvider";
 export const RoomTab = ({
   available,
@@ -17,6 +10,7 @@ export const RoomTab = ({
   dirty,
   rerender,
   setRerender,
+  deleteRoom,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState([]);
@@ -27,6 +21,7 @@ export const RoomTab = ({
     setIsOpen(!isOpen);
     setSideBarOn(!sideBarOn);
   };
+ 
 
   return (
     <div className=" flex flex-col">
@@ -43,6 +38,7 @@ export const RoomTab = ({
                 setIsOpen={setIsOpen}
                 isOpen={isOpen}
                 setType={setType}
+                deleteRoom={deleteRoom}
               />
             </div>
           ))}
@@ -103,21 +99,31 @@ export const RoomTab = ({
   );
 };
 
-export const RoomCard = ({ item, setState, setIsOpen, isOpen, setType }) => {
+export const RoomCard = ({
+  item,
+  setState,
+  setIsOpen,
+  isOpen,
+  setType,
+  deleteRoom,
+}) => {
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
   return (
     <div className="relative">
       <div className="dropdown dropdown-left absolute right-3 top-1">
-        <button tabIndex={0} className="border duration-500 border-transparent hover:border-green-600 hover:bg-green-500 hover:text-white p-1 rounded-full">
+        <button
+          tabIndex={0}
+          className="border duration-500 border-transparent hover:border-green-600 hover:bg-green-500 hover:text-white p-1 rounded-full"
+        >
           <IoEllipsisVertical size={10} />
         </button>
         <div
           tabIndex={0}
           className="dropdown-content menu bg-base-100 p-2 shadow rounded-box w-20 mr-4"
         >
-            <button className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center">
-              Delete
-            </button>
+          <button onClick={()=> deleteRoom(item.id)} className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center">
+            Delete
+          </button>
         </div>
       </div>
       <button

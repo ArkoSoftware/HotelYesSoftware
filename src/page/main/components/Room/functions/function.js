@@ -28,7 +28,7 @@ export const addRoom = async function (roomNumber, price, type) {
     roomNumber: parseInt(roomNumber),
     price: parseInt(price),
     type: type,
-    uid: auth.currentUser.uid,
+    // uid: auth.currentUser.uid,
     user: auth.currentUser.email,
     time: serverTimestamp(),
   }).then(() => {

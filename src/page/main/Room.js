@@ -54,6 +54,8 @@ const Room = () => {
           toggleModal={toggleModal}
           setRerender={setRerender}
           rerender={rerender}
+          setSideBarOn={setSideBarOn}
+          sideBarOn={sideBarOn}
         />
       </div>
     </ModalProvider>

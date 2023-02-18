@@ -14,8 +14,7 @@ const DatePicker = ({ label, setValue, value }) => {
 
   const changed = (e) => { 
     setSelected(e);
-    setValue(new Date(e).getTime());
-    console.log(e.getTime());
+    setValue(new Date(e).getTime()); 
   };
 
   return (

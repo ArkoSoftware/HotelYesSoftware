@@ -17,30 +17,30 @@ const Room = () => {
   const [reserved, setReserved] = useState([]);
   const [dirty, setDirty] = useState([]);
   const [selectDate, setSelectDate] = useState(new Date().getTime());
+  const [todayAvailable, setTodayAvailable] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
   const getAllData = async () => {
     const arr = await getRoomList(selectDate);
     setAvailable(arr.arr);
+    setTodayAvailable(arr.arr)
     setBooked(arr.arr3);
     setReserved(arr.arr2);
     setDirty(arr.arr4);
   };
 
   const getSearchedData = async () => {
-    // setAvailable([...available.filter(data => new Date(data.time.seconds) === new Date(selectDate))]);
-    // available.forEach((data) => {
-    //   const sec = data.time.seconds;
-    //   const time = new Date(sec);
-    //   console.log(time);
-    // });
-    // console.log(new Date(selectDate).toLocaleDateString());
-    const date = new Date().getTime();
-    console.log(selectDate, date);
-    // setBooked(arr.arr3);
-    // setReserved(arr.arr2);
-    // setDirty(arr.arr4);
+    
+    const searchedDate = available.filter(
+      (data) =>
+        new Date(parseInt(data.time.seconds * 1000))
+          .toUTCString()
+          .slice(0, 16) === new Date(selectDate).toUTCString().slice(0, 16)
+    );
+    
+
+    setTodayAvailable(searchedDate);
   };
 
   const deleteRoom = async (id) => {
@@ -86,7 +86,7 @@ const Room = () => {
           <RoomTab
             rerender={rerender}
             setRerender={setRerender}
-            available={available}
+            available={todayAvailable}
             booked={booked}
             reserved={reserved}
             dirty={dirty}

@@ -3,6 +3,7 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import ModalView from "./ModalView";
 import { mediumFont } from "../../../../theme";
 import { NavContext } from "../../../../contexts/NavProvider";
+import Loader from "../../../../components/Loader/Loader";
 export const RoomTab = ({
   available,
   booked,
@@ -24,63 +25,98 @@ export const RoomTab = ({
 
   return (
     <div className=" flex flex-col">
-      <div className="flex flex-col flex-wrap ">
-        <div className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
-          Available Room
+      {!(
+        available.length ||
+        booked.length ||
+        reserved.length ||
+        dirty.length
+      ) ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col flex-wrap ">
+          {available.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Available Room
+              </h4>
+              <div className="flex flex-wrap">
+                {available.map((item, idx) => (
+                  <div className="p-4" key={idx}>
+                    <RoomCard
+                      item={item}
+                      setState={setRoomInfo}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      setType={setType}
+                      deleteRoom={deleteRoom}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {reserved.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Reserved Room
+              </h4>
+              <div className="flex flex-wrap">
+                {reserved.map((item, idx) => (
+                  <div
+                    className="p-4"
+                    key={idx}
+                    onClick={() => setSideBarOn(!sideBarOn)}
+                  >
+                    <RoomCardReserved
+                      state={item}
+                      item={item}
+                      setState={setRoomInfo}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      setType={setType}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {booked.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Booked Room
+              </h4>
+              <div className="flex flex-wrap">
+                {booked.map((item, idx) => (
+                  <div className="p-4" key={idx}>
+                    <RoomCardBooked
+                      state={item}
+                      item={item}
+                      setState={setRoomInfo}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      setType={setType}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {dirty.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Dirty Room
+              </h4>
+              <div className="flex flex-row flex-wrap">
+                {dirty.map((item, idx) => (
+                  <div className="p-4" key={idx}>
+                    <RoomCardDirty item={item} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
-        <div className="flex flex-wrap">
-          {available.map((item, idx) => (
-            <div className="p-4" key={idx}>
-              <RoomCard
-                item={item}
-                setState={setRoomInfo}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                setType={setType}
-                deleteRoom={deleteRoom}
-              />
-            </div>
-          ))}
-          {reserved.map((item, idx) => (
-            <div
-              className="p-4"
-              key={idx}
-              onClick={() => setSideBarOn(!sideBarOn)}
-            >
-              <RoomCardReserved
-                state={item}
-                item={item}
-                setState={setRoomInfo}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                setType={setType}
-              />
-            </div>
-          ))}
-          {booked.map((item, idx) => (
-            <div className="p-4" key={idx}>
-              <RoomCardBooked
-                state={item}
-                item={item}
-                setState={setRoomInfo}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                setType={setType}
-              />
-            </div>
-          ))}
-        </div>
-        <div className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
-          Dirty Room
-        </div>
-        <div className="flex flex-row flex-wrap">
-          {dirty.map((item, idx) => (
-            <div className="p-4" key={idx}>
-              <RoomCardDirty item={item} />
-            </div>
-          ))}
-        </div>
-      </div>
+      )}
       {isOpen ? (
         <ModalView
           rerender={rerender}
@@ -106,8 +142,8 @@ export const RoomCard = ({
   setType,
   deleteRoom,
 }) => {
-  const { sideBarOn, setSideBarOn } = useContext(NavContext); 
-  
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   return (
     <div className="relative">
       <div className="dropdown dropdown-left absolute right-3 top-1">

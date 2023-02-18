@@ -8,6 +8,7 @@ import DatePicker from "./components/Room/components/DatePicker";
 import { deleteDoc, doc } from "firebase/firestore/lite";
 import { db } from "../../config/adminFirebase";
 import toast from "react-hot-toast";
+import { setDate } from "date-fns";
 
 const Room = () => {
   const [rerender, setRerender] = useState(false);
@@ -16,6 +17,7 @@ const Room = () => {
   const [reserved, setReserved] = useState([]);
   const [dirty, setDirty] = useState([]);
   const [selectDate, setSelectDate] = useState(new Date().getTime());
+  
   const [loading, setLoading] = useState(false);
 
   const getAllData = async () => {
@@ -33,7 +35,7 @@ const Room = () => {
     //   const time = new Date(sec);
     //   console.log(time);
     // });
-    console.log(new Date(selectDate));
+    console.log(new Date(selectDate).toLocaleDateString());
     // setBooked(arr.arr3);
     // setReserved(arr.arr2);
     // setDirty(arr.arr4);

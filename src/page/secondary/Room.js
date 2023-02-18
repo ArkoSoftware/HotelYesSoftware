@@ -37,8 +37,11 @@ const Room = () => {
         new Date(parseInt(data.time.seconds * 1000))
           .toUTCString()
           .slice(0, 16) === new Date(selectDate).toUTCString().slice(0, 16)
-    );
-    
+    ); 
+
+    // today.toLocaleDateString()
+
+    // console.log(new Date(selectDate).toUTCString().slice(0, 16))
 
     setTodayAvailable(searchedDate);
   };

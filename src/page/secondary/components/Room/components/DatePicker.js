@@ -12,9 +12,10 @@ const DatePicker = ({ label, setValue, value }) => {
   }
   let footer = <p>Please pick a day.</p>;
 
-  const changed = (e) => {
+  const changed = (e) => { 
     setSelected(e);
     setValue(new Date(e).getTime());
+    console.log(e.getTime());
   };
 
   return (

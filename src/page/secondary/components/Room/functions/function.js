@@ -36,6 +36,7 @@ export const getRoomList = async function () {
       }
     }
   });
+
   await get(child(realRef, `liveDirty/`)).then(async (snapshot) => {
     if (snapshot.exists()) {
       const keys = Object.keys(snapshot.val());
@@ -74,6 +75,9 @@ export const getRoomList = async function () {
     const data = docs.data();
     arr.push({ ...data, id: docs.id });
   });
+
+  
+  
 
   return { arr, arr3, arr2, arr4 };
 };

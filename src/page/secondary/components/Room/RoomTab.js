@@ -21,7 +21,6 @@ export const RoomTab = ({
     setIsOpen(!isOpen);
     setSideBarOn(!sideBarOn);
   };
- 
 
   return (
     <div className=" flex flex-col">
@@ -107,7 +106,8 @@ export const RoomCard = ({
   setType,
   deleteRoom,
 }) => {
-  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext); 
+  
   return (
     <div className="relative">
       <div className="dropdown dropdown-left absolute right-3 top-1">
@@ -121,7 +121,10 @@ export const RoomCard = ({
           tabIndex={0}
           className="dropdown-content menu bg-base-100 p-2 shadow rounded-box w-20 mr-4"
         >
-          <button onClick={()=> deleteRoom(item.id)} className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center">
+          <button
+            onClick={() => deleteRoom(item.id)}
+            className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center"
+          >
             Delete
           </button>
         </div>
@@ -208,7 +211,7 @@ export const RoomCardReserved = ({
 
       <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
         <div className="mr-2 ">Price:</div>
-        <div className="">Rs.{item.roomRate}</div>
+        <div className="">Rs.{item.roomOriginalPrice}</div>
       </div>
     </button>
   );

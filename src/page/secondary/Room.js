@@ -24,9 +24,7 @@ const Room = () => {
     setBooked(arr.arr3);
     setReserved(arr.arr2);
     setDirty(arr.arr4);
-  };
-  // console.log(selectDate);
-  // console.log(available);
+  }; 
 
   const getSearchedData = async () => {
     // setAvailable([...available.filter(data => new Date(data.time.seconds) === new Date(selectDate))]);

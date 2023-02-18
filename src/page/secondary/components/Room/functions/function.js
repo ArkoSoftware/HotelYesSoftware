@@ -76,15 +76,14 @@ export const getRoomList = async function () {
     arr.push({ ...data, id: docs.id });
   });
 
-  
-  
-
   return { arr, arr3, arr2, arr4 };
 };
 
 export const addData = async function (form) {
-  const ref1 = ref(database, "liveReserve/reserve" + form.roomNumber);
-  await set(ref1, form);
+  // const ref1 = ref(database, "liveReserve/reserve" + form.roomNumber);
+  // await set(ref1, form);
+
+  const docRef = await addDoc(collection(db, "reservedRoom"), form) 
 };
 export const checkIn = async function (form) {
   const location = "liveBooking/checkIn" + form.roomNumber;

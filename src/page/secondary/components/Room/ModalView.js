@@ -410,7 +410,7 @@ const ModalView = ({
 
                   setRerender(!rerender);
                   setIsOpen(!isOpen);
-                  setSideBarOn(!sideBarOn);
+                  setSideBarOn(!isOpen);
                 }}
                 style={{ fontSize: 12 }}
                 className="p-2 text-red-500 rounded-xl w-full mt-8 flex-1 border border-red-500"

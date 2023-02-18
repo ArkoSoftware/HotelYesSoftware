@@ -87,7 +87,11 @@ export const RoomTab = ({
               </h4>
               <div className="flex flex-wrap">
                 {booked.map((item, idx) => (
-                  <div className="p-4" key={idx}>
+                  <div
+                    className="p-4"
+                    key={idx}
+                    onClick={() => setSideBarOn(!sideBarOn)}
+                  >
                     <RoomCardBooked
                       state={item}
                       item={item}

@@ -152,7 +152,7 @@ const ModalView = ({
     } else {
       return true;
     }
-    console.log(
+    /* console.log(
       customerName,
       phoneNumber,
       address,
@@ -164,7 +164,7 @@ const ModalView = ({
       advance,
       roomRateType,
       noOfGuests
-    );
+    ); */
   };
   useEffect(() => {
     changeData();

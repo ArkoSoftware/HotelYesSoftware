@@ -10,6 +10,8 @@ import {
   query,
   where,
   deleteDoc,
+  setDoc,
+  updateDoc,
 } from "firebase/firestore/lite";
 import { set } from "firebase/database";
 import { async } from "@firebase/util";
@@ -119,21 +121,32 @@ export const checkIn = async function (form) {
     await remove(ref1);
   } catch {} */
 
-  // await addDoc(collection(db, "checkInList"), form);
-
-  /* const arr1 = []
+  const arr1 = [];
+  const arr2 = [];
 
   const checkInListDoc = await getDocs(collection(db, "checkInList"));
   checkInListDoc.forEach((doc) => {
-    arr1.push({...doc.data(), id:doc.id})
+    arr1.push({ ...doc.data(), id: doc.id });
   });
-  
-  const selectedRoom = arr1.find(data => data.roomNumber === form.roomNumber) */
-  
-  
+  const checkInRoomData = arr1.find(
+    (data) => data.roomNumber == form.roomNumber
+  );
 
-  // console.log(selectedRoom);
-  // console.log(form.roomNumber.roomNumber)
+  if (checkInRoomData) {
+    const checkInListRef = doc(db, "checkInList", checkInRoomData.id);
+    await updateDoc(checkInListRef, form);
+  } else {
+    await addDoc(collection(db, "checkInList"), form);
+  }
+
+  const reservedRoom = await getDocs(collection(db, "reservedRoom"));
+  reservedRoom.forEach((doc) => {
+    arr2.push({ ...doc.data(), id: doc.id });
+  });
+  const reservedRoomData = arr2.find(
+    (data) => data.roomNumber == form.roomNumber
+  );
+  await deleteDoc(doc(db, "reservedRoom", reservedRoomData.id));
 };
 
 const NavigateFinal = function () {

@@ -81,8 +81,7 @@ export const getRoomList = async function () {
 
 export const addData = async function (form) {
   // const ref1 = ref(database, "liveReserve/reserve" + form.roomNumber);
-  // await set(ref1, form);
-
+  // await set(ref1, form); 
   const docRef = await addDoc(collection(db, "reservedRoom"), form) 
 };
 export const checkIn = async function (form) {

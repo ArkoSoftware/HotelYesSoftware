@@ -120,7 +120,20 @@ export const checkIn = async function (form) {
   } catch {} */
 
   // await addDoc(collection(db, "checkInList"), form);
-  console.log(form.roomNumber)
+
+  /* const arr1 = []
+
+  const checkInListDoc = await getDocs(collection(db, "checkInList"));
+  checkInListDoc.forEach((doc) => {
+    arr1.push({...doc.data(), id:doc.id})
+  });
+  
+  const selectedRoom = arr1.find(data => data.roomNumber === form.roomNumber) */
+  
+  
+
+  // console.log(selectedRoom);
+  // console.log(form.roomNumber.roomNumber)
 };
 
 const NavigateFinal = function () {

@@ -124,7 +124,7 @@ const ModalView = ({
     }
   };
   const validateData = () => {
-    console.log(
+    /* console.log(
       customerName == "" ||
         phoneNumber == "" ||
         address == "" ||
@@ -135,7 +135,7 @@ const ModalView = ({
         roomRate == "" ||
         advance == "" ||
         noOfGuests == ""
-    );
+    ); */
     if (
       customerName == "" ||
       phoneNumber == "" ||

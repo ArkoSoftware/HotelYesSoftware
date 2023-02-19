@@ -1,15 +1,9 @@
 import React, { useContext, useState } from "react";
-import { useEffect } from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
-import { getRoomList } from "./functions/function";
 import ModalView from "./ModalView";
-import {
-  extreSmallFont,
-  largeFont,
-  mediumFont,
-  smallFont,
-} from "../../../../theme";
+import { mediumFont } from "../../../../theme";
 import { NavContext } from "../../../../contexts/NavProvider";
+import Loader from "../../../../components/Loader/Loader";
 export const RoomTab = ({
   available,
   booked,
@@ -17,6 +11,7 @@ export const RoomTab = ({
   dirty,
   rerender,
   setRerender,
+  deleteRoom,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState([]);
@@ -30,62 +25,102 @@ export const RoomTab = ({
 
   return (
     <div className=" flex flex-col">
-      <div className="flex flex-col flex-wrap ">
-        <div className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
-          Available Room
+      {!(
+        available.length ||
+        booked.length ||
+        reserved.length ||
+        dirty.length
+      ) ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col flex-wrap ">
+          {available.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Available Room
+              </h4>
+              <div className="flex flex-wrap">
+                {available.map((item, idx) => (
+                  <div className="p-4" key={idx}>
+                    <RoomCard
+                      item={item}
+                      setState={setRoomInfo}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      setType={setType}
+                      deleteRoom={deleteRoom}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {reserved.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Reserved Room
+              </h4>
+              <div className="flex flex-wrap">
+                {reserved.map((item, idx) => (
+                  <div
+                    className="p-4"
+                    key={idx}
+                    onClick={() => setSideBarOn(!sideBarOn)}
+                  >
+                    <RoomCardReserved
+                      state={item}
+                      item={item}
+                      setState={setRoomInfo}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      setType={setType}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {booked.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Booked Room
+              </h4>
+              <div className="flex flex-wrap">
+                {booked.map((item, idx) => (
+                  <div
+                    className="p-4"
+                    key={idx}
+                    onClick={() => setSideBarOn(!sideBarOn)}
+                  >
+                    <RoomCardBooked
+                      state={item}
+                      item={item}
+                      setState={setRoomInfo}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      setType={setType}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {dirty.length !== 0 && (
+            <>
+              <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
+                Dirty Room
+              </h4>
+              <div className="flex flex-row flex-wrap">
+                {dirty.map((item, idx) => (
+                  <div className="p-4" key={idx}>
+                    <RoomCardDirty item={item} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
-        <div className="flex flex-wrap">
-          {available.map((item, idx) => (
-            <div className="p-4" key={idx}>
-              <RoomCard
-                item={item}
-                setState={setRoomInfo}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                setType={setType}
-              />
-            </div>
-          ))}
-          {reserved.map((item, idx) => (
-            <div
-              className="p-4"
-              key={idx}
-              onClick={() => setSideBarOn(!sideBarOn)}
-            >
-              <RoomCardReserved
-                state={item}
-                item={item}
-                setState={setRoomInfo}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                setType={setType}
-              />
-            </div>
-          ))}
-          {booked.map((item, idx) => (
-            <div className="p-4" key={idx}>
-              <RoomCardBooked
-                state={item}
-                item={item}
-                setState={setRoomInfo}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                setType={setType}
-              />
-            </div>
-          ))}
-        </div>
-        <div className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
-          Dirty Room
-        </div>
-        <div className="flex flex-row flex-wrap">
-          {dirty.map((item, idx) => (
-            <div className="p-4" key={idx}>
-              <RoomCardDirty item={item} />
-            </div>
-          ))}
-        </div>
-      </div>
+      )}
       {isOpen ? (
         <ModalView
           rerender={rerender}
@@ -103,21 +138,35 @@ export const RoomTab = ({
   );
 };
 
-export const RoomCard = ({ item, setState, setIsOpen, isOpen, setType }) => {
+export const RoomCard = ({
+  item,
+  setState,
+  setIsOpen,
+  isOpen,
+  setType,
+  deleteRoom,
+}) => {
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   return (
     <div className="relative">
       <div className="dropdown dropdown-left absolute right-3 top-1">
-        <button tabIndex={0} className="border duration-500 border-transparent hover:border-green-600 hover:bg-green-500 hover:text-white p-1 rounded-full">
+        <button
+          tabIndex={0}
+          className="border duration-500 border-transparent hover:border-green-600 hover:bg-green-500 hover:text-white p-1 rounded-full"
+        >
           <IoEllipsisVertical size={10} />
         </button>
         <div
           tabIndex={0}
           className="dropdown-content menu bg-base-100 p-2 shadow rounded-box w-20 mr-4"
         >
-            <button className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center">
-              Delete
-            </button>
+          <button
+            onClick={() => deleteRoom(item.id)}
+            className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center"
+          >
+            Delete
+          </button>
         </div>
       </div>
       <button
@@ -202,7 +251,7 @@ export const RoomCardReserved = ({
 
       <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
         <div className="mr-2 ">Price:</div>
-        <div className="">Rs.{item.roomRate}</div>
+        <div className="">Rs.{item.roomOriginalPrice}</div>
       </div>
     </button>
   );

@@ -10,6 +10,9 @@ import { auth } from "../../../../config/adminFirebase";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import ErrorMessage from "../../../ErrorMessage";
+import { useContext } from "react";
+import { NavContext } from "../../../../contexts/NavProvider";
+
 const RoomSmallTab = ({ state }) => {
   return (
     <div className="border border-gray-500 w-44 h-44 rounded-2xl flex flex-col p-4 mx-auto">
@@ -67,6 +70,9 @@ const ModalView = ({
   const [roomRateType, setRoomRateType] = useState("EP");
   const [noOfGuests, setNoOfGuests] = useState("");
   const [showError, setShowError] = useState("");
+
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   const emptyField = () => {
     setCustomerName("");
     setPhoneNumber("");
@@ -118,7 +124,7 @@ const ModalView = ({
     }
   };
   const validateData = () => {
-    console.log(
+    /* console.log(
       customerName == "" ||
         phoneNumber == "" ||
         address == "" ||
@@ -129,7 +135,7 @@ const ModalView = ({
         roomRate == "" ||
         advance == "" ||
         noOfGuests == ""
-    );
+    ); */
     if (
       customerName == "" ||
       phoneNumber == "" ||
@@ -146,7 +152,7 @@ const ModalView = ({
     } else {
       return true;
     }
-    console.log(
+    /* console.log(
       customerName,
       phoneNumber,
       address,
@@ -158,7 +164,7 @@ const ModalView = ({
       advance,
       roomRateType,
       noOfGuests
-    );
+    ); */
   };
   useEffect(() => {
     changeData();
@@ -404,6 +410,7 @@ const ModalView = ({
 
                   setRerender(!rerender);
                   setIsOpen(!isOpen);
+                  setSideBarOn(!!isOpen);
                 }}
                 style={{ fontSize: 12 }}
                 className="p-2 text-red-500 rounded-xl w-full mt-8 flex-1 border border-red-500"
@@ -449,6 +456,7 @@ const ModalView = ({
 
                     setRerender(!rerender);
                     setIsOpen(!isOpen);
+                    setSideBarOn(!sideBarOn);
                   }
                 }}
                 style={{ fontSize: 12 }}

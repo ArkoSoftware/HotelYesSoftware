@@ -15,6 +15,8 @@ const ModalView = ({
   toggleModal,
   setRerender,
   rerender,
+  sideBarOn,
+  setSideBarOn,
 }) => {
   const [showError, setShowError] = useState(false);
   const [roomNumber, setRoomNumber] = React.useState("");
@@ -80,7 +82,8 @@ const ModalView = ({
                   setPrice();
                   setRoomType("");
                   setRerender(!rerender);
-                }
+                  setSideBarOn(!sideBarOn)
+                } 
               }
             }}
             className="bg-green-700 p-3 text-white rounded-xl w-full mt-5"

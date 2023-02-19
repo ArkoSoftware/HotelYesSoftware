@@ -10,3 +10,7 @@ body{
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.rdp-day_selected {
+    background-color: #02b149 !important ;
+}

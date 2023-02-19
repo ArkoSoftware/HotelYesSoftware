@@ -12,6 +12,7 @@ const DailyBook = () => {
   const [expenseTotal, setExpenseTotal] = useState();
   const [incomeTotal, setIncomeTotal] = useState();
   const [previousClosing, setPreviousClosing] = useState();
+
   const getAllData = async () => {
     let today = new Date(date);
     let previousDate = new Date();
@@ -22,6 +23,8 @@ const DailyBook = () => {
     let month = ("0" + parts[0]).slice(-2);
     let day = ("0" + parts[1]).slice(-2);
     let year = parts[2];
+
+    console.log(today.toLocaleDateString());
 
     var predate = `${year}-${month}-${day}`;
     const arr11 = await getAllExpenseData(predate);
@@ -38,16 +41,21 @@ const DailyBook = () => {
     setExpenseData(temp);
     setIncomeData(temp2);
 
+    
     //setIncomeData(incomeData + parseInt(arr12.total) - parseInt(arr11.total));
   };
+
   useEffect(() => {
     getAllData();
   }, []);
+
+  
+
   return (
     <ModalProvider>
-      <div className="p-8 flex flex-col">
-        <div className="text-2xl tracking-tighter font-bold">Daily Book</div>
-        <div className="w-1/3 my-4 flex flex-col space-y-4 ">
+      <div className="p-8">
+        <h2 className="text-2xl tracking-tighter font-bold">Daily Book</h2>
+        <div className="my-4 flex flex-col space-y-4 ">
           <div className="flex flex-1">
             <DatePicker label={"Pick a Date"} value={date} setValue={setDate} />
           </div>
@@ -60,6 +68,7 @@ const DailyBook = () => {
             </button>
           </div>
         </div>
+        
         <div className="flex">
           <div className="flex flex-col flex-1">
             <div className="p-3 bg-gray-400 text-center text-sm">Income</div>

@@ -103,14 +103,24 @@ export const getRoomList = async function () {
     const data = docs.data();
     arr.push({ ...data, id: docs.id });
   });
-
   return { arr, arr3, arr2, arr4 };
 };
 
 export const addData = async function (form) {
-  // const ref1 = ref(database, "liveReserve/reserve" + form.roomNumber);
-  // await set(ref1, form);
-  const docRef = await addDoc(collection(db, "reservedRoom"), form);
+  /* const ref1 = ref(database, "liveReserve/reserve" + form.roomNumber);
+  await set(ref1, form); */
+
+  // const docRef = await addDoc(collection(db, "reservedRoom"), form);
+
+  const arr1 = [];
+  const roomListDoc = await getDocs(collection(db, "roomList"));
+  roomListDoc.forEach((doc) => arr1.push({ ...doc.data(), id: doc.id }));
+  const selectedRoom = arr1.find((data) => data.roomNumber == form.roomNumber);
+  // console.log(form?.checkInDate, form?.checkOutDate);
+  console.log(selectedRoom);
+  // console.log(selectedRoom.id, selectedRoom?.date) // date: {checkInDate: , checkOutDate: }
+  const roomListRef = doc(db, "roomList", selectedRoom.id);
+  await updateDoc(roomListRef, {date: [...selectedRoom]});
 };
 export const checkIn = async function (form) {
   /* const location = "liveBooking/checkIn" + form.roomNumber;

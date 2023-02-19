@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   query,
   where,
+  deleteDoc,
 } from "firebase/firestore/lite";
 import { set } from "firebase/database";
 import { async } from "@firebase/util";
@@ -22,7 +23,8 @@ export const getRoomList = async function () {
   const arr = [];
   const arr4 = [];
   const filterRoom = [];
-  await get(child(realRef, `liveReserve/`)).then(async (snapshot) => {
+
+  /* await get(child(realRef, `liveReserve/`)).then(async (snapshot) => {
     if (snapshot.exists()) {
       const keys = Object.keys(snapshot.val());
       const iterator = keys.values();
@@ -35,9 +37,17 @@ export const getRoomList = async function () {
         });
       }
     }
+  }); */
+
+  const reservedRoomDoc = await getDocs(collection(db, "reservedRoom"));
+  reservedRoomDoc.forEach((doc) => {
+    arr2.push({ ...doc.data(), id: doc.id });
+    filterRoom.push(doc?.data()?.roomNumber);
   });
 
-  await get(child(realRef, `liveDirty/`)).then(async (snapshot) => {
+  // await deleteDoc(doc(db, "dirtyRooms", "bH6OVLcPZtRbf9rKSJCX"));
+
+  /* await get(child(realRef, `liveDirty/`)).then(async (snapshot) => {
     if (snapshot.exists()) {
       const keys = Object.keys(snapshot.val());
       const iterator = keys.values();
@@ -50,8 +60,16 @@ export const getRoomList = async function () {
         });
       }
     }
+  }); */
+
+  const dirtyRoomsDoc = await getDocs(collection(db, "dirtyRooms"));
+  dirtyRoomsDoc.forEach((doc) => {
+    arr4.push({ ...doc.data(), id: doc.id });
+    console.log(doc.data().roomNumber);
+    // filterRoom.push(doc?.data()?.roomNumber);
   });
-  await get(child(realRef, `liveBooking/`)).then(async (snapshot) => {
+
+  /* await get(child(realRef, `liveBooking/`)).then(async (snapshot) => {
     if (snapshot.exists()) {
       const keys = Object.keys(snapshot.val());
       const iterator = keys.values();
@@ -64,10 +82,18 @@ export const getRoomList = async function () {
         });
       }
     }
+  }); */
+
+  const bookingRoomsDoc = await getDocs(collection(db, "bookingRooms"));
+  bookingRoomsDoc.forEach((doc) => {
+    arr3.push({ ...doc.data(), id: doc.id });
+    // filterRoom.push(doc?.data()?.roomNumber);
   });
+
   if (filterRoom.length == 0) {
     filterRoom.push("");
   }
+
   const doc1 = collection(db, "roomList");
   const q = query(doc1, where("roomNumber", "not-in", filterRoom));
   const snap = await getDocs(q);
@@ -81,17 +107,20 @@ export const getRoomList = async function () {
 
 export const addData = async function (form) {
   // const ref1 = ref(database, "liveReserve/reserve" + form.roomNumber);
-  // await set(ref1, form); 
-  const docRef = await addDoc(collection(db, "reservedRoom"), form) 
+  // await set(ref1, form);
+  const docRef = await addDoc(collection(db, "reservedRoom"), form);
 };
 export const checkIn = async function (form) {
-  const location = "liveBooking/checkIn" + form.roomNumber;
+  /* const location = "liveBooking/checkIn" + form.roomNumber;
   const ref1 = ref(database, location);
   await set(ref1, form);
   try {
     const ref1 = ref(database, "liveReserve/reserve" + form.roomNumber);
     await remove(ref1);
-  } catch {}
+  } catch {} */
+
+  // await addDoc(collection(db, "checkInList"), form);
+  console.log(form.roomNumber)
 };
 
 const NavigateFinal = function () {

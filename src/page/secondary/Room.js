@@ -24,26 +24,33 @@ const Room = () => {
   const getAllData = async () => {
     const arr = await getRoomList(selectDate);
     setAvailable(arr.arr);
-    setTodayAvailable(arr.arr)
+    setTodayAvailable(arr.arr);
     setBooked(arr.arr3);
     setReserved(arr.arr2);
     setDirty(arr.arr4);
   };
 
   const getSearchedData = async () => {
-    
-    const searchedDate = available.filter(
-      (data) =>
-        new Date(parseInt(data.time.seconds * 1000))
-          .toUTCString()
-          .slice(0, 16) === new Date(selectDate).toUTCString().slice(0, 16)
-    ); 
+    // const searchedDate = available.filter((data) => data.date);
+
+    let searchedDate = [];
+    available.forEach((data) => {
+      data.date.forEach((date) => {
+        if (date.checkInDate < selectDate && date.checkOutDate > selectDate) {
+          searchedDate.push(data);
+        }
+      });
+    });
+
+    console.log(searchedDate);
+
+    setTodayAvailable(searchedDate);
 
     // today.toLocaleDateString()
 
     // console.log(new Date(selectDate).toUTCString().slice(0, 16))
 
-    setTodayAvailable(searchedDate);
+    // setTodayAvailable(searchedDate);
   };
 
   const deleteRoom = async (id) => {

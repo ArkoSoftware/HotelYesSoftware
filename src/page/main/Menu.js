@@ -81,24 +81,24 @@ const Menu = () => {
           >
             Manage Menu
           </div>
-          <div className="flex items-center justify-between mt-10">
-            <div>
+          <div className="block md:flex items-center justify-between mt-10">
+            <div className="flex justify-between mb-5 md:m-0 lg:block">
               <button
                 onClick={toggleModal3}
-                className="rounded border bg-green-600 text-white text-sm py-1 px-8 mx-4"
+                className="rounded border bg-green-600 text-white text-sm py-1 px-8 m-0 md:mx-4"
                 style={{ fontSize: extreSmallFont }}
               >
                 New Entry
               </button>
               <button
                 onClick={toggleModal2}
-                className="rounded border duration-500 border-green-600 hover:bg-green-600 text-green-600 hover:text-white text-sm py-1 px-8 mx-4"
+                className="rounded border duration-500 border-green-600 hover:bg-green-600 text-green-600 hover:text-white text-sm py-1 px-8 m-0 md:mx-4"
                 style={{ fontSize: extreSmallFont }}
               >
                 New Category
               </button>
             </div>
-            <form onSubmit={searchHandler} className="mr-5 flex">
+            <form onSubmit={searchHandler} className="m-0 md:mr-5 flex">
               <input
                 type="text"
                 placeholder="Search here"

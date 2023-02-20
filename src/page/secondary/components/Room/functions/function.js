@@ -89,7 +89,7 @@ export const getRoomList = async function () {
   const bookingRoomsDoc = await getDocs(collection(db, "bookingRooms"));
   bookingRoomsDoc.forEach((doc) => {
     arr3.push({ ...doc.data(), id: doc.id });
-    // filterRoom.push(doc?.data()?.roomNumber);
+    // filterRoom.push(doc?.data()?.roomNumber) ;
   });
 
   if (filterRoom.length == 0) {

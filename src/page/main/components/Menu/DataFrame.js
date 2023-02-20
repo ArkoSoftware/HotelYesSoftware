@@ -7,9 +7,12 @@ import { db } from "../../../../config/adminFirebase";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import EditMenuModal from "./EditMenuModal";
 
 const DataFrame = ({ data, title, rerender, setRerender }) => {
-  const [onEditBtn, setOnEditBtn] = useState(true);
+  const [tableData, setTableData] = useState({});
+  const [modalIsOn, setModalIsOn] = useState(true);
+ 
 
   const deleteMenuHandler = async (id) => {
     const confirmed = window.confirm("Are you want to delete?");
@@ -25,7 +28,9 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
     }
   };
 
-  const editMenuHandler = (id) => {};
+  const editMenuHandler = (data) => {
+    setTableData(data); 
+  };
 
   return (
     <div className="w-full border border-gray-300 flex flex-col">
@@ -76,12 +81,16 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
           </div>
 
           <div className="border border-gray-100 py-3 px-6 flex gap-4">
-            <button
-              onClick={() => editMenuHandler(t.id)}
-              className="duration-500 text-green-600 bg-white hover:bg-green-600 border border-green-600 hover:text-white py-2 px-2 rounded"
+            <label
+              onClick={() => {
+                editMenuHandler(t);
+                setModalIsOn(!modalIsOn);
+              }}
+              htmlFor="editMenuModal"
+              className="duration-500 text-green-600 bg-white hover:bg-green-600 border border-green-600 hover:text-white py-2 px-2 rounded cursor-pointer"
             >
               <FaEdit />
-            </button>
+            </label>
             <button
               onClick={() => deleteMenuHandler(t.id)}
               className="duration-500 text-red-600 bg-white hover:bg-red-600 border border-red-600 hover:text-white py-2 px-2 rounded"
@@ -91,6 +100,15 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
           </div>
         </div>
       ))}
+      {modalIsOn && (
+        <EditMenuModal
+          tableData={tableData}
+          modalIsOn={modalIsOn}
+          setModalIsOn={setModalIsOn}
+          setRerender={setRerender}
+          rerender={rerender}
+        />
+      )}
     </div>
   );
 };

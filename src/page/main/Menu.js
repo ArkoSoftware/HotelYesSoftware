@@ -20,7 +20,7 @@ let data = [
   { productId: 10249, productName: "TOMSP", quantity: 23 },
   { productId: 10250, productName: "HANAR", quantity: 23 },
 ];
-let title = ["Food Name", "Category", "Recipe", "Price"];
+let title = ["Food Name", "Category", "Recipe", "Price", "Action"];
 const Menu = () => {
   const [rerender, setRerender] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

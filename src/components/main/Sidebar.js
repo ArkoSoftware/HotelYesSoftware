@@ -3,7 +3,7 @@ import sidebar from "../../data/sidebar.json";
 import { Link } from "react-router-dom";
 import { signOutFromAccount } from "../Authentication/functions/function";
 import { UserContext } from "../../contexts/context";
-import { extreSmallFont, largeFont, mediumFont, smallFont } from "../../theme";
+import { extreSmallFont } from "../../theme";
 import { useContext } from "react";
 import { NavContext } from "../../contexts/NavProvider";
 
@@ -55,7 +55,10 @@ const Sidebar = () => {
         {value ? (
           <>
             {sidebar.tab.map((val, idx) => (
-              <Link to={val[1]} key={idx}>
+              <Link
+                to={val[1]} 
+                key={idx}
+              >
                 <div
                   className={` mx-4 rounded px-3 py-3  tracking-tighter ${
                     isDark

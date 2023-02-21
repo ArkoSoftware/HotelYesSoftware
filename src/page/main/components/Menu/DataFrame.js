@@ -100,6 +100,7 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
           </div>
         </div>
       ))}
+      {/* Edit modal for update data */}
       {modalIsOn && (
         <EditMenuModal
           tableData={tableData}

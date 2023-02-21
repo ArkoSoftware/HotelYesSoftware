@@ -50,10 +50,11 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
         style={{ width: "90%", height: "90%" }}
       >
         <div className="flex">
-          <span className="text-xl tracking-tighter">Purchase Bill</span>
+          <span className="text-xl tracking-tighter  ">Purchase Bill</span>
           <div className="ml-auto flex space-x-3">
             <button
-              className="bg-green-700 text-white rounded p-2 px-5"
+              className="bg-green-700 disabled:bg-green-300 text-white rounded p-2 px-5"
+              disabled={!(billNumber && vendorName && invoiceNumber) && true}
               onClick={async () => {
                 const res = await addPurchaseBill(
                   billNumber,
@@ -82,7 +83,11 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
         </div>
         <div className="mt-5 flex space-x-2 flex-wrap">
           <div className="flex-1">
-            <InputView setValue={setBillNumber} label={"Bill Number"} />
+            <InputView
+              setValue={setBillNumber}
+              label={"Bill Number"}
+              value={billNumber}
+            />
           </div>
           <div className="flex-1">
             <DatePicker
@@ -115,6 +120,11 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
               style={{ fontSize: 12 }}
             >
               Vendor Name
+              {!vendorName && (
+                <span className="text-[10px] ml-2 text-red-500">
+                  * Field is empty.
+                </span>
+              )}
             </label>
             <select
               onChange={(e) => {
@@ -135,6 +145,7 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
               <InputView
                 setValue={setInvoiceNumber}
                 label={"Supplier Invoice Number"}
+                value={invoiceNumber}
               />
             </div>
           </div>

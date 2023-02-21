@@ -9,7 +9,12 @@ const InputView = ({ label, setValue, value }) => {
         className="text-gray-600"
         style={{ fontSize: extreSmallFont }}
       >
-        {label}
+        {label}{" "}
+        {!value && (
+          <span className="text-[10px] ml-2 text-red-500">
+            * Field is empty.
+          </span>
+        )}
       </label>
       <input
         onChange={(e) => setValue(e.target.value)}

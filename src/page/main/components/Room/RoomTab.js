@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { IoEllipsisVertical } from "react-icons/io5";
-import { getRoomList } from "./functions/function";
+import React from "react"; 
+import { IoEllipsisVertical } from "react-icons/io5"; 
 import { extreSmallFont, largeFont } from "../../../../theme";
+import Loader from "../../../../components/Loader/Loader";
 
 export const RoomTab = ({ rerender, roomdata }) => {
   return (
-    <div className="flex flex-row flex-wrap ">
-      {roomdata.map((item) => (
-        <div className="p-4">
-          <RoomCard item={item} />
-        </div>
-      ))}
-    </div>
+    <>
+      {!roomdata.length && <Loader />}
+      <div className="flex flex-row flex-wrap ">
+        {roomdata.map((item) => (
+          <div className="p-4">
+            <RoomCard item={item} />
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

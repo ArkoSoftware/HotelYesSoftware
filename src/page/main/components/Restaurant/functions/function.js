@@ -20,7 +20,7 @@ export const getTableList = async function () {
   });
   return arr;
 };
-export const addTable = async function (tableNumber) {
+export const addTable = async function (tableNumber) { 
   const doc1 = collection(db, "tableList");
   const snap = await addDoc(doc1, {
     tableNumber: parseInt(tableNumber),

@@ -24,7 +24,7 @@ export const RestaurantTab = ({ rerender }) => {
   );
 };
 
-export const RestaurantCard = ({ item }) => {
+export const RestaurantCard = ({ item }) => { 
   return (
     <div className="bg-gray-200 w-24 h-24 rounded-2xl flex flex-col p-4">
       <div className="ml-auto">

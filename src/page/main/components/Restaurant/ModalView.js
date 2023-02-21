@@ -49,13 +49,14 @@ const ModalView = ({
           />
           <button
             onClick={() => {
-              if (tableNumber == "") {
+              if (!/^-?\d+\.?\d*$/.test(tableNumber)) {
                 setShowError(true);
               } else {
                 if (addTable(tableNumber)) {
                   setIsOpen(false);
                   setTableNumber();
                   setRerender(!rerender);
+                  setShowError(false);
                 }
               }
             }}

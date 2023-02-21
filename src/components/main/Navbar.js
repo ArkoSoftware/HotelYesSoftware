@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { signOutFromAccount } from "../Authentication/functions/function";
 
 const Navbar = () => {
-  const { sideBarOn, setSideBarOn, user, isDark } = useContext(NavContext); 
+  const { sideBarOn, setSideBarOn, user, isDark } = useContext(NavContext);
 
   return (
     <section
@@ -43,12 +43,7 @@ const Navbar = () => {
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >
-              {" "}
-              {user?.photoURL ? 
-              <img src={user.photoURL} alt="" />
-              :
               <FaUserCircle className="text-lg" />
-              }
               <p className="text-sm">{user?.email.split("@")[0]}</p>
             </label>
             <div

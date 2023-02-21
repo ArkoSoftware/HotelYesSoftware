@@ -1,18 +1,16 @@
-import React from "react"; 
+import React from "react";
 import { useContext } from "react";
 import { NavContext } from "../../contexts/NavProvider";
 import { toast } from "react-hot-toast";
 
 const Setting = () => {
   const { user, updateUserProfile } = useContext(NavContext);
-  
 
   const updateUserHandler = (event) => {
     event.preventDefault();
     const form = event.target;
-    const name = form.name.value;
-    const image = form.image.value;
-    const profile = { displayName: name, photoURL: image };
+    const name = form.name.value; 
+    const profile = { displayName: name };
     updateUserProfile(profile)
       .then(() => {
         toast.success("Update user account");

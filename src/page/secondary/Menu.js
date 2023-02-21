@@ -81,7 +81,7 @@ const Menu = () => {
             />
           </div>
         ) : (
-          <div className="px-12 pb-8">
+          <div className="pl-1 md:px-12 md:pb-8">
             <DataFrame
               data={dataList}
               setRerender={setRerender}

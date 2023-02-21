@@ -12,7 +12,6 @@ import EditMenuModal from "./EditMenuModal";
 const DataFrame = ({ data, title, rerender, setRerender }) => {
   const [tableData, setTableData] = useState({});
   const [modalIsOn, setModalIsOn] = useState(true);
- 
 
   const deleteMenuHandler = async (id) => {
     const confirmed = window.confirm("Are you want to delete?");
@@ -29,13 +28,13 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
   };
 
   const editMenuHandler = (data) => {
-    setTableData(data); 
+    setTableData(data);
   };
 
   return (
     <div className="w-full border border-gray-300 flex flex-col">
       <div className="w-full bg-gray-300 p-2" style={{ display: "flex" }}>
-        <div className="w-24" style={{ fontSize: extreSmallFont }}>
+        <div className="md:w-24" style={{ fontSize: extreSmallFont }}>
           S.N.
         </div>
         {title.map((t) => (
@@ -50,7 +49,7 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
       {data.map((t, index) => (
         <div className="w-full" style={{ display: "flex", fontSize: 12 }}>
           <div
-            className="w-24 border border-gray-100 p-3"
+            className="md:w-24 border border-gray-100 p-3"
             style={{ fontSize: extreSmallFont }}
           >
             {index + 1}
@@ -80,7 +79,7 @@ const DataFrame = ({ data, title, rerender, setRerender }) => {
             {t.price}
           </div>
 
-          <div className="border border-gray-100 py-3 px-6 flex gap-4">
+          <div className="border border-gray-100 px-4 pt-1 md:py-3 md:px-6 flex flex-col md:flex-row gap-1 md:gap-4">
             <label
               onClick={() => {
                 editMenuHandler(t);

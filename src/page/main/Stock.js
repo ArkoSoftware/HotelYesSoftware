@@ -52,28 +52,28 @@ const Stock = () => {
       <div className="w-full h-full">
         <div className="p-8">
           <div className="text-2xl tracking-tighter">Manage Stock</div>
-          <div className="flex flex-row">
+          <div className="flex flex-col md:flex-row">
             <button
               onClick={toggleModal}
-              className="rounded-xl bg-blue-800 text-white text-sm py-2 px-8 mt-10 mx-4"
+              className="rounded-xl bg-blue-800 text-white text-sm py-2 px-8 mt-5 md:mt-10 mx-4"
             >
               Add To Stock
             </button>
             <button
               onClick={toggleModal2}
-              className="rounded-xl border border-gray-300 text-black text-sm py-2 px-8 mt-10 mx-4"
+              className="rounded-xl border border-gray-300 text-black text-sm mt-5 py-2 px-8 md:mt-10 mx-4"
             >
               Add New Entry
             </button>
             <button
               onClick={toggleModal3}
-              className="rounded-xl border bg-green-700 text-white text-sm py-2 px-8 mt-10 mx-4"
+              className="rounded-xl border bg-green-700 text-white text-sm mt-5 py-2 px-8 md:mt-10 mx-4"
             >
               New Purchase Bill
             </button>
           </div>
         </div>
-        <div className="px-12 pb-8">
+        <div className="p-0 md:px-12 md:pb-8">
           <DataFrame data={stockData} title={title} />
         </div>
         <ModalView isOpen={isOpen} toggleModal={toggleModal} />

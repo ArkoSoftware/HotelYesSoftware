@@ -2,11 +2,12 @@ import React from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { getTableList } from "./functions/function";
 import { extreSmallFont, mediumFont } from "../../../../theme";
+import Loader from "../../../../components/Loader/Loader";
 
 export const RestaurantTab = ({ rerender }) => {
   const [tableData, setTableData] = React.useState([]);
   const getAllData = async () => {
-    const arr = await getTableList(); 
+    const arr = await getTableList();
     setTableData(arr);
   };
 
@@ -14,13 +15,16 @@ export const RestaurantTab = ({ rerender }) => {
     getAllData();
   }, [rerender]);
   return (
-    <div className="flex flex-row flex-wrap ">
-      {tableData.map((item) => (
-        <div className="p-4">
-          <RestaurantCard item={item} />
-        </div>
-      ))}
-    </div>
+    <>
+      {!tableData.length && <Loader />}
+      <div className="flex flex-row flex-wrap ">
+        {tableData.map((item) => (
+          <div className="p-4">
+            <RestaurantCard item={item} />
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

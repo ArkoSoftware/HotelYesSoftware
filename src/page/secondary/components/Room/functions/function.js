@@ -89,7 +89,7 @@ export const getRoomList = async function () {
   const bookingRoomsDoc = await getDocs(collection(db, "bookingRooms"));
   bookingRoomsDoc.forEach((doc) => {
     arr3.push({ ...doc.data(), id: doc.id });
-    // filterRoom.push(doc?.data()?.roomNumber);
+    // filterRoom.push(doc?.data()?.roomNumber) ;
   });
 
   if (filterRoom.length == 0) {
@@ -102,7 +102,7 @@ export const getRoomList = async function () {
   snap.forEach((docs) => {
     const data = docs.data();
     arr.push({ ...data, id: docs.id });
-  });
+  }); 
   return { arr, arr3, arr2, arr4 };
 };
 

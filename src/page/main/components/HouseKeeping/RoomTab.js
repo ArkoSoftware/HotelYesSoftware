@@ -5,7 +5,7 @@ export const RoomTab = ({ data }) => {
   return (
     <div className="flex flex-row flex-wrap ">
       {data.map((item) => (
-        <div className="p-4">
+        <div className="p-2 md:p-4">
           <RoomCard item={item} />
         </div>
       ))}
@@ -15,7 +15,7 @@ export const RoomTab = ({ data }) => {
 
 export const RoomCard = ({ item }) => {
   return (
-    <div className="bg-gray-200 w-44 h-44 rounded-2xl flex flex-col p-4">
+    <div className="bg-gray-200 md:w-44 md:h-44 rounded-2xl flex flex-col p-4">
       <div className="ml-auto">
         <IoEllipsisVertical />
       </div>

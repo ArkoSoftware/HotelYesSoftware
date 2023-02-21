@@ -69,9 +69,9 @@ const HouseKeeping = () => {
   return (
     <ModalProvider>
       <div className="w-full h-full">
-        <div className="p-8">
+        <div className="p-1 md:p-8">
           <div className="text-2xl tracking-tighter">HouseKeeping</div>
-          <div className="pt-10 px-4 pb-8">
+          <div className="pt-10 md:px-4 pb-8">
             <DataFrame data={data} title={title} />
           </div>
           <button

@@ -53,7 +53,7 @@ const Vendor = (props) => {
             </button>
           </div>
         </div>
-        <div className="px-12 pb-8">
+        <div className="md:px-12 md:pb-8">
           <DataFrame data={data} title={title} />
         </div>
         <ModalView isOpen={isOpen} toggleModal={toggleModal} />

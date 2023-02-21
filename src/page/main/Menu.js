@@ -11,20 +11,10 @@ import { NavContext } from "../../contexts/NavProvider";
 import { CiSearch } from "react-icons/ci";
 import { RotatingLines } from "react-loader-spinner";
 
-let data = [
-  { productId: 10248, productName: "VINET", quantity: 190 },
-  { productId: 10249, productName: "TOMSP", quantity: 23 },
-  { productId: 10250, productName: "HANAR", quantity: 23 },
-  { productId: 10251, productName: "VICTE", quantity: 20 },
-  { productId: 10248, productName: "VINET", quantity: 190 },
-  { productId: 10249, productName: "TOMSP", quantity: 23 },
-  { productId: 10250, productName: "HANAR", quantity: 23 },
-];
-let title = ["Food Name", "Category", "Recipe", "Price"];
+ 
+let title = ["Food Name", "Category", "Recipe", "Price", "Action"];
 const Menu = () => {
-  const [rerender, setRerender] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpenNew, setIsOpenNew] = useState(false);
+  const [rerender, setRerender] = useState(false); 
   const [dataList, setDataList] = useState([]);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [openAddCategory, setAddCategory] = useState(false);
@@ -81,24 +71,24 @@ const Menu = () => {
           >
             Manage Menu
           </div>
-          <div className="flex items-center justify-between mt-10">
-            <div>
+          <div className="block md:flex items-center justify-between mt-10">
+            <div className="flex justify-between mb-5 md:m-0 lg:block">
               <button
                 onClick={toggleModal3}
-                className="rounded border bg-green-600 text-white text-sm py-1 px-8 mx-4"
+                className="rounded border bg-green-600 text-white text-sm py-1 px-8 m-0 md:mx-4"
                 style={{ fontSize: extreSmallFont }}
               >
                 New Entry
               </button>
               <button
                 onClick={toggleModal2}
-                className="rounded border duration-500 border-green-600 hover:bg-green-600 text-green-600 hover:text-white text-sm py-1 px-8 mx-4"
+                className="rounded border duration-500 border-green-600 hover:bg-green-600 text-green-600 hover:text-white text-sm py-1 px-8 m-0 md:mx-4"
                 style={{ fontSize: extreSmallFont }}
               >
                 New Category
               </button>
             </div>
-            <form onSubmit={searchHandler} className="mr-5 flex">
+            <form onSubmit={searchHandler} className="m-0 md:mr-5 flex">
               <input
                 type="text"
                 placeholder="Search here"
@@ -122,7 +112,7 @@ const Menu = () => {
             />
           </div>
         ) : (
-          <div className="px-12 pb-8">
+          <div className="pl-1 md:px-12 md:pb-8">
             <DataFrame
               data={dataList}
               setRerender={setRerender}

@@ -11,20 +11,10 @@ import { NavContext } from "../../contexts/NavProvider";
 import { CiSearch } from "react-icons/ci";
 import { RotatingLines } from "react-loader-spinner";
 
-let data = [
-  { productId: 10248, productName: "VINET", quantity: 190 },
-  { productId: 10249, productName: "TOMSP", quantity: 23 },
-  { productId: 10250, productName: "HANAR", quantity: 23 },
-  { productId: 10251, productName: "VICTE", quantity: 20 },
-  { productId: 10248, productName: "VINET", quantity: 190 },
-  { productId: 10249, productName: "TOMSP", quantity: 23 },
-  { productId: 10250, productName: "HANAR", quantity: 23 },
-];
+ 
 let title = ["Food Name", "Category", "Recipe", "Price", "Action"];
 const Menu = () => {
-  const [rerender, setRerender] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpenNew, setIsOpenNew] = useState(false);
+  const [rerender, setRerender] = useState(false); 
   const [dataList, setDataList] = useState([]);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [openAddCategory, setAddCategory] = useState(false);

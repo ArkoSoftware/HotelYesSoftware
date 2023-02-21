@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import { auth } from "../config/adminFirebase";
@@ -9,16 +9,20 @@ export const NavContext = createContext();
 const NavProvider = ({ children }) => {
   const [sideBarOn, setSideBarOn] = useState(true);
   const [user, setUser] = useState(null);
-  const [isDark, setIsDark] = useState(false); 
+  const [isDark, setIsDark] = useState(false);
 
-  useEffect(()=>{
-    setIsDark(JSON.parse(localStorage.getItem('colorTheme') || false))
-  },[])
+  useEffect(() => {
+    setIsDark(JSON.parse(localStorage.getItem("colorTheme") || false));
+  }, []);
 
-  const themeToggleHandler = ()=>{
-    setIsDark(!isDark)
-    localStorage.setItem('colorTheme', JSON.stringify(!isDark))
-  }
+  const themeToggleHandler = () => {
+    setIsDark(!isDark);
+    localStorage.setItem("colorTheme", JSON.stringify(!isDark));
+  };
+
+  const updateUserProfile = (profile) => {
+    return updateProfile(auth.currentUser, profile);
+  };
 
   // code for get the logged in user
   useEffect(() => {
@@ -29,7 +33,14 @@ const NavProvider = ({ children }) => {
     return () => unsubscribe();
   }, [user]);
 
-  const navInfo = { sideBarOn, setSideBarOn, user, isDark, themeToggleHandler };
+  const navInfo = {
+    sideBarOn,
+    setSideBarOn,
+    user,
+    isDark,
+    themeToggleHandler,
+    updateUserProfile,
+  };
   return <NavContext.Provider value={navInfo}>{children}</NavContext.Provider>;
 };
 

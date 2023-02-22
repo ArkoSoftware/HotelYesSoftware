@@ -13,14 +13,14 @@ export const getTableList = async function () {
   const arr = [];
   snap.forEach((docs) => {
     const data = docs.data();
-    arr.push(data);
+    arr.push({ ...data, id: docs.id });
   });
   arr.sort(function (a, b) {
     return a.tableNumber - b.tableNumber;
   });
   return arr;
 };
-export const addTable = async function (tableNumber) { 
+export const addTable = async function (tableNumber) {
   const doc1 = collection(db, "tableList");
   const snap = await addDoc(doc1, {
     tableNumber: parseInt(tableNumber),

@@ -1,7 +1,8 @@
-import React from "react"; 
-import { IoEllipsisVertical } from "react-icons/io5"; 
+import React from "react";
+import { IoEllipsisVertical } from "react-icons/io5";
 import { extreSmallFont, largeFont } from "../../../../theme";
 import Loader from "../../../../components/Loader/Loader";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 export const RoomTab = ({ rerender, roomdata }) => {
   return (
@@ -21,8 +22,27 @@ export const RoomTab = ({ rerender, roomdata }) => {
 export const RoomCard = ({ item }) => {
   return (
     <div className="bg-gray-200 w-44 h-44 rounded-2xl flex flex-col p-4">
-      <div className="ml-auto">
-        <IoEllipsisVertical size={12} />
+      <div className="dropdown dropdown-end">
+        <label tabIndex={0} className="absolute right-0">
+          <IoEllipsisVertical size={12} />
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box mr-3"
+        >
+          <li>
+            <button className="text-sm px-2 py-1 text-green-600 hover:bg-green-600 hover:text-white">
+              <FaEdit />
+              Edit
+            </button>
+          </li>
+          <li>
+            <button className="text-sm px-2 py-1 text-red-600 hover:bg-red-600 hover:text-white">
+              <FaTrashAlt />
+              Delete
+            </button>
+          </li>
+        </ul>
       </div>
       <div
         className="text-2xl text-center my-4"

@@ -39,7 +39,7 @@ const Sidebar = () => {
         <div className="flex gap-2 px-4">
           <button
             className="p-3 bg-green-600 text-white mx-auto rounded my-2 w-[50%]"
-            onClick={() => setValue(true)}
+            onClick={() => setValue(true)} 
             style={{ fontSize: 8 }}
           >
             Admin Access

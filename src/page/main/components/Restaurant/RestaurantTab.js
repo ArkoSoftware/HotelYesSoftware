@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { getTableList } from "./functions/function";
 import { mediumFont } from "../../../../theme";
@@ -6,21 +6,24 @@ import Loader from "../../../../components/Loader/Loader";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 export const RestaurantTab = ({ rerender }) => {
-  const [tableData, setTableData] = React.useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [isChange, setIsChange] = useState(true);
+
   const getAllData = async () => {
     const arr = await getTableList();
     setTableData(arr);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getAllData();
   }, [rerender]);
+
   return (
     <>
       {!tableData.length && <Loader />}
       <div className="flex flex-row flex-wrap ">
-        {tableData.map((item) => (
-          <div className="p-4">
+        {tableData.map((item, idx) => (
+          <div className="p-4" key={idx}>
             <RestaurantCard item={item} />
           </div>
         ))}
@@ -43,12 +46,14 @@ export const RestaurantCard = ({ item }) => {
           >
             <li>
               <button className="text-sm px-2 py-1 text-green-600 hover:bg-green-600 hover:text-white">
-                <FaEdit />Edit
+                <FaEdit />
+                Edit
               </button>
             </li>
             <li>
               <button className="text-sm px-2 py-1 text-red-600 hover:bg-red-600 hover:text-white">
-                <FaTrashAlt />Delete
+                <FaTrashAlt />
+                Delete
               </button>
             </li>
           </ul>

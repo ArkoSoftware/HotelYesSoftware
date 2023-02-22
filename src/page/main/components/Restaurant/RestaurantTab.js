@@ -3,7 +3,10 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { getTableList } from "./functions/function";
 import { mediumFont } from "../../../../theme";
 import Loader from "../../../../components/Loader/Loader";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaSave } from "react-icons/fa";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore/lite";
+import { db } from "../../../../config/adminFirebase";
+import toast from "react-hot-toast";
 
 export const RestaurantTab = ({ rerender }) => {
   const [tableData, setTableData] = useState([]);
@@ -16,7 +19,7 @@ export const RestaurantTab = ({ rerender }) => {
 
   useEffect(() => {
     getAllData();
-  }, [rerender]);
+  }, [rerender, isChange]);
 
   return (
     <>
@@ -24,7 +27,11 @@ export const RestaurantTab = ({ rerender }) => {
       <div className="flex flex-row flex-wrap ">
         {tableData.map((item, idx) => (
           <div className="p-4" key={idx}>
-            <RestaurantCard item={item} />
+            <RestaurantCard
+              item={item}
+              isChange={isChange}
+              setIsChange={setIsChange}
+            />
           </div>
         ))}
       </div>
@@ -32,31 +39,102 @@ export const RestaurantTab = ({ rerender }) => {
   );
 };
 
-export const RestaurantCard = ({ item }) => {
+export const RestaurantCard = ({ item, isChange, setIsChange }) => {
+  const [dropdown, setDropDown] = useState(true);
+  const [toggleEditBtn, setToggleEditBtn] = useState(true);
+  const [itemData, setItemData] = useState("");
+
+  const deleteTable = async (id) => {
+    await deleteDoc(doc(db, "tableList", id))
+      .then(() => {
+        setDropDown(!dropdown);
+        toast.success("Table deleted successfully.");
+        setIsChange(!isChange);
+      })
+      .catch((err) => {
+        setDropDown(!dropdown);
+        toast.success("Table deleting failed!");
+      });
+  };
+
+  const editTable = async (id) => {
+    if (/^-?\d+\.?\d*$/.test(itemData)) {
+      const tableRef = doc(db, "tableList", id);
+
+      await updateDoc(tableRef, {
+        tableNumber: itemData,
+      })
+        .then(() => {
+          setDropDown(!dropdown);
+          toast.success("Table updated successfully.");
+          setIsChange(!isChange);
+        })
+        .catch((err) => {
+          setDropDown(!dropdown);
+          toast.error("Table updating failed!");
+        });
+    } else {
+      toast.error("Table updating failed! Please add valid number");
+    }
+  };
+
   return (
     <>
       <div className="bg-gray-200 w-24 h-24 rounded-2xl flex flex-col p-4">
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="absolute right-0">
+          <label
+            tabIndex={0}
+            onClick={() => setDropDown(!dropdown)}
+            className="absolute right-0"
+          >
             <IoEllipsisVertical size={12} />
           </label>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box"
-          >
-            <li>
-              <button className="text-sm px-2 py-1 text-green-600 hover:bg-green-600 hover:text-white">
-                <FaEdit />
-                Edit
-              </button>
-            </li>
-            <li>
-              <button className="text-sm px-2 py-1 text-red-600 hover:bg-red-600 hover:text-white">
-                <FaTrashAlt />
-                Delete
-              </button>
-            </li>
-          </ul>
+          {dropdown && (
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box"
+            >
+              {toggleEditBtn ? (
+                <>
+                  <li>
+                    <input
+                      type="text"
+                      defaultValue={item.tableNumber}
+                      onChange={(e) => setItemData(e.target.value)}
+                      className="input input-xs input-bordered bg-white w-20"
+                    />
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => editTable(item.id)}
+                      className="text-sm px-2 py-1 text-green-600 hover:bg-green-600 hover:text-white"
+                    >
+                      <FaSave />
+                      Save
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <button className="text-sm px-2 py-1 text-green-600 hover:bg-green-600 hover:text-white">
+                      <FaEdit />
+                      Edit
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => deleteTable(item.id)}
+                      className="text-sm px-2 py-1 text-red-600 hover:bg-red-600 hover:text-white"
+                    >
+                      <FaTrashAlt />
+                      Delete
+                    </button>
+                  </li>
+                </>
+              )}
+            </ul>
+          )}
         </div>
         <div
           className="text-2xl text-center my-auto"

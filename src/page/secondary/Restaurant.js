@@ -5,6 +5,7 @@ import { getTableList } from "./components/Restaurant/functions/function";
 import { TabData } from "./components/Restaurant/TabData";
 import { ModalProvider } from "styled-react-modal";
 import { OccupiedTab } from "./components/Restaurant/OccupiedTab";
+import Loader from "../../components/Loader/Loader";
 
 const Restaurant = () => {
   const [tableData, setTableData] = useState([]);
@@ -29,21 +30,29 @@ const Restaurant = () => {
         <div className="text-base font-medium tracking-tighter mb-5">
           Restaurant Order
         </div>
-        <OccupiedTab
-          rerender={rerender}
-          setRerender={setRerender}
-          setSelectedTable={setSelectedTable}
-          toggleModal={toggleModal}
-          tableData={occupiedTable}
-        />
-        <div className="my-6"></div>
-        <TabData
-          rerender={rerender}
-          setRerender={setRerender}
-          setSelectedTable={setSelectedTable}
-          toggleModal={toggleModal}
-          tableData={tableData}
-        />
+        {occupiedTable.length || tableData.length ? (
+          <>
+            <OccupiedTab
+              rerender={rerender}
+              setRerender={setRerender}
+              setSelectedTable={setSelectedTable}
+              toggleModal={toggleModal}
+              tableData={occupiedTable}
+            />
+            <div className="my-6"></div>
+            <TabData
+              rerender={rerender}
+              setRerender={setRerender}
+              setSelectedTable={setSelectedTable}
+              toggleModal={toggleModal}
+              tableData={tableData}
+            />
+          </>
+        ) : (
+          <div className="absolute left-0 right-0">
+            <Loader />
+          </div>
+        )}
       </div>
     </ModalProvider>
   );

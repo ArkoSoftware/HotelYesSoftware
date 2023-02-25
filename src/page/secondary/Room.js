@@ -24,33 +24,9 @@ const Room = () => {
   const getAllData = async () => {
     const arr = await getRoomList(selectDate);
     setAvailable(arr.arr);
-    setTodayAvailable(arr.arr);
     setBooked(arr.arr3);
     setReserved(arr.arr2);
     setDirty(arr.arr4);
-  };
-
-  const getSearchedData = async () => {
-    // const searchedDate = available.filter((data) => data.date);
-
-    let searchedDate = [];
-    available.forEach((data) => {
-      data.date.forEach((date) => {
-        if (date.checkInDate < selectDate && date.checkOutDate > selectDate) {
-          searchedDate.push(data);
-        }
-      });
-    });
-
-    console.log(searchedDate);
-
-    setTodayAvailable(searchedDate);
-
-    // today.toLocaleDateString()
-
-    // console.log(new Date(selectDate).toUTCString().slice(0, 16))
-
-    // setTodayAvailable(searchedDate);
   };
 
   const deleteRoom = async (id) => {
@@ -85,7 +61,7 @@ const Room = () => {
             </div>
             <div className=" flex-1">
               <button
-                onClick={() => getSearchedData()}
+                onClick={() => getRoomList(selectDate)}
                 className="bg-green-600 rounded-xl px-8 h-10 mt-auto text-sm text-white"
               >
                 Search
@@ -96,7 +72,7 @@ const Room = () => {
           <RoomTab
             rerender={rerender}
             setRerender={setRerender}
-            available={todayAvailable}
+            available={available}
             booked={booked}
             reserved={reserved}
             dirty={dirty}

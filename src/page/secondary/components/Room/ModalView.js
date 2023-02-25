@@ -55,7 +55,7 @@ const ModalView = ({
   const [idNo, setIdNo] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
-  const [checkInDate, setCheckInDate] = useState(new Date().getTime());
+  const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [noOfNights, setNoOfNights] = useState("");
   const [arrivedFrom, setArrivedFrom] = useState("");
@@ -119,52 +119,16 @@ const ModalView = ({
       setAdvance(state.advance);
       setRoomRateType(state.roomRateType);
       setNoOfGuests(state.noOfGuests);
-      setCheckInDate(new Date(state.checkInDate).getTime());
-      setCheckOutDate(new Date(state.checkOutDate).getTime());
+      setCheckInDate("");
+      setCheckOutDate("");
     }
   };
   const validateData = () => {
-    /* console.log(
-      customerName == "" ||
-        phoneNumber == "" ||
-        address == "" ||
-        email == "" ||
-        checkInDate == "" ||
-        checkOutDate == "" ||
-        noOfNights == "" ||
-        roomRate == "" ||
-        advance == "" ||
-        noOfGuests == ""
-    ); */
-    if (
-      customerName == "" ||
-      phoneNumber == "" ||
-      address == "" ||
-      email == "" ||
-      checkInDate == "" ||
-      checkOutDate == "" ||
-      noOfNights == "" ||
-      roomRate == "" ||
-      advance == "" ||
-      noOfGuests == ""
-    ) {
+    if (customerName == "" || checkInDate == "") {
       setShowError(true);
     } else {
       return true;
     }
-    /* console.log(
-      customerName,
-      phoneNumber,
-      address,
-      email,
-      checkInDate,
-      checkOutDate,
-      noOfNights,
-      roomRate,
-      advance,
-      roomRateType,
-      noOfGuests
-    ); */
   };
   useEffect(() => {
     changeData();
@@ -206,7 +170,6 @@ const ModalView = ({
                   setValue={setCustomerName}
                 />
                 <InputView
-                  required={true}
                   label={"Phone Number"}
                   value={phoneNumber}
                   setValue={setPhoneNumber}
@@ -218,29 +181,17 @@ const ModalView = ({
                 />
               </div>
               <div className="flex flex-row space-x-6">
+                <InputView label={"Id No:"} value={idNo} setValue={setIdNo} />
                 <InputView
-                  required={true}
-                  label={"Id No:"}
-                  value={idNo}
-                  setValue={setIdNo}
-                />
-                <InputView
-                  required={true}
                   label={"Address"}
                   value={address}
                   setValue={setAddress}
                 />
-                <InputView
-                  required={true}
-                  label={"Email:"}
-                  value={email}
-                  setValue={setEmail}
-                />
+                <InputView label={"Email:"} value={email} setValue={setEmail} />
               </div>
               <div className="flex flex-row space-x-6">
                 <div className="flex flex-col w-full">
                   <DatePicker
-                    required={true}
                     label={"Check In Date"}
                     setValue={setCheckInDate}
                     value={checkInDate}
@@ -248,7 +199,6 @@ const ModalView = ({
                 </div>
                 <div className="flex flex-col w-full">
                   <DatePicker
-                    required={true}
                     label={"Check Out Date"}
                     setValue={setCheckOutDate}
                     value={checkOutDate}
@@ -256,7 +206,6 @@ const ModalView = ({
                 </div>
 
                 <InputView
-                  required={true}
                   label={"No. of Nights:"}
                   value={noOfNights}
                   setValue={setNoOfNights}
@@ -303,13 +252,11 @@ const ModalView = ({
           </div>
           <div className="my-4 mb-0 flex flex-row space-x-8 border border-gray-700 bg-gray-200 p-4 rounded-xl">
             <InputView
-              required={true}
               label={"Room Rate"}
               value={roomRate}
               setValue={setRoomRate}
             />
             <InputView
-              required={true}
               label={"Advance Payment"}
               value={advance}
               setValue={setAdvance}
@@ -320,7 +267,6 @@ const ModalView = ({
               setValue={setRoomRateType}
             />
             <InputView
-              required={true}
               label={"No. Of Guests"}
               value={noOfGuests}
               setValue={setNoOfGuests}
@@ -336,57 +282,14 @@ const ModalView = ({
             <div className="flex flex-row space-x-4">
               <button
                 onClick={() => {
-                  if (validateData()) {
-                    checkIn({
-                      customerName,
-                      phoneNumber,
-                      nationality,
-                      idNo,
-                      address,
-                      email,
-                      checkInDate: new Date().getTime(),
-                      checkOutDate,
-                      noOfNights,
-                      arrivedFrom,
-                      goingTo,
-                      purpose,
-                      occupation,
-                      method,
-                      billNo,
-                      vehicleNo,
-                      roomRate,
-                      advance,
-                      roomRateType,
-                      noOfGuests,
-                      roomNumber: state.roomNumber,
-                      roomType: state.type,
-                      roomOriginalPrice: state.price,
-                      discount: state.price - roomRate,
-                      status: "Booked",
-                      uploadedBy: auth.currentUser.uid,
-                    });
-
-                    setIsOpen(!isOpen);
-                    setRerender(!rerender);
-                  }
-                }}
-                style={{ fontSize: 12 }}
-                className="bg-green-700 p-2 text-white rounded-xl w-full mt-8 flex-1"
-              >
-                Check In
-              </button>
-              <button
-                onClick={() => {
-                  console.log(checkInDate);
-                  console.log(checkOutDate);
-                  addData({
+                  checkIn({
                     customerName,
                     phoneNumber,
                     nationality,
                     idNo,
                     address,
                     email,
-                    checkInDate,
+                    checkInDate: new Date().getTime(),
                     checkOutDate,
                     noOfNights,
                     arrivedFrom,
@@ -404,13 +307,54 @@ const ModalView = ({
                     roomType: state.type,
                     roomOriginalPrice: state.price,
                     discount: state.price - roomRate,
-                    status: "Reserved",
+                    status: "Booked",
                     uploadedBy: auth.currentUser.uid,
                   });
 
-                  setRerender(!rerender);
                   setIsOpen(!isOpen);
-                  setSideBarOn(!!isOpen);
+                  setRerender(!rerender);
+                }}
+                style={{ fontSize: 12 }}
+                className="bg-green-700 p-2 text-white rounded-xl w-full mt-8 flex-1"
+              >
+                Check In
+              </button>
+              <button
+                onClick={() => {
+                  if (validateData()) {
+                    addData({
+                      customerName,
+                      phoneNumber,
+                      nationality,
+                      idNo,
+                      address,
+                      email,
+                      checkInDate,
+                      checkOutDate,
+                      noOfNights,
+                      arrivedFrom,
+                      goingTo,
+                      purpose,
+                      occupation,
+                      method,
+                      billNo,
+                      vehicleNo,
+                      roomRate,
+                      advance,
+                      roomRateType,
+                      noOfGuests,
+                      roomNumber: state.roomNumber,
+                      roomType: state.type,
+                      roomOriginalPrice: state.price,
+                      discount: state.price - roomRate,
+                      status: "Reserved",
+                      uploadedBy: auth.currentUser.uid,
+                    });
+
+                    setRerender(!rerender);
+                    setIsOpen(!isOpen);
+                    setSideBarOn(!!isOpen);
+                  }
                 }}
                 style={{ fontSize: 12 }}
                 className="p-2 text-red-500 rounded-xl w-full mt-8 flex-1 border border-red-500"

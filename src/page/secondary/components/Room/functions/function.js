@@ -14,7 +14,6 @@ import {
   updateDoc,
 } from "firebase/firestore/lite";
 import { set } from "firebase/database";
-import { async } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -26,15 +25,31 @@ export const getRoomList = async function (selectDate) {
   const arr4 = [];
   const filterRoom = [""];
 
-  await get(child(realRef, `liveReserve/`)).then(async (snapshot) => {
+  await get(child(realRef, `liveBooking/`)).then(async (snapshot) => {
     if (snapshot.exists()) {
       const keys = Object.keys(snapshot.val());
       const iterator = keys.values();
       for (var key of iterator) {
-        await get(child(realRef, `liveReserve/` + key)).then((snapshot) => {
+        await get(child(realRef, `liveBooking/` + key)).then((snapshot) => {
           if (snapshot.exists()) {
-            arr2.push(snapshot.val());
-            filterRoom.push(snapshot.val().roomNumber);
+            if (
+              snapshot.val().checkOutDate == "" ||
+              snapshot.val().checkOutDate == null
+            ) {
+              arr3.push(snapshot.val());
+              filterRoom.push(snapshot.val().roomNumber);
+            } else {
+              if (selectDate >= snapshot.val().checkOutDate) {
+                console.log("More");
+              } else if (
+                selectDate >= snapshot.val().checkInDate &&
+                selectDate <= snapshot.val().checkOutDate
+              ) {
+                console.log("Between");
+                arr3.push(snapshot.val());
+                filterRoom.push(snapshot.val().roomNumber);
+              }
+            }
           }
         });
       }
@@ -86,10 +101,25 @@ export const getRoomList = async function (selectDate) {
 };
 
 export const addData = async function (form) {
+  console.log(form);
+  const data = form;
   const doc1 = collection(db, "reserved");
-  const snap = await addDoc(doc1, form);
+  const ref1 = doc(doc1);
+  data["id"] = ref1.id;
+  const doc2 = doc(db, "reserved", ref1.id);
+  const snap = await setDoc(doc2, data);
 };
-export const checkIn = async function (form) {};
+export const updateData = async function (state) {
+  console.log(state);
+  const doc1 = doc(db, "reserved", state.id);
+
+  const snap = await updateDoc(doc1, state);
+};
+export const checkIn = async function (form) {
+  await set(ref(database, "liveBooking/" + form.roomNumber), form)
+    .then(() => console.log("Data added successfully"))
+    .catch((error) => console.log("Error adding data:", error));
+};
 
 const NavigateFinal = function () {
   const navigate = useNavigate();
@@ -179,4 +209,10 @@ export const confirmCheckout = async function (data) {
       roomType: data.data.roomType,
     });
   }
+};
+
+export const deleteReservation = async (state) => {
+  const doc1 = doc(db, "reserved", state.id);
+
+  const snap = await deleteDoc(doc1);
 };

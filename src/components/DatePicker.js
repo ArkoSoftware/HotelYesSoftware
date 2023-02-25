@@ -15,6 +15,7 @@ const DatePicker = ({ label, setValue, value, required }) => {
   const changed = (e) => {
     setSelected(e);
     setValue(new Date(e).getTime());
+    toggleModal();
   };
 
   return (

@@ -5,7 +5,12 @@ import InputView from "../InputView";
 import SelectView from "../SelectView";
 import DatePicker from "../../../../components/DatePicker";
 import { useState } from "react";
-import { addData, checkIn } from "./functions/function";
+import {
+  addData,
+  checkIn,
+  deleteReservation,
+  updateData,
+} from "./functions/function";
 import { auth } from "../../../../config/adminFirebase";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -55,7 +60,7 @@ const ModalView = ({
   const [idNo, setIdNo] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
-  const [checkInDate, setCheckInDate] = useState("");
+  const [checkInDate, setCheckInDate] = useState(new Date().getTime());
   const [checkOutDate, setCheckOutDate] = useState("");
   const [noOfNights, setNoOfNights] = useState("");
   const [arrivedFrom, setArrivedFrom] = useState("");
@@ -93,13 +98,14 @@ const ModalView = ({
     setAdvance("");
     setRoomRateType("");
     setNoOfGuests("");
-    setCheckInDate("");
-    setCheckInDate("");
+    setCheckInDate(new Date().getTime());
+    setCheckOutDate("");
   };
   const changeData = () => {
     if (type == "NewRoom") {
       emptyField();
     } else {
+      console.log(state);
       setCustomerName(state.customerName);
       setPhoneNumber(state.phoneNumber);
       setNationality(state.nationality);
@@ -119,8 +125,8 @@ const ModalView = ({
       setAdvance(state.advance);
       setRoomRateType(state.roomRateType);
       setNoOfGuests(state.noOfGuests);
-      setCheckInDate("");
-      setCheckOutDate("");
+      setCheckInDate(state.checkInDate || "");
+      setCheckOutDate(state.checkOutDate || "");
     }
   };
   const validateData = () => {
@@ -192,6 +198,7 @@ const ModalView = ({
               <div className="flex flex-row space-x-6">
                 <div className="flex flex-col w-full">
                   <DatePicker
+                    required={true}
                     label={"Check In Date"}
                     setValue={setCheckInDate}
                     value={checkInDate}
@@ -282,37 +289,39 @@ const ModalView = ({
             <div className="flex flex-row space-x-4">
               <button
                 onClick={() => {
-                  checkIn({
-                    customerName,
-                    phoneNumber,
-                    nationality,
-                    idNo,
-                    address,
-                    email,
-                    checkInDate: new Date().getTime(),
-                    checkOutDate,
-                    noOfNights,
-                    arrivedFrom,
-                    goingTo,
-                    purpose,
-                    occupation,
-                    method,
-                    billNo,
-                    vehicleNo,
-                    roomRate,
-                    advance,
-                    roomRateType,
-                    noOfGuests,
-                    roomNumber: state.roomNumber,
-                    roomType: state.type,
-                    roomOriginalPrice: state.price,
-                    discount: state.price - roomRate,
-                    status: "Booked",
-                    uploadedBy: auth.currentUser.uid,
-                  });
+                  if (validateData()) {
+                    checkIn({
+                      customerName,
+                      phoneNumber,
+                      nationality,
+                      idNo,
+                      address,
+                      email,
+                      checkInDate,
+                      checkOutDate,
+                      noOfNights,
+                      arrivedFrom,
+                      goingTo,
+                      purpose,
+                      occupation,
+                      method,
+                      billNo,
+                      vehicleNo,
+                      roomRate,
+                      advance,
+                      roomRateType,
+                      noOfGuests,
+                      roomNumber: state.roomNumber,
+                      roomType: state.type,
+                      roomOriginalPrice: state.price,
+                      discount: state.price - roomRate,
+                      status: "Booked",
+                      uploadedBy: auth.currentUser.uid,
+                    });
 
-                  setIsOpen(!isOpen);
-                  setRerender(!rerender);
+                    setIsOpen(!isOpen);
+                    setRerender(!rerender);
+                  }
                 }}
                 style={{ fontSize: 12 }}
                 className="bg-green-700 p-2 text-white rounded-xl w-full mt-8 flex-1"
@@ -353,7 +362,7 @@ const ModalView = ({
 
                     setRerender(!rerender);
                     setIsOpen(!isOpen);
-                    setSideBarOn(!!isOpen);
+                    setSideBarOn(!isOpen);
                   }
                 }}
                 style={{ fontSize: 12 }}
@@ -408,12 +417,63 @@ const ModalView = ({
               >
                 Check In
               </button>
-              <button
-                style={{ fontSize: 12 }}
-                className="border border-red-500 bg-red-200 p-2 text-red-800 rounded-xl w-full mt-8 flex-1"
-              >
-                Cancel Reservation
-              </button>
+              <div className="flex-1 flex flex-row space-x-2">
+                <button
+                  onClick={async () => {
+                    if (validateData()) {
+                      updateData({
+                        customerName,
+                        phoneNumber,
+                        nationality,
+                        idNo,
+                        address,
+                        email,
+                        checkInDate,
+                        checkOutDate,
+                        noOfNights,
+                        arrivedFrom,
+                        goingTo,
+                        purpose,
+                        occupation,
+                        method,
+                        billNo,
+                        vehicleNo,
+                        roomRate,
+                        advance,
+                        roomRateType,
+                        noOfGuests,
+                        roomNumber: state.roomNumber,
+                        roomType: state.roomType,
+                        roomOriginalPrice: state.roomOriginalPrice,
+                        discount: state.price - roomRate,
+                        status: "Reserved",
+                        uploadedBy: auth.currentUser.uid,
+                        id: state.id,
+                      });
+
+                      setRerender(!rerender);
+                      setIsOpen(!isOpen);
+                      setSideBarOn(!isOpen);
+                    }
+                  }}
+                  style={{ fontSize: 12 }}
+                  className="border border-green-500 bg-green-200 p-2 text-green-800 rounded-xl w-full mt-8 flex-1"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={async () => {
+                    await deleteReservation(state);
+                    setRerender(!rerender);
+                    setIsOpen(!isOpen);
+                    setSideBarOn(!sideBarOn);
+                  }}
+                  style={{ fontSize: 12 }}
+                  className="border border-red-500 bg-red-200 p-2 text-red-800 rounded-xl w-full mt-8 flex-1"
+                >
+                  Cancel Reservation
+                </button>
+              </div>
             </div>
           )}
           {type == "Booked" && (

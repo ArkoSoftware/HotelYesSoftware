@@ -24,6 +24,6 @@ export const listOfDirtyRoom = async function () {
 };
 
 export const moveFromDirty = async function (roomNumber) {
-  const ref1 = ref(database, "liveDirty/dirty" + roomNumber);
+  const ref1 = ref(database, "liveDirty/" + roomNumber);
   await remove(ref1);
 };

@@ -8,6 +8,7 @@ import { useState } from "react";
 import {
   addData,
   checkIn,
+  checkInReserve,
   deleteReservation,
   updateData,
 } from "./functions/function";
@@ -377,7 +378,7 @@ const ModalView = ({
               <button
                 onClick={() => {
                   if (validateData()) {
-                    checkIn({
+                    checkInReserve({
                       customerName,
                       phoneNumber,
                       nationality,
@@ -398,6 +399,7 @@ const ModalView = ({
                       advance,
                       roomRateType,
                       noOfGuests,
+                      id: state.id,
                       roomNumber: state.roomNumber,
                       roomType: state.roomType,
                       roomOriginalPrice: state.roomOriginalPrice,

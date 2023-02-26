@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "styled-react-modal";
 
 const ConfirmTransferModal2 = ({ isOpen, setIsOpen, callFunction }) => {
+  const navigate = useNavigate();
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
@@ -16,7 +18,10 @@ const ConfirmTransferModal2 = ({ isOpen, setIsOpen, callFunction }) => {
         <div className="mt-auto flex flex-row space-x-3 w-full">
           <div className="flex-1">
             <button
-              onClick={() => callFunction()}
+              onClick={() => {
+                callFunction();
+                navigate("/room", { replace: true });
+              }}
               className="bg-green-700 p-3 rounded-xl  text-white"
               style={{ fontSize: 12 }}
             >

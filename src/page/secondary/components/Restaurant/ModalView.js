@@ -13,7 +13,6 @@ import OrderTable from "./OrderTable";
 const ModalView = ({ isOpen, toggleModal, state, rerender, setRerender }) => {
   const [total, setTotal] = useState();
   const [value, setValue] = useState();
-  const [guests, setGuests] = useState();
   const [billNo, setBillNo] = useState();
   return (
     <Modal
@@ -35,7 +34,6 @@ const ModalView = ({ isOpen, toggleModal, state, rerender, setRerender }) => {
             </div>
           </div>
           <div className=" px-5 w-full flex flex-row space-x-5">
-            <InputView label={"No. of Guests"} setValue={setGuests} />
             <InputView label={"Bill No."} setValue={setBillNo} />
           </div>
         </div>
@@ -46,7 +44,6 @@ const ModalView = ({ isOpen, toggleModal, state, rerender, setRerender }) => {
             total={total}
             setTotal={setTotal}
             setValue={setValue}
-            guests={guests}
             billNo={billNo}
             state={state}
             toggleModal={toggleModal}

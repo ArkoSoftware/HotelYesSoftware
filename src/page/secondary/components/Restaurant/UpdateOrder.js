@@ -114,7 +114,6 @@ const UpdateOrder = ({
   total,
   setTotal,
   state,
-  guests,
   rerender,
   setRerender,
   toggleModal,
@@ -199,7 +198,6 @@ const UpdateOrder = ({
               menuData: numRows,
               tableNumber: state.form.tableNumber,
               total: total,
-              guests: guests,
               state: state,
               billNo: billNo,
             });

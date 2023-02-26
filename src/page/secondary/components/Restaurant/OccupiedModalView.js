@@ -22,13 +22,12 @@ const OccupiedModalView = ({
 }) => {
   const [total, setTotal] = useState();
   const [value, setValue] = useState();
-  const [guests, setGuests] = useState();
   const [billNo, setBillNo] = useState();
 
   const fixData = () => {
-    setGuests(state.form ? state.form.guests : "");
+    setBillNo(state.form.billNo);
   };
-  
+
   useEffect(() => {
     fixData();
   }, []);
@@ -38,7 +37,7 @@ const OccupiedModalView = ({
       onBackgroundClick={toggleModal}
       onEscapeKeydown={toggleModal}
     >
-      <div className="bg-white rounded-xl p-5 w-5/6 h-5/6 overflow-y-scroll">
+      <div className="bg-white rounded-xl p-5 w-5/6 h-4/6 overflow-y-scroll">
         <div className="flex">
           <div className="bg-gray-200 w-24 h-24 rounded-2xl flex flex-col p-4">
             <div className="ml-auto">
@@ -52,11 +51,6 @@ const OccupiedModalView = ({
             </div>
           </div>
           <div className=" px-5 w-full flex flex-row space-x-4">
-            <InputView
-              label={"No. of Guests"}
-              value={guests}
-              setValue={setGuests}
-            />
             <InputView label={"Bill No."} value={billNo} setValue={setBillNo} />
           </div>
         </div>
@@ -69,7 +63,6 @@ const OccupiedModalView = ({
             total={total}
             setTotal={setTotal}
             setValue={setValue}
-            guests={guests}
             billNo={billNo}
           />
         </div>

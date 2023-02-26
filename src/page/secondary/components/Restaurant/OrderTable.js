@@ -128,7 +128,6 @@ const OrderTable = ({
   total,
   setTotal,
   state,
-  guests,
   billNo,
   rerender,
   setRerender,
@@ -212,7 +211,6 @@ const OrderTable = ({
             menuData: JSON.stringify(numRows),
             tableNumber: state.tableNumber,
             total: total,
-            guests: guests,
             billNo: billNo,
             date: new Date(),
           });

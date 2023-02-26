@@ -16,25 +16,34 @@ const CheckoutRoom = () => {
   const [orderList, setOrderList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [itemList, setItemList] = useState([]);
+  const [numOfNights, setNumOfNights] = useState();
   const state = useLocation().state;
   const [displayTotal, setDisplayTotal] = useState(0);
+  const [price, setPrice] = useState();
+  const [discount, setDiscount] = useState(0);
 
   const checkOutRoom = () => {
+    const ad = parseInt(state.advance) || 0;
     confirmCheckout({
       invoiceTo,
       data,
       restaurantTotal: displayTotal,
-      orderBillTotal,
-      discount: orderBillTotal - displayTotal,
+      discount,
       grandTotal:
         displayTotal +
-        parseInt(state.noOfNights) * parseInt(state.roomRate) -
-        parseInt(state.advance),
+        parseInt(numOfNights) * parseInt(price) -
+        parseInt(state.advance || 0) -
+        discount,
     });
   };
   const getAllData = async () => {
-    const order = data.order;
-    const allKeys = Object.keys(order);
+    let order;
+    let allKeys = {};
+    if (data.order) {
+      order = data.order;
+      allKeys = Object.keys(order);
+    }
+
     const arr = [];
     var total = 0;
     for (var i = 0; i < allKeys.length; i++) {
@@ -46,6 +55,16 @@ const CheckoutRoom = () => {
         total = total + d1[j][1] * d1[j][2];
       }
     }
+    let numOfNights = 0;
+    if (data.checkOutDate == "" || data.checkOutDate == null) {
+      numOfNights =
+        (new Date().getTime() - 86400000 - data.checkInDate) / 86400000;
+
+      setNumOfNights(Math.round(numOfNights));
+    }
+    if (state.roomRate == null || state.roomRate == "") {
+      setPrice(parseInt(state.roomOriginalPrice));
+    }
     setOrderBillTotal(total);
     setOrderList(arr);
     setDisplayTotal(total);
@@ -56,7 +75,7 @@ const CheckoutRoom = () => {
   }, []);
   return (
     <ModalProvider>
-      <div className="p-8">
+      <div className="p-8 w-full">
         <div className="flex flex-col p-8 bg-gray-200 rounded-xl">
           <div className="flex">
             <div className="">
@@ -100,7 +119,7 @@ const CheckoutRoom = () => {
           </div>
           <div className=" flex flex-row my-7">
             <div className="font-bold mr-4" style={{ fontSize: 14 }}>
-              Checkout Bill Bill
+              Checkout Bill
             </div>
           </div>
           <div className="bg-gray-600 p-3 flex flex-row">
@@ -122,13 +141,13 @@ const CheckoutRoom = () => {
               {state.roomNumber}
             </div>
             <div className="flex-1 text-black" style={{ fontSize: 13 }}>
-              {state.noOfNights}
+              {numOfNights}
             </div>
             <div className="flex-1 text-black" style={{ fontSize: 13 }}>
-              {parseInt(state.roomRate)}
+              {parseInt(price)}
             </div>
             <div className="flex-1 text-black" style={{ fontSize: 13 }}>
-              Rs. {parseInt(state.noOfNights) * parseInt(state.roomRate)}
+              Rs. {parseInt(numOfNights) * parseInt(price)}
             </div>
           </div>
           <div className="bg-gray-300 p-3 flex flex-row">
@@ -149,7 +168,24 @@ const CheckoutRoom = () => {
             </div>
             <div className="flex-1 text-black" style={{ fontSize: 13 }}>
               Rs.
-              {parseInt(state.advance)}
+              {parseInt(state.advance || 0)}
+            </div>
+          </div>
+          <div className="bg-gray-400 p-3 flex flex-row">
+            <div className="flex-1 text-black" style={{ fontSize: 13 }}></div>
+            <div className="flex-1 text-black" style={{ fontSize: 13 }}></div>
+            <div className="flex-1 text-black" style={{ fontSize: 13 }}>
+              Discount
+            </div>
+            <div className="flex-1 text-black" style={{ fontSize: 13 }}>
+              <input
+                onChange={(e) => {
+                  var dis = parseInt(e.currentTarget.value) || 0;
+                  setDiscount(dis);
+                }}
+                type="text"
+                className="bg-gray-400 text-black w-full outline-none text-left"
+              />
             </div>
           </div>
           <div className="bg-gray-400 p-3 flex flex-row">
@@ -161,8 +197,9 @@ const CheckoutRoom = () => {
             <div className="flex-1 text-black" style={{ fontSize: 13 }}>
               Rs.
               {displayTotal +
-                parseInt(state.noOfNights) * parseInt(state.roomRate) -
-                parseInt(state.advance)}
+                parseInt(numOfNights) * parseInt(price) -
+                parseInt(state.advance || 0) -
+                discount}
             </div>
           </div>
           {data.hasOwnProperty("order") ? (
@@ -229,36 +266,7 @@ const CheckoutRoom = () => {
                   <div className="border border-gray-600 bg-gray-600 pt-1"></div>
                 </>
               ))}
-              <div className="bg-gray-600 p-3 flex flex-row">
-                <div className="text-white px-4" style={{ fontSize: 13 }}></div>
-                <div
-                  className="flex-1 text-white"
-                  style={{ fontSize: 13 }}
-                ></div>
-                <div
-                  className="flex-1 text-white"
-                  style={{ fontSize: 13 }}
-                ></div>
-                <div
-                  className="flex-1 text-white text-center"
-                  style={{ fontSize: 13 }}
-                >
-                  Discount:
-                </div>
-                <div
-                  className="flex-1 text-white text-right"
-                  style={{ fontSize: 13 }}
-                >
-                  <input
-                    onChange={(e) => {
-                      var dis = parseInt(e.currentTarget.value) || 0;
-                      setDisplayTotal(orderBillTotal - dis);
-                    }}
-                    type="text"
-                    className="bg-gray-600 text-white text-right w-full py-2"
-                  />
-                </div>
-              </div>
+
               <div className="bg-gray-600 p-3 flex flex-row">
                 <div className="text-white px-4" style={{ fontSize: 13 }}></div>
                 <div

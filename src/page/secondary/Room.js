@@ -22,8 +22,11 @@ const Room = () => {
   const [loading, setLoading] = useState(false);
 
   const getAllData = async () => {
+    setAvailable([]);
+    setBooked([]);
+    setReserved([]);
+    setDirty([]);
     const arr = await getRoomList(selectDate);
-    console.log("hi");
     setAvailable(arr.arr);
     setBooked(arr.arr3);
     setReserved(arr.arr2);
@@ -60,7 +63,7 @@ const Room = () => {
                 setValue={setSelectDate}
               />
             </div>
-            <div className=" flex-1">
+            <div className=" flex-1 flex flex-row space-x-3">
               <button
                 onClick={() => {
                   getAllData();
@@ -68,6 +71,14 @@ const Room = () => {
                 className="bg-green-600 rounded-xl px-8 h-10 mt-auto text-sm text-white"
               >
                 Search
+              </button>
+              <button
+                onClick={() => {
+                  getAllData();
+                }}
+                className="bg-gray-600 rounded-xl px-8 h-10 mt-auto text-sm text-white"
+              >
+                Refresh
               </button>
             </div>
           </div>

@@ -120,6 +120,13 @@ export const checkIn = async function (form) {
     .then(() => console.log("Data added successfully"))
     .catch((error) => console.log("Error adding data:", error));
 };
+export const checkInReserve = async function (form) {
+  await set(ref(database, "liveBooking/" + form.roomNumber), form)
+    .then(() => console.log("Data added successfully"))
+    .catch((error) => console.log("Error adding data:", error));
+  const doc1 = doc(db, "reserved", form.id);
+  const snap = await deleteDoc(doc1);
+};
 
 const NavigateFinal = function () {
   const navigate = useNavigate();
@@ -161,10 +168,10 @@ export const confirmCheckout = async function (data) {
     const doc2 = collection(db, "dailyRoomRecord", checkOutDate, "record");
     const snap2 = await addDoc(doc2, temp);
     try {
-      const ref1 = ref(database, "liveBooking/checkIn" + data.data.roomNumber);
+      const ref1 = ref(database, "liveBooking/" + data.data.roomNumber);
       await remove(ref1);
     } catch {}
-    const ref1 = ref(database, "liveDirty/dirty" + data.data.roomNumber);
+    const ref1 = ref(database, "liveDirty/" + data.data.roomNumber);
     await set(ref1, {
       roomNumber: data.data.roomNumber,
       price: data.data.roomOriginalPrice,
@@ -199,10 +206,10 @@ export const confirmCheckout = async function (data) {
     const doc2 = collection(db, "dailyRoomRecord", checkOutDate, "record");
     const snap2 = await addDoc(doc2, temp);
     try {
-      const ref1 = ref(database, "liveBooking/checkIn" + data.data.roomNumber);
+      const ref1 = ref(database, "liveBooking/" + data.data.roomNumber);
       await remove(ref1);
     } catch {}
-    const ref1 = ref(database, "liveDirty/dirty" + data.data.roomNumber);
+    const ref1 = ref(database, "liveDirty/" + data.data.roomNumber);
     await set(ref1, {
       roomNumber: data.data.roomNumber,
       price: data.data.roomOriginalPrice,

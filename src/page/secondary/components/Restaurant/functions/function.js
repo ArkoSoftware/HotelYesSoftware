@@ -83,7 +83,7 @@ export const updateOrderData = async function (data) {
 
 export const assignBillToRoom = async function (data, orderInfo, tableNumber) {
   const roomNumber = data.roomNumber;
-  const ref1 = ref(database, "liveBooking/checkIn" + roomNumber + "/order");
+  const ref1 = ref(database, "liveBooking/" + roomNumber + "/order");
   await push(ref1, orderInfo);
 
   try {

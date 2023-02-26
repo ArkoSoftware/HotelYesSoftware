@@ -17,7 +17,7 @@ export const TabData = ({ tableData, rerender, setRerender }) => {
 
   return (
     <div className=" flex flex-col">
-      <div className="flex flex-row  flex-wrap">
+      <div className="grid grid-cols-3 md:flex flex-row  flex-wrap ">
         {tableData.map((data) => (
           <button
             onClick={() => {

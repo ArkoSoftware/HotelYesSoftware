@@ -19,23 +19,7 @@ const Sidebar = () => {
       } fixed z-10`}
     >
       <div className="my-5">
-        <div className="px-4 flex items-center gap-2">
-          <input
-            onChange={themeToggleHandler}
-            type="checkbox"
-            className="toggle toggle-sm"
-            id="toggleBtn"
-            checked={isDark}
-          />
-          <label
-            htmlFor="toggleBtn"
-            className={`cursor-pointer select-none text-sm ${
-              isDark ? "text-white" : "text-slate-800"
-            }`}
-          >
-            {isDark ? "Dark" : "Light"} Theme
-          </label>
-        </div>
+        
         <div className="flex gap-2 px-4">
           <button
             className="p-3 bg-green-600 text-white mx-auto rounded my-2 w-[50%]"

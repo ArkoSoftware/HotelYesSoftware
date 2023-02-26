@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import { signOutFromAccount } from "../Authentication/functions/function";
 
 const Navbar = () => {
-  const { sideBarOn, setSideBarOn, user, isDark } = useContext(NavContext);
+  const { sideBarOn, setSideBarOn, user, isDark, themeToggleHandler } =
+    useContext(NavContext);
 
   return (
     <section
@@ -61,6 +62,15 @@ const Navbar = () => {
                 </button>
               </div>
             </div>
+          </div>
+          <div className="px-4 flex items-center gap-2">
+            <input
+              onChange={themeToggleHandler}
+              type="checkbox"
+              className="toggle toggle-sm"
+              id="toggleBtn"
+              checked={isDark}
+            />
           </div>
         </div>
       </div>

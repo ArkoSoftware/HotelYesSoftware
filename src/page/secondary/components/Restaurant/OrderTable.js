@@ -56,7 +56,7 @@ const EntryRow = ({
     getTotal(temp);
   };
   return (
-    <div className="flex ">
+    <div className="flex w-screen md:w-full">
       <button
         onClick={() => removeRow(index)}
         className="w-20 text-sm border border-gray-200 p-3 flex"
@@ -90,7 +90,7 @@ const EntryRow = ({
       <input
         list="foodNames"
         name="foodName"
-        className="text-sm pl-2 md:w-[34%]"
+        className="text-sm pl-2 w-full md:w-[34%]"
         onChange={(e) => {
           setName(e.target.value);
           addValue(e.target.value, 0);
@@ -114,7 +114,7 @@ const EntryRow = ({
         style={{ fontSize: 10 }}
       />
       <div
-        className="flex-1 text-sm border border-gray-200 p-3 text-right"
+        className="flex-1 text-sm border border-gray-200 p-3 text-right w-48"
         style={{ fontSize: 10 }}
       >
         {numRows[index][2]}
@@ -156,17 +156,17 @@ const OrderTable = ({
 
   return (
     <div className="rounded-xl">
-      <div className="flex bg-gray-200 border border-gray-300 p-3">
+      <div className="flex w-screen md:w-full bg-gray-200 border border-gray-300 p-3">
         <div className="w-20" style={{ fontSize: 10 }}>
           S.N
         </div>
-        <div className="flex-1 text-center" style={{ fontSize: 10 }}>
+        <div className="text-center w-full" style={{ fontSize: 10 }}>
           Food Name
         </div>
-        <div className="flex-1 text-center" style={{ fontSize: 10 }}>
+        <div className="text-center w-full" style={{ fontSize: 10 }}>
           Quantity
         </div>
-        <div className="flex-1 text-right" style={{ fontSize: 10 }}>
+        <div className="text-right w-full" style={{ fontSize: 10 }}>
           Amount
         </div>
       </div>
@@ -185,7 +185,7 @@ const OrderTable = ({
           />
         );
       })}
-      <div className="flex bg-gray-200 border border-gray-300 p-3">
+      <div className="flex w-screen md:w-full bg-gray-200 border border-gray-300 p-3">
         <div className="flex-1">
           <button
             onClick={addNewRow}

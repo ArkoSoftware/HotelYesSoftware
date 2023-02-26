@@ -55,7 +55,7 @@ const Room = () => {
       <div className="w-full h-full overflow-y-scroll">
         <div className="p-8">
           <div className=" text-2xl font-bold tracking-tighter">Book Room</div>
-          <div className="w-1/3 my-4 flex flex-col space-y-4 ">
+          <div className="md:w-1/3 my-4 flex flex-col space-y-4 ">
             <div className="flex flex-1">
               <DatePicker
                 label={"Pick a Date"}

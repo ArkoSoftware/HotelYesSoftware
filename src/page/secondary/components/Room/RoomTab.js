@@ -39,9 +39,9 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Available Room
               </h4>
-              <div className="flex flex-wrap">
+              <div className="grid grid-cols-2 gap-4 md:flex flex-wrap">
                 {available.map((item, idx) => (
-                  <div className="p-4" key={idx}>
+                  <div className="md:p-4" key={idx}>
                     <RoomCard
                       item={item}
                       setState={setRoomInfo}

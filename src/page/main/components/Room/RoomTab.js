@@ -8,9 +8,9 @@ export const RoomTab = ({ rerender, roomdata }) => {
   return (
     <>
       {!roomdata.length && <Loader />}
-      <div className="flex flex-row flex-wrap ">
+      <div className="grid grid-cols-2 gap-5 md:flex flex-row flex-wrap ">
         {roomdata.map((item) => (
-          <div className="p-4">
+          <div className="md:p-4">
             <RoomCard item={item} />
           </div>
         ))}
@@ -21,7 +21,7 @@ export const RoomTab = ({ rerender, roomdata }) => {
 
 export const RoomCard = ({ item }) => {
   return (
-    <div className="bg-gray-200 w-44 h-44 rounded-2xl flex flex-col p-4">
+    <div className="bg-gray-200 w-40 md:w-44 h-40 md:h-44 rounded-2xl flex flex-col p-4">
       <div className="dropdown dropdown-end">
         <label tabIndex={0} className="absolute right-0">
           <IoEllipsisVertical size={12} />

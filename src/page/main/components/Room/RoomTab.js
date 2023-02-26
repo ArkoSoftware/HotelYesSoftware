@@ -3,6 +3,7 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { extreSmallFont, largeFont } from "../../../../theme";
 import Loader from "../../../../components/Loader/Loader";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import RoomUpdateModal from "./RoomUpdateModal";
 
 export const RoomTab = ({ rerender, roomdata }) => {
   return (
@@ -15,6 +16,7 @@ export const RoomTab = ({ rerender, roomdata }) => {
           </div>
         ))}
       </div>
+      <RoomUpdateModal />
     </>
   );
 };
@@ -31,10 +33,13 @@ export const RoomCard = ({ item }) => {
           className="dropdown-content menu p-2 shadow bg-base-100 rounded-box mr-3"
         >
           <li>
-            <button className="text-sm px-2 py-1 text-green-600 hover:bg-green-600 hover:text-white">
+            <label
+              htmlFor="editRoomModal"
+              className="text-sm px-2 py-1 text-green-600 hover:bg-green-600 hover:text-white"
+            >
               <FaEdit />
               Edit
-            </button>
+            </label>
           </li>
           <li>
             <button className="text-sm px-2 py-1 text-red-600 hover:bg-red-600 hover:text-white">

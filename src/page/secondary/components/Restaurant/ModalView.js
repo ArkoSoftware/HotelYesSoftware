@@ -22,7 +22,7 @@ const ModalView = ({ isOpen, toggleModal, state, rerender, setRerender }) => {
     >
       <div className="bg-white rounded-xl p-5 w-5/6 h-5/6 overflow-y-scroll">
         <div className="flex">
-          <div className="bg-gray-200 w-24 h-24 rounded-2xl flex flex-col p-4">
+          <div className="bg-gray-200 w-24 md:h-24 rounded-2xl flex flex-col p-4">
             <div className="ml-auto">
               <IoEllipsisVertical size={12} />
             </div>
@@ -37,7 +37,7 @@ const ModalView = ({ isOpen, toggleModal, state, rerender, setRerender }) => {
             <InputView label={"Bill No."} setValue={setBillNo} />
           </div>
         </div>
-        <div className="px-3 py-4">
+        <div className="px-3 py-4 overflow-scroll">
           <OrderTable
             rerender={rerender}
             setRerender={setRerender}

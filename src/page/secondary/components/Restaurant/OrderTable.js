@@ -90,7 +90,7 @@ const EntryRow = ({
       <input
         list="foodNames"
         name="foodName"
-        className="text-sm pl-2 w-[34%]"
+        className="text-sm pl-2 md:w-[34%]"
         onChange={(e) => {
           setName(e.target.value);
           addValue(e.target.value, 0);

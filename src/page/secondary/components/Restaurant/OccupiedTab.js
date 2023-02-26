@@ -13,7 +13,7 @@ export const OccupiedTab = ({ tableData, rerender, setRerender }) => {
 
   return (
     <div className=" flex flex-col">
-      <div className="flex flex-row space-x-4">
+      <div className="grid grid-cols-3 md:flex flex-row ">
         {tableData.map((data) => (
           <button
             onClick={() => {

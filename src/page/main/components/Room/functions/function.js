@@ -15,7 +15,7 @@ export const getRoomList = async function () {
   const arr = [];
   snap.forEach((docs) => {
     const data = docs.data();
-    arr.push(data);
+    arr.push({ ...data, id: docs.id });
   });
   arr.sort(function (a, b) {
     return a.roomNumber - b.roomNumber;

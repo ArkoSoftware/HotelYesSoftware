@@ -1,14 +1,8 @@
 import React from "react";
 import Modal from "styled-react-modal";
-import { IoClose, IoEllipsisVertical } from "react-icons/io5";
+import { IoEllipsisVertical } from "react-icons/io5";
 import InputView from "../InputView";
-import SelectView from "../SelectView";
-import { extreSmallFont, smallFont } from "../../../../theme";
-import DatePicker from "../../../../components/DatePicker";
-import { useState } from "react";
-import { addData, addOrderData } from "./functions/function";
-import { auth } from "../../../../config/adminFirebase";
-import OrderTable from "./OrderTable";
+import { useState } from "react"; 
 import { useEffect } from "react";
 import UpdateOrder from "./UpdateOrder";
 

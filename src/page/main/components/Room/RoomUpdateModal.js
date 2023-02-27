@@ -25,12 +25,14 @@ const RoomUpdateModal = ({
 
     if (!/^\d+$/.test(roomNumber)) {
       setRoomNumberError("* enter valid room number");
+      return;
     } else {
       setRoomNumberError("");
     }
 
     if (!/^\d+$/.test(price)) {
       setPriceError("* enter valid number");
+      return;
     } else {
       setPriceError("");
     }
@@ -75,7 +77,9 @@ const RoomUpdateModal = ({
               id="RoomNumber"
               defaultValue={item?.roomNumber}
               placeholder="Room Number"
-              className="input input-bordered input-sm w-full mb-4 mt-2"
+              className={`input input-bordered ${
+                roomNumberError && "input-error"
+              } input-sm w-full mb-4 mt-2`}
               required
             />
             <label className="block text-xs" htmlFor="Price">
@@ -87,7 +91,9 @@ const RoomUpdateModal = ({
               id="Price"
               placeholder="Price"
               defaultValue={item?.price}
-              className="input input-bordered input-sm w-full mb-4 mt-2"
+              className={`input input-bordered ${
+                priceError && "input-error"
+              } input-sm w-full mb-4 mt-2`}
               required
             />
             <label className="block text-xs" htmlFor="RoomType">

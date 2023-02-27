@@ -6,7 +6,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import RoomUpdateModal from "./RoomUpdateModal";
 import { useState } from "react";
 
-export const RoomTab = ({ rerender, roomdata }) => {
+export const RoomTab = ({ rerender, roomdata, setRerender }) => {
   return (
     <>
       {!roomdata.length && <Loader />}

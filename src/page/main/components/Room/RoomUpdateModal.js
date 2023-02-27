@@ -1,9 +1,18 @@
 import React from "react";
+import toast from "react-hot-toast";
 
 const RoomUpdateModal = ({ data }) => {
   const { type, roomNumber, time, user, price, id } = data;
 
-  
+  const updateRoomHandle = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const roomNumber = form.RoomNumber.value;
+    const price = form.Price.value;
+    const roomType = form.RoomType.value; 
+
+    
+  };
 
   return (
     <div>
@@ -17,7 +26,7 @@ const RoomUpdateModal = ({ data }) => {
             ✕
           </label>
           <h3 className="text-lg font-normal">Update Room Data</h3>
-          <div className="py-4">
+          <form className="py-4" onSubmit={(e) => updateRoomHandle(e)}>
             <label className="block text-xs" htmlFor="RoomNumber">
               Room Number
             </label>
@@ -63,10 +72,13 @@ const RoomUpdateModal = ({ data }) => {
               ))}
             </select>
 
-            <button className="bg-green-600 text-white mt-5 py-1 rounded-md w-full">
+            <button
+              type="submit"
+              className="bg-green-600 hover:bg-green-700 duration-300 text-white mt-5 py-2 rounded-md w-full"
+            >
               Update Room
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

@@ -1,17 +1,54 @@
+import { doc, updateDoc } from "firebase/firestore/lite";
 import React from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { db } from "../../../../config/adminFirebase";
 
-const RoomUpdateModal = ({ data }) => {
-  const { type, roomNumber, time, user, price, id } = data;
+const RoomUpdateModal = ({
+  allRoomData,
+  rerender,
+  setRerender,
+  roomId,
+  isModalOn,
+  setIsModalOn,
+}) => {
+  const item = allRoomData.find((room) => room?.id === roomId);
+  const [roomNumberError, setRoomNumberError] = useState("");
+  const [priceError, setPriceError] = useState("");
 
-  const updateRoomHandle = (event) => {
+  const updateRoomHandle = async (event) => {
     event.preventDefault();
     const form = event.target;
     const roomNumber = form.RoomNumber.value;
     const price = form.Price.value;
-    const roomType = form.RoomType.value; 
+    const roomType = form.RoomType.value;
 
-    
+    if (!/^\d+$/.test(roomNumber)) {
+      setRoomNumberError("* enter valid room number");
+    } else {
+      setRoomNumberError("");
+    }
+
+    if (!/^\d+$/.test(price)) {
+      setPriceError("* enter valid number");
+    } else {
+      setPriceError("");
+    }
+
+    const roomRef = doc(db, "roomList", item?.id);
+    await updateDoc(roomRef, {
+      type: roomType,
+      roomNumber,
+      price,
+    })
+      .then(() => {
+        toast.success("Update room successfully!");
+        setRerender(!rerender);
+        setIsModalOn(!isModalOn);
+      })
+      .catch(() => {
+        toast.error("Update failed!");
+      });
   };
 
   return (
@@ -28,27 +65,30 @@ const RoomUpdateModal = ({ data }) => {
           <h3 className="text-lg font-normal">Update Room Data</h3>
           <form className="py-4" onSubmit={(e) => updateRoomHandle(e)}>
             <label className="block text-xs" htmlFor="RoomNumber">
-              Room Number
+              Room Number{" "}
+              <span className="text-red-500">{roomNumberError}</span>
             </label>
 
             <input
               type="text"
               name="RoomNumber"
               id="RoomNumber"
-              value={roomNumber}
+              defaultValue={item?.roomNumber}
               placeholder="Room Number"
               className="input input-bordered input-sm w-full mb-4 mt-2"
+              required
             />
             <label className="block text-xs" htmlFor="Price">
-              Price
+              Price <span className="text-red-500">{priceError}</span>
             </label>
             <input
               type="text"
               name="Price"
               id="Price"
               placeholder="Price"
-              value={price}
+              defaultValue={item?.price}
               className="input input-bordered input-sm w-full mb-4 mt-2"
+              required
             />
             <label className="block text-xs" htmlFor="RoomType">
               Room Type
@@ -59,7 +99,7 @@ const RoomUpdateModal = ({ data }) => {
               className="input input-sm input-bordered w-full mt-2"
             >
               <option disabled selected>
-                {type ? type : "Choose one"}
+                {item?.type ? item?.type : "Choose one"}
               </option>
               {[
                 "King Size",

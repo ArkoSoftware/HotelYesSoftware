@@ -35,7 +35,7 @@ const Menu = () => {
     const arr = [];
     snap.forEach((docs) => {
       arr.push({ ...docs.data(), id: docs.id });
-    }); 
+    });  
     setDataList(arr);
   };
 

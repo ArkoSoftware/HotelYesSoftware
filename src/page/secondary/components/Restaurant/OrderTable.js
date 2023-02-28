@@ -56,70 +56,48 @@ const EntryRow = ({
     getTotal(temp);
   };
   return (
-    <div className="flex w-screen md:w-full">
-      <button
-        onClick={() => removeRow(index)}
-        className="w-20 text-sm border border-gray-200 p-3 flex"
-      >
-        <IoCloseCircle className="my-auto" color="#2f2f2f" />
-        <span className="ml-auto " style={{ fontSize: 10 }}>
-          {index + 1}
-        </span>
-      </button>
-      {/*
-      ------------------------------------
-      previous dropdown without search bar
-      ------------------------------------
-       <select
-        onChange={(e) => {
-          setName(e.target.value);
+    <tr>
+      <td className="border py-2 text-center">
+        <button onClick={() => removeRow(index)} className="text-sm ">
+          <IoCloseCircle className="inline mr-2" color="#2f2f2f" />
+          <span className="" style={{ fontSize: 10 }}>
+            {index + 1}
+          </span>
+        </button>
+      </td>
+      <td className="border p-0 text-center">
+        <input
+          list="foodNames"
+          name="foodName"
+          className="w-full h-full p-2 text-xs text-center"
+          onChange={(e) => {
+            setName(e.target.value);
+            addValue(e.target.value, 0);
+          }}
+        />
+        <datalist id="foodNames">
+          {foodList.map((d1) => (
+            <option value={d1.foodName}>{d1.foodName}</option>
+          ))}
+        </datalist>
+      </td>
+      <td className="border p-0 text-center">
+        <input
+          value={quantity}
+          onChange={(e) => {
+            setQuantity(e.target.value);
 
-          addValue(e.target.value, 0);
-        }}
-        className="p-2 flex-1 border border-gray-200 w-full text-sm"
-        style={{ fontSize: 10 }}
-      > 
-        <option className="capitalize"></option>
-        {foodList.map((d1) => (
-          <option className="capitalize" value={d1.foodName}>
-            {d1.foodName}
-          </option>
-        ))}
-      </select> */}
-
-      <input
-        list="foodNames"
-        name="foodName"
-        className="text-sm pl-2 w-full md:w-[34%]"
-        onChange={(e) => {
-          setName(e.target.value);
-          addValue(e.target.value, 0);
-        }}
-      />
-      <datalist id="foodNames">
-        {foodList.map((d1) => (
-          <option value={d1.foodName}>{d1.foodName}</option>
-        ))}
-      </datalist>
-
-      <input
-        value={quantity}
-        onChange={(e) => {
-          setQuantity(e.target.value);
-
-          addValue(e.target.value, 1);
-        }}
-        className="flex-1 text-sm border border-gray-200 p-3"
-        placeholder="Quantity"
-        style={{ fontSize: 10 }}
-      />
-      <div
-        className="flex-1 text-sm border border-gray-200 p-3 text-right w-48"
-        style={{ fontSize: 10 }}
-      >
-        {numRows[index][2]}
-      </div>
-    </div>
+            addValue(e.target.value, 1);
+          }}
+          className="flex-1 text-sm p-2 w-full text-center"
+          placeholder="Quantity"
+          style={{ fontSize: 10 }}
+        />
+      </td>
+      <td className="border text-xs py-2 text-center">
+        {numRows[index][2] || "0.00"}
+      </td>
+    </tr>
   );
 };
 
@@ -155,74 +133,80 @@ const OrderTable = ({
   }
 
   return (
-    <div className="rounded-xl">
-      <div className="flex w-screen md:w-full bg-gray-200 border border-gray-300 p-3">
-        <div className="w-20" style={{ fontSize: 10 }}>
-          S.N
-        </div>
-        <div className="text-center w-full" style={{ fontSize: 10 }}>
-          Food Name
-        </div>
-        <div className="text-center w-full" style={{ fontSize: 10 }}>
-          Quantity
-        </div>
-        <div className="text-right w-full" style={{ fontSize: 10 }}>
-          Amount
-        </div>
+    <>
+      <div className="overflow-x-auto ">
+        <table className="w-screen md:w-full">
+          <thead>
+            <tr>
+              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
+                S.N
+              </th>
+              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
+                Food Name
+              </th>
+              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
+                Quantity
+              </th>
+              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
+                Amount
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {numRows.map((d1, index) => {
+              return (
+                <EntryRow
+                  data={d1}
+                  setValue={setValue}
+                  setNumRows={setNumRows}
+                  numRows={numRows}
+                  setTotal={setTotal}
+                  index={index}
+                  removeRow={(index) => {
+                    removeRow(index);
+                  }}
+                />
+              );
+            })}
+            <tr className="w-screen md:w-full bg-gray-200 border border-gray-300">
+              <td className="text-center py-2 w-24">
+                <button
+                  onClick={addNewRow}
+                  className="underline text-blue-900 text-sm"
+                  style={{ fontSize: 10 }}
+                >
+                  Add New Row
+                </button>
+              </td>
+              <td></td>
+              <td></td>
+              <td className="w-24 text-xs text-center py-2">
+                Total: <span className="ml-5">{total}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      {numRows.map((d1, index) => {
-        return (
-          <EntryRow
-            data={d1}
-            setValue={setValue}
-            setNumRows={setNumRows}
-            numRows={numRows}
-            setTotal={setTotal}
-            index={index}
-            removeRow={(index) => {
-              removeRow(index);
-            }}
-          />
-        );
-      })}
-      <div className="flex w-screen md:w-full bg-gray-200 border border-gray-300 p-3">
-        <div className="flex-1">
-          <button
-            onClick={addNewRow}
-            className="underline text-blue-900 text-sm"
-            style={{ fontSize: 10 }}
-          >
-            Add New Row
-          </button>
-        </div>
-        <div className="flex-1 text-center"></div>
-        <div className="flex-1 text-center"></div>
-        <div className="flex-1 text-center"></div>
-        <div
-          className="flex-1 text-left text-gray-700"
+      <div> 
+        <button
+          onClick={() => {
+            addOrderData({
+              menuData: JSON.stringify(numRows),
+              tableNumber: state.tableNumber,
+              total: total,
+              billNo: billNo,
+              date: new Date(),
+            });
+            toggleModal();
+            setRerender(!rerender);
+          }}
+          className="rounded-xl bg-green-700 text-white w-full p-3 mt-5 "
           style={{ fontSize: 10 }}
         >
-          Total: {total}
-        </div>
+          Create Order
+        </button>
       </div>
-      <button
-        onClick={() => {
-          addOrderData({
-            menuData: JSON.stringify(numRows),
-            tableNumber: state.tableNumber,
-            total: total,
-            billNo: billNo,
-            date: new Date(),
-          });
-          toggleModal();
-          setRerender(!rerender);
-        }}
-        className="rounded-xl bg-green-700 text-white w-full p-3 mt-5 "
-        style={{ fontSize: 10 }}
-      >
-        Create Order
-      </button>
-    </div>
+    </>
   );
 };
 

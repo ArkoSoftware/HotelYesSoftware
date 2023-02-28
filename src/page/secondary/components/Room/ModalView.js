@@ -146,7 +146,7 @@ const ModalView = ({
       onBackgroundClick={toggleModal}
       onEscapeKeydown={toggleModal}
     >
-      <div className="bg-white rounded-xl p-5 w-5/6">
+      <div className="bg-white rounded-xl p-5 w-5/6 h-full overflow-y-scroll">
         <div className="flex">
           {type == "NewRoom" && (
             <span className="text-xl tracking-tighter">Book New Room</span>
@@ -164,12 +164,12 @@ const ModalView = ({
           </div>
         </div>
         <div className="mt-5">
-          <div className="my-4 flex flex-row space-x-2">
+          <div className="my-4 flex flex-col md:flex-row space-x-2">
             <div className=" px-5">
               <RoomSmallTab state={state} />
             </div>
             <div className="flex flex-col w-full space-y-4 p-3 bg-gray-50 rounded-xl">
-              <div className="flex flex-row space-x-6">
+              <div className="flex flex-col md:flex-row md:space-x-6">
                 <InputView
                   required={true}
                   label={"Customer Name"}
@@ -187,7 +187,7 @@ const ModalView = ({
                   setValue={setNationality}
                 />
               </div>
-              <div className="flex flex-row space-x-6">
+              <div className="flex flex-col md:flex-row md:space-x-6">
                 <InputView label={"Id No:"} value={idNo} setValue={setIdNo} />
                 <InputView
                   label={"Address"}
@@ -196,7 +196,7 @@ const ModalView = ({
                 />
                 <InputView label={"Email:"} value={email} setValue={setEmail} />
               </div>
-              <div className="flex flex-row space-x-6">
+              <div className="flex flex-col md:flex-row md:space-x-6">
                 <div className="flex flex-col w-full">
                   <DatePicker
                     required={true}
@@ -221,7 +221,7 @@ const ModalView = ({
               </div>
             </div>
           </div>
-          <div className="my-4 flex flex-row space-x-8">
+          <div className="my-4 flex flex-col md:flex-row md:space-x-8">
             <InputView
               label={"Arrived From:"}
               value={arrivedFrom}
@@ -245,7 +245,7 @@ const ModalView = ({
             />
           </div>
 
-          <div className="my-4 flex flex-row space-x-8">
+          <div className="my-4 flex flex-col md:flex-row md:space-x-8">
             <InputView
               label={"Method Of Payment"}
               value={method}
@@ -258,7 +258,7 @@ const ModalView = ({
               setValue={setVehicleNo}
             />
           </div>
-          <div className="my-4 mb-0 flex flex-row space-x-8 border border-gray-700 bg-gray-200 p-4 rounded-xl">
+          <div className="my-4 mb-0 flex flex-col md:flex-row md:space-x-8 border border-gray-700 bg-gray-200 p-4 rounded-xl">
             <InputView
               label={"Room Rate"}
               value={roomRate}

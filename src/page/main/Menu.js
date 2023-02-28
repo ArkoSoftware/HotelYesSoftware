@@ -20,6 +20,7 @@ const Menu = () => {
   const [openAddCategory, setAddCategory] = useState(false);
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
+
   function toggleModal3(e) {
     setOpenPurchaseBill(!openPurchaseBill);
     setSideBarOn(!sideBarOn);
@@ -34,7 +35,7 @@ const Menu = () => {
     const arr = [];
     snap.forEach((docs) => {
       arr.push({ ...docs.data(), id: docs.id });
-    });
+    });  
     setDataList(arr);
   };
 

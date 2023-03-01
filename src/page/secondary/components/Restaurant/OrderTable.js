@@ -7,7 +7,6 @@ import {
 } from "./functions/function";
 import { db } from "../../../../config/adminFirebase";
 import { collection, getDocs } from "firebase/firestore/lite";
-
 const EntryRow = ({
   data,
   index,
@@ -20,7 +19,6 @@ const EntryRow = ({
 }) => {
   const [name, setName] = useState(data[0]);
   const [quantity, setQuantity] = useState(data[1] || 1);
-
   const getTotal = (temp) => {
     let sum = 0;
     for (let i = 0; i < temp.length; i++) {
@@ -30,9 +28,7 @@ const EntryRow = ({
   };
   const addValue = function (val, field) {
     var value;
-
     const temp = numRows;
-
     temp[index][field] = val;
     setNumRows(temp);
     setValue(temp);
@@ -52,7 +48,7 @@ const EntryRow = ({
         onClick={() => removeRow(index)}
         className="w-20 text-sm border border-gray-200 p-3 flex"
       >
-        <IoCloseCircle className="my-auto" color="#2f2f2f" />
+        <IoCloseCircle className="my-auto" color="#2F2F2F" />
         <span className="ml-auto " style={{ fontSize: 10 }}>
           {index + 1}
         </span>
@@ -75,7 +71,6 @@ const EntryRow = ({
         value={quantity}
         onChange={(e) => {
           setQuantity(e.target.value);
-
           addValue(e.target.value, 1);
         }}
         className="flex-1 text-sm border border-gray-200 p-3"
@@ -91,7 +86,6 @@ const EntryRow = ({
     </div>
   );
 };
-
 const OrderTable = ({
   setValue,
   total,
@@ -111,7 +105,6 @@ const OrderTable = ({
     snap.forEach((docs) => {
       arr.push(docs.data());
     });
-
     setFoodList(arr);
   };
   useEffect(() => {
@@ -135,61 +128,21 @@ const OrderTable = ({
     setNumRows([...arr]);
     getTotal(numRows, setTotal);
   }
-
   return (
-    <>
-      <div className="overflow-x-auto ">
-        <table className="w-screen md:w-full">
-          <thead>
-            <tr>
-              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
-                S.N
-              </th>
-              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
-                Food Name
-              </th>
-              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
-                Quantity
-              </th>
-              <th className="text-xs font-normal bg-[#e5e7eb] py-2 border">
-                Amount
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {numRows.map((d1, index) => {
-              return (
-                <EntryRow
-                  data={d1}
-                  setValue={setValue}
-                  setNumRows={setNumRows}
-                  numRows={numRows}
-                  setTotal={setTotal}
-                  index={index}
-                  removeRow={(index) => {
-                    removeRow(index);
-                  }}
-                />
-              );
-            })}
-            <tr className="w-screen md:w-full bg-gray-200 border border-gray-300">
-              <td className="text-center py-2 w-24">
-                <button
-                  onClick={addNewRow}
-                  className="underline text-blue-900 text-sm"
-                  style={{ fontSize: 10 }}
-                >
-                  Add New Row
-                </button>
-              </td>
-              <td></td>
-              <td></td>
-              <td className="w-24 text-xs text-center py-2">
-                Total: <span className="ml-5">{total}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div className="rounded-xl">
+      <div className="flex w-screen md:w-full bg-gray-200 border border-gray-300 p-3">
+        <div className="w-20" style={{ fontSize: 10 }}>
+          S.N
+        </div>
+        <div className="text-center w-full" style={{ fontSize: 10 }}>
+          Food Name
+        </div>
+        <div className="text-center w-full" style={{ fontSize: 10 }}>
+          Quantity
+        </div>
+        <div className="text-right w-full" style={{ fontSize: 10 }}>
+          Amount
+        </div>
       </div>
       {numRows.map((d1, index) => {
         return (
@@ -224,11 +177,27 @@ const OrderTable = ({
           className="flex-1 text-left text-gray-700"
           style={{ fontSize: 10 }}
         >
-          Create Order
+          Total: {total}
         </div>
       </div>
-    </>
+      <button
+        onClick={() => {
+          addOrderData({
+            menuData: JSON.stringify(numRows),
+            tableNumber: state.tableNumber,
+            total: total,
+            billNo: billNo,
+            date: new Date(),
+          });
+          toggleModal();
+          setRerender(!rerender);
+        }}
+        className="rounded-xl bg-green-700 text-white w-full p-3 mt-5 "
+        style={{ fontSize: 10 }}
+      >
+        Create Order
+      </button>
+    </div>
   );
 };
-
 export default OrderTable;

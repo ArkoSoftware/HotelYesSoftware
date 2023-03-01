@@ -86,8 +86,7 @@ const PurchaseTable = ({ setValue }) => {
     arr.push(["", ""]);
     setNumRows([...arr]);
   };
-  function removeRow(n) {
-    alert(n);
+  function removeRow(n) { 
     const arr = numRows;
     arr.splice(n, 1);
     setNumRows([...arr]);

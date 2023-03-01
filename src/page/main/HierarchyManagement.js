@@ -64,7 +64,7 @@ const HierarchyManagement = () => {
   };
 
   return (
-    <div>
+    <div className="w-screen">
       <h2 className="text-lg p-8 tracking-tighter">Hierarchy Management</h2>
 
       <div className="overflow-x-auto px-12 pb-8">
@@ -82,7 +82,7 @@ const HierarchyManagement = () => {
           <table className="w-full">
             <thead>
               <tr className="border">
-                <td className="w-24 text-[10px] text-left rounded-none bg-gray-300 p-2 font-medium">
+                <td className="text-[10px] text-center rounded-none bg-gray-300 p-2 font-medium">
                   S.N.
                 </td>
                 <td className="text-center text-[10px] bg-gray-300 p-2 font-medium">
@@ -102,13 +102,13 @@ const HierarchyManagement = () => {
             <tbody>
               {usersList?.map((data, idx) => (
                 <tr key={idx}>
-                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                  <th className="border border-gray-200 p-2 text-[10px] font-normal">
                     {idx + 1}
-                  </td>
-                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                  </th>
+                  <td className="text-center border border-gray-200 p-2 text-[10px]">
                     {data.name}
                   </td>
-                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                  <td className="text-center border border-gray-200 p-2 text-[10px]">
                     <select onChange={(e) => setRole(e.target.value)}>
                       <option selected disabled>
                         {data.role}
@@ -118,10 +118,10 @@ const HierarchyManagement = () => {
                       <option value="Chef">Chef</option>
                     </select>
                   </td>
-                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                  <td className="text-center border border-gray-200 p-2 text-[10px]">
                     siddharthaghimire@gmail.com
                   </td>
-                  <td className="w-24 border border-gray-200 p-2 text-[10px]">
+                  <td className="text-center border border-gray-200 p-2 text-[10px]">
                     {loading ? (
                       <div className="my-2 mx-3">
                         <Bars

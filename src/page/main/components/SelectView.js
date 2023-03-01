@@ -1,7 +1,7 @@
 import React from "react";
 import { extreSmallFont, smallFont } from "../../../theme";
 
-const SelectView = ({ label, data, setValue }) => {
+const SelectView = ({ label, data, setValue, value }) => {
   return (
     <>
       <label
@@ -9,13 +9,15 @@ const SelectView = ({ label, data, setValue }) => {
         className="text-gray-600"
         style={{ fontSize: extreSmallFont }}
       >
-        {label}
+        {label} {!value && <span className="text-red-500">* Select a {label}</span>}
       </label>
       <select
         onChange={(e) => {
           setValue(e.target.value);
         }}
-        className="p-2 border border-gray-400 rounded w-full text-sm"
+        className={`p-2 border ${
+          value ? "border-gray-400" : "border-red-500"
+        }  rounded w-full text-sm`}
       >
         {data.map((d1, idx) => (
           <option

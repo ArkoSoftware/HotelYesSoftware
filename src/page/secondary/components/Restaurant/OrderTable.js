@@ -5,6 +5,8 @@ import {
   getCategoryItem,
   getMenuItem,
 } from "./functions/function";
+import { db } from "../../../../config/adminFirebase";
+import { collection, getDocs } from "firebase/firestore/lite";
 
 const EntryRow = ({
   data,
@@ -14,22 +16,11 @@ const EntryRow = ({
   setNumRows,
   setValue,
   setTotal,
+  foodList,
 }) => {
   const [name, setName] = useState(data[0]);
   const [quantity, setQuantity] = useState(data[1] || 1);
-  const [foodList, setFoodList] = React.useState([]);
-  console.log(name);
-  const getAllData = async () => {
-    const arr = [];
-    const temp = await getMenuItem();
-    for (var i = 0; i < temp.length; i++) {
-      arr.push(temp[i]);
-    }
-    setFoodList(arr);
-  };
-  useEffect(() => {
-    getAllData();
-  }, []);
+
   const getTotal = (temp) => {
     let sum = 0;
     for (let i = 0; i < temp.length; i++) {
@@ -66,27 +57,6 @@ const EntryRow = ({
           {index + 1}
         </span>
       </button>
-      {/*
-      ------------------------------------
-      previous dropdown without search bar
-      ------------------------------------
-       <select
-        onChange={(e) => {
-          setName(e.target.value);
-
-          addValue(e.target.value, 0);
-        }}
-        className="p-2 flex-1 border border-gray-200 w-full text-sm"
-        style={{ fontSize: 10 }}
-      > 
-        <option className="capitalize"></option>
-        {foodList.map((d1) => (
-          <option className="capitalize" value={d1.foodName}>
-            {d1.foodName}
-          </option>
-        ))}
-      </select> */}
-
       <input
         list="foodNames"
         name="foodName"
@@ -101,7 +71,6 @@ const EntryRow = ({
           <option value={d1.foodName}>{d1.foodName}</option>
         ))}
       </datalist>
-
       <input
         value={quantity}
         onChange={(e) => {
@@ -134,7 +103,20 @@ const OrderTable = ({
   toggleModal,
 }) => {
   const [numRows, setNumRows] = useState([["", 1, ""]]);
+  const [foodList, setFoodList] = useState([]);
+  const getAllData = async () => {
+    const arr = [];
+    const doc1 = collection(db, "menu");
+    const snap = await getDocs(doc1);
+    snap.forEach((docs) => {
+      arr.push(docs.data());
+    });
 
+    setFoodList(arr);
+  };
+  useEffect(() => {
+    getAllData();
+  }, []);
   const addNewRow = () => {
     const arr = numRows;
     arr.push(["", 1, ""]);
@@ -173,6 +155,7 @@ const OrderTable = ({
       {numRows.map((d1, index) => {
         return (
           <EntryRow
+            foodList={foodList}
             data={d1}
             setValue={setValue}
             setNumRows={setNumRows}

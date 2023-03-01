@@ -12,7 +12,7 @@ export const TabData = ({ tableData, rerender, setRerender }) => {
 
   const toggleModal = function () {
     setIsOpen(!isOpen);
-    setSideBarOn(!sideBarOn)
+    setSideBarOn(!sideBarOn);
   };
 
   return (

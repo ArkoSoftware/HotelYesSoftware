@@ -5,6 +5,8 @@ import {
   getCategoryItem,
   getMenuItem,
 } from "./functions/function";
+import { db } from "../../../../config/adminFirebase";
+import { collection, getDocs } from "firebase/firestore/lite";
 
 const EntryRow = ({
   data,
@@ -14,22 +16,11 @@ const EntryRow = ({
   setNumRows,
   setValue,
   setTotal,
+  foodList,
 }) => {
   const [name, setName] = useState(data[0]);
   const [quantity, setQuantity] = useState(data[1] || 1);
-  const [foodList, setFoodList] = React.useState([]);
-  console.log(name);
-  const getAllData = async () => {
-    const arr = [];
-    const temp = await getMenuItem();
-    for (var i = 0; i < temp.length; i++) {
-      arr.push(temp[i]);
-    }
-    setFoodList(arr);
-  };
-  useEffect(() => {
-    getAllData();
-  }, []);
+
   const getTotal = (temp) => {
     let sum = 0;
     for (let i = 0; i < temp.length; i++) {
@@ -56,48 +47,48 @@ const EntryRow = ({
     getTotal(temp);
   };
   return (
-    <tr>
-      <td className="border py-2 text-center">
-        <button onClick={() => removeRow(index)} className="text-sm ">
-          <IoCloseCircle className="inline mr-2" color="#2f2f2f" />
-          <span className="" style={{ fontSize: 10 }}>
-            {index + 1}
-          </span>
-        </button>
-      </td>
-      <td className="border p-0 text-center">
-        <input
-          list="foodNames"
-          name="foodName"
-          className="w-full h-full p-2 text-xs text-center"
-          onChange={(e) => {
-            setName(e.target.value);
-            addValue(e.target.value, 0);
-          }}
-        />
-        <datalist id="foodNames">
-          {foodList.map((d1) => (
-            <option value={d1.foodName}>{d1.foodName}</option>
-          ))}
-        </datalist>
-      </td>
-      <td className="border p-0 text-center">
-        <input
-          value={quantity}
-          onChange={(e) => {
-            setQuantity(e.target.value);
+    <div className="flex w-screen md:w-full">
+      <button
+        onClick={() => removeRow(index)}
+        className="w-20 text-sm border border-gray-200 p-3 flex"
+      >
+        <IoCloseCircle className="my-auto" color="#2f2f2f" />
+        <span className="ml-auto " style={{ fontSize: 10 }}>
+          {index + 1}
+        </span>
+      </button>
+      <input
+        list="foodNames"
+        name="foodName"
+        className="text-sm pl-2 w-full md:w-[34%]"
+        onChange={(e) => {
+          setName(e.target.value);
+          addValue(e.target.value, 0);
+        }}
+      />
+      <datalist id="foodNames">
+        {foodList.map((d1) => (
+          <option value={d1.foodName}>{d1.foodName}</option>
+        ))}
+      </datalist>
+      <input
+        value={quantity}
+        onChange={(e) => {
+          setQuantity(e.target.value);
 
-            addValue(e.target.value, 1);
-          }}
-          className="flex-1 text-sm p-2 w-full text-center"
-          placeholder="Quantity"
-          style={{ fontSize: 10 }}
-        />
-      </td>
-      <td className="border text-xs py-2 text-center">
-        {numRows[index][2] || "0.00"}
-      </td>
-    </tr>
+          addValue(e.target.value, 1);
+        }}
+        className="flex-1 text-sm border border-gray-200 p-3"
+        placeholder="Quantity"
+        style={{ fontSize: 10 }}
+      />
+      <div
+        className="flex-1 text-sm border border-gray-200 p-3 text-right w-48"
+        style={{ fontSize: 10 }}
+      >
+        {numRows[index][2]}
+      </div>
+    </div>
   );
 };
 
@@ -112,7 +103,20 @@ const OrderTable = ({
   toggleModal,
 }) => {
   const [numRows, setNumRows] = useState([["", 1, ""]]);
+  const [foodList, setFoodList] = useState([]);
+  const getAllData = async () => {
+    const arr = [];
+    const doc1 = collection(db, "menu");
+    const snap = await getDocs(doc1);
+    snap.forEach((docs) => {
+      arr.push(docs.data());
+    });
 
+    setFoodList(arr);
+  };
+  useEffect(() => {
+    getAllData();
+  }, []);
   const addNewRow = () => {
     const arr = numRows;
     arr.push(["", 1, ""]);
@@ -187,24 +191,41 @@ const OrderTable = ({
           </tbody>
         </table>
       </div>
-      <div> 
-        <button
-          onClick={() => {
-            addOrderData({
-              menuData: JSON.stringify(numRows),
-              tableNumber: state.tableNumber,
-              total: total,
-              billNo: billNo,
-              date: new Date(),
-            });
-            toggleModal();
-            setRerender(!rerender);
-          }}
-          className="rounded-xl bg-green-700 text-white w-full p-3 mt-5 "
+      {numRows.map((d1, index) => {
+        return (
+          <EntryRow
+            foodList={foodList}
+            data={d1}
+            setValue={setValue}
+            setNumRows={setNumRows}
+            numRows={numRows}
+            setTotal={setTotal}
+            index={index}
+            removeRow={(index) => {
+              removeRow(index);
+            }}
+          />
+        );
+      })}
+      <div className="flex w-screen md:w-full bg-gray-200 border border-gray-300 p-3">
+        <div className="flex-1">
+          <button
+            onClick={addNewRow}
+            className="underline text-blue-900 text-sm"
+            style={{ fontSize: 10 }}
+          >
+            Add New Row
+          </button>
+        </div>
+        <div className="flex-1 text-center"></div>
+        <div className="flex-1 text-center"></div>
+        <div className="flex-1 text-center"></div>
+        <div
+          className="flex-1 text-left text-gray-700"
           style={{ fontSize: 10 }}
         >
           Create Order
-        </button>
+        </div>
       </div>
     </>
   );

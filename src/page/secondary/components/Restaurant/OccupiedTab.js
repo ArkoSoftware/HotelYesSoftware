@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import ModalView from "./ModalView";
 import { IoEllipsisVertical } from "react-icons/io5";
 import OccupiedModalView from "./OccupiedModalView";
 

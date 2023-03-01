@@ -13,6 +13,13 @@ let data = [
     price: 2400,
     delivered: "NotDelivered",
   },
+  {
+    billId: 210,
+    rooms: 10,
+    date: "2nd Jan",
+    price: 2400,
+    delivered: "NotDelivered",
+  },
 ];
 let title = ["Bill Id", "No. of Rooms", "Date", "Price", "Delivered"];
 const roomdata = [

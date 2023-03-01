@@ -5,7 +5,7 @@ import ModalView from "./components/Room/ModalView";
 import { largeFont } from "../../theme";
 import { getRoomList } from "./components/Room/functions/function";
 import { useEffect } from "react";
-import { NavContext } from "../../contexts/NavProvider"; 
+import { NavContext } from "../../contexts/NavProvider";
 
 const Room = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,11 @@ const Room = () => {
             Add New Room
           </button>
           <div className="pt-5">
-            <RoomTab roomdata={roomdata} rerender={rerender} />
+            <RoomTab
+              roomdata={roomdata}
+              setRerender={setRerender}
+              rerender={rerender}
+            />
           </div>
         </div>
         <ModalView

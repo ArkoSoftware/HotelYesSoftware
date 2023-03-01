@@ -1,9 +1,57 @@
+import { doc, updateDoc } from "firebase/firestore/lite";
 import React from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { db } from "../../../../config/adminFirebase";
 
-const RoomUpdateModal = ({ data }) => {
-  const { type, roomNumber, time, user, price, id } = data;
+const RoomUpdateModal = ({
+  allRoomData,
+  rerender,
+  setRerender,
+  roomId,
+  isModalOn,
+  setIsModalOn,
+}) => {
+  const item = allRoomData.find((room) => room?.id === roomId);
+  const [roomNumberError, setRoomNumberError] = useState("");
+  const [priceError, setPriceError] = useState("");
 
-  
+  const updateRoomHandle = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const roomNumber = form.RoomNumber.value;
+    const price = form.Price.value;
+    const roomType = form.RoomType.value;
+
+    if (!/^\d+$/.test(roomNumber)) {
+      setRoomNumberError("* enter valid room number");
+      return;
+    } else {
+      setRoomNumberError("");
+    }
+
+    if (!/^\d+$/.test(price)) {
+      setPriceError("* enter valid number");
+      return;
+    } else {
+      setPriceError("");
+    }
+
+    const roomRef = doc(db, "roomList", item?.id);
+    await updateDoc(roomRef, {
+      type: roomType,
+      roomNumber,
+      price,
+    })
+      .then(() => {
+        toast.success("Update room successfully!");
+        setRerender(!rerender);
+        setIsModalOn(!isModalOn);
+      })
+      .catch(() => {
+        toast.error("Update failed!");
+      });
+  };
 
   return (
     <div>
@@ -17,29 +65,36 @@ const RoomUpdateModal = ({ data }) => {
             ✕
           </label>
           <h3 className="text-lg font-normal">Update Room Data</h3>
-          <div className="py-4">
+          <form className="py-4" onSubmit={(e) => updateRoomHandle(e)}>
             <label className="block text-xs" htmlFor="RoomNumber">
-              Room Number
+              Room Number{" "}
+              <span className="text-red-500">{roomNumberError}</span>
             </label>
 
             <input
               type="text"
               name="RoomNumber"
               id="RoomNumber"
-              value={roomNumber}
+              defaultValue={item?.roomNumber}
               placeholder="Room Number"
-              className="input input-bordered input-sm w-full mb-4 mt-2"
+              className={`input input-bordered ${
+                roomNumberError && "input-error"
+              } input-sm w-full mb-4 mt-2`}
+              required
             />
             <label className="block text-xs" htmlFor="Price">
-              Price
+              Price <span className="text-red-500">{priceError}</span>
             </label>
             <input
               type="text"
               name="Price"
               id="Price"
               placeholder="Price"
-              value={price}
-              className="input input-bordered input-sm w-full mb-4 mt-2"
+              defaultValue={item?.price}
+              className={`input input-bordered ${
+                priceError && "input-error"
+              } input-sm w-full mb-4 mt-2`}
+              required
             />
             <label className="block text-xs" htmlFor="RoomType">
               Room Type
@@ -50,7 +105,7 @@ const RoomUpdateModal = ({ data }) => {
               className="input input-sm input-bordered w-full mt-2"
             >
               <option disabled selected>
-                {type ? type : "Choose one"}
+                {item?.type ? item?.type : "Choose one"}
               </option>
               {[
                 "King Size",
@@ -63,10 +118,13 @@ const RoomUpdateModal = ({ data }) => {
               ))}
             </select>
 
-            <button className="bg-green-600 text-white mt-5 py-1 rounded-md w-full">
+            <button
+              type="submit"
+              className="bg-green-600 hover:bg-green-700 duration-300 text-white mt-5 py-2 rounded-md w-full"
+            >
               Update Room
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

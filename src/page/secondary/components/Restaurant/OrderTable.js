@@ -57,6 +57,27 @@ const EntryRow = ({
           {index + 1}
         </span>
       </button>
+      {/*
+      ------------------------------------
+      previous dropdown without search bar
+      ------------------------------------
+       <select
+        onChange={(e) => {
+          setName(e.target.value);
+
+          addValue(e.target.value, 0);
+        }}
+        className="p-2 flex-1 border border-gray-200 w-full text-sm"
+        style={{ fontSize: 10 }}
+      > 
+        <option className="capitalize"></option>
+        {foodList.map((d1) => (
+          <option className="capitalize" value={d1.foodName}>
+            {d1.foodName}
+          </option>
+        ))}
+      </select> */}
+
       <input
         list="foodNames"
         name="foodName"
@@ -71,24 +92,23 @@ const EntryRow = ({
           <option value={d1.foodName}>{d1.foodName}</option>
         ))}
       </datalist>
+
       <input
         value={quantity}
         onChange={(e) => {
           setQuantity(e.target.value);
 
-          addValue(e.target.value, 1);
-        }}
-        className="flex-1 text-sm border border-gray-200 p-3"
-        placeholder="Quantity"
-        style={{ fontSize: 10 }}
-      />
-      <div
-        className="flex-1 text-sm border border-gray-200 p-3 text-right w-48"
-        style={{ fontSize: 10 }}
-      >
-        {numRows[index][2]}
-      </div>
-    </div>
+            addValue(e.target.value, 1);
+          }}
+          className="flex-1 text-sm p-2 w-full text-center"
+          placeholder="Quantity"
+          style={{ fontSize: 10 }}
+        />
+      </td>
+      <td className="border text-xs py-2 text-center">
+        {numRows[index][2] || "0.00"}
+      </td>
+    </tr>
   );
 };
 
@@ -155,7 +175,6 @@ const OrderTable = ({
       {numRows.map((d1, index) => {
         return (
           <EntryRow
-            foodList={foodList}
             data={d1}
             setValue={setValue}
             setNumRows={setNumRows}
@@ -188,24 +207,26 @@ const OrderTable = ({
           Total: {total}
         </div>
       </div>
-      <button
-        onClick={() => {
-          addOrderData({
-            menuData: JSON.stringify(numRows),
-            tableNumber: state.tableNumber,
-            total: total,
-            billNo: billNo,
-            date: new Date(),
-          });
-          toggleModal();
-          setRerender(!rerender);
-        }}
-        className="rounded-xl bg-green-700 text-white w-full p-3 mt-5 "
-        style={{ fontSize: 10 }}
-      >
-        Create Order
-      </button>
-    </div>
+      <div> 
+        <button
+          onClick={() => {
+            addOrderData({
+              menuData: JSON.stringify(numRows),
+              tableNumber: state.tableNumber,
+              total: total,
+              billNo: billNo,
+              date: new Date(),
+            });
+            toggleModal();
+            setRerender(!rerender);
+          }}
+          className="rounded-xl bg-green-700 text-white w-full p-3 mt-5 "
+          style={{ fontSize: 10 }}
+        >
+          Create Order
+        </button>
+      </div>
+    </>
   );
 };
 

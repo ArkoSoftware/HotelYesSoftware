@@ -43,51 +43,55 @@ const EntryRow = ({
     getTotal(temp);
   };
   return (
-    <div className="flex ">
-      <button
-        onClick={() => removeRow(index)}
-        className="w-20 text-sm border border-gray-200 p-3 flex"
-      >
-        <IoCloseCircle className="my-auto" color="#2f2f2f" />
-        <span className="ml-auto ">{index + 1}</span>
-      </button>
-      <select
-        onChange={(e) => {
-          setName(e.target.value);
+    <tr>
+      <th className="font-normal py-3 border">
+        <button onClick={() => removeRow(index)} className="w-20 text-sm flex">
+          <IoCloseCircle className="my-auto" color="#2f2f2f" />
+          <span className="ml-auto ">{index + 1}</span>
+        </button>
+      </th>
+      <td className=" py-3 border">
+        <select
+          onChange={(e) => {
+            setName(e.target.value);
 
-          addValue(e.target.value, 0);
-        }}
-        className="p-2 flex-1 border border-gray-200 w-full text-sm"
-      >
-        <option className="capitalize"></option>
-        {categoryList.map((d1) => (
-          <option className="capitalize" value={d1}>
-            {d1}
-          </option>
-        ))}
-      </select>
+            addValue(e.target.value, 0);
+          }}
+          className="flex-1 w-full text-sm outline-none text-center"
+        >
+          <option className="capitalize"></option>
+          {categoryList.map((d1) => (
+            <option className="capitalize" value={d1}>
+              {d1}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td className="p-0 border">
+        <input
+          value={quantity}
+          onChange={(e) => {
+            setQuantity(e.target.value);
 
-      <input
-        value={quantity}
-        onChange={(e) => {
-          setQuantity(e.target.value);
+            addValue(e.target.value, 1);
+          }}
+          className="flex-1 text-sm w-full py-3 text-center"
+          placeholder="Quantity"
+        />
+      </td>
+      <td className=" p-0 border">
+        <input
+          value={rate}
+          onChange={(e) => {
+            setRate(e.target.value);
 
-          addValue(e.target.value, 1);
-        }}
-        className="flex-1 text-sm border border-gray-200 p-3"
-        placeholder="Quantity"
-      />
-      <input
-        value={rate}
-        onChange={(e) => {
-          setRate(e.target.value);
-
-          addValue(e.target.value, 2);
-        }}
-        className="flex-1 text-sm border border-gray-200 p-3"
-        placeholder="Rate"
-      />
-    </div>
+            addValue(e.target.value, 2);
+          }}
+          className="flex-1 text-sm py-3 w-full text-center"
+          placeholder="Rate"
+        />
+      </td>
+    </tr>
   );
 };
 
@@ -105,43 +109,52 @@ const PurchaseTable = ({ setValue, total, setTotal }) => {
     setNumRows([...arr]);
   }
   return (
-    <div className="rounded-xl">
-      <div className="flex bg-gray-200 border border-gray-300 p-3">
-        <div className="w-20">S.N</div>
-        <div className="flex-1 text-center">Item Name</div>
-        <div className="flex-1 text-center">Quantity</div>
-        <div className="flex-1 text-right">Rate</div>
-      </div>
-      {numRows.map((d1, index) => {
-        return (
-          <EntryRow
-            data={d1}
-            setValue={setValue}
-            setNumRows={setNumRows}
-            numRows={numRows}
-            setTotal={setTotal}
-            index={index}
-            removeRow={(index) => {
-              removeRow(index);
-            }}
-          />
-        );
-      })}
-      <div className="flex bg-gray-200 border border-gray-300 p-3">
-        <div className="flex-1">
-          <button
-            onClick={addNewRow}
-            className="underline text-blue-900 text-sm"
-          >
-            Add New Row
-          </button>
-        </div>
-        <div className="flex-1 text-center"></div>
-        <div className="flex-1 text-center"></div>
-        <div className="flex-1 text-center"></div>
-        <div className="flex-1 text-left text-gray-700">Total: {total}</div>
-      </div>
-    </div>
+    <>
+      <div className="overflow-x-auto">
+        <table className="table-normal w-full border">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="w-36 font-normal text-sm py-3">S.N</th>
+              <th className="font-normal text-center text-sm py-3">
+                Item Name
+              </th>
+              <th className="font-normal text-center text-sm py-3">Quantity</th>
+              <th className="font-normal text-center text-sm py-3">Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {numRows.map((d1, index) => {
+              return (
+                <EntryRow
+                  data={d1}
+                  setValue={setValue}
+                  setNumRows={setNumRows}
+                  numRows={numRows}
+                  setTotal={setTotal}
+                  index={index}
+                  removeRow={(index) => {
+                    removeRow(index);
+                  }}
+                />
+              );
+            })}
+            <tr className="bg-gray-200">
+              <th>
+                <button
+                  onClick={addNewRow}
+                  className="underline text-blue-800 text-sm font-normal"
+                >
+                  Add New Row
+                </button>
+              </th>
+              <td></td>
+              <td></td>
+              <td className="text-center text-sm">Total: {total}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+    </>
   );
 };
 

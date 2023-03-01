@@ -14,7 +14,7 @@ const ModalView = ({ isOpen, toggleModal }) => {
       onBackgroundClick={toggleModal}
       onEscapeKeydown={toggleModal}
     >
-      <div className="bg-white rounded-xl p-5 w-1/3 ">
+      <div className="bg-white rounded-xl p-5 w-4/5 md:w-1/3 ">
         <div className="flex">
           <span className="text-xl tracking-tighter">Add Vendor</span>
           <div className="ml-auto">

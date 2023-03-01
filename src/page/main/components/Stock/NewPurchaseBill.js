@@ -53,7 +53,7 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
           <span className="text-xl tracking-tighter  ">Purchase Bill</span>
           <div className="ml-auto flex space-x-3">
             <button
-              className="bg-green-700 disabled:bg-green-300 text-white rounded p-2 px-5"
+              className="bg-green-700 disabled:bg-green-400 text-white rounded px-3 md:px-5 text-xs md:text-sm"
               disabled={!(billNumber && vendorName && invoiceNumber) && true}
               onClick={async () => {
                 const res = await addPurchaseBill(
@@ -74,14 +74,14 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
               Save
             </button>
             <button
-              className="bg-gray-300 rounded p-2 px-5"
+              className="bg-gray-300 rounded py-2 px-3 md:px-5 text-xs md:text-sm"
               onClick={toggleModal}
             >
               Cancel
             </button>
           </div>
         </div>
-        <div className="mt-5 flex space-x-2 flex-wrap">
+        <div className="mt-5 md:flex md:space-x-2 flex-wrap">
           <div className="flex-1">
             <InputView
               setValue={setBillNumber}
@@ -109,10 +109,11 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
               setValue={setBillType}
               label={"Types"}
               data={["Sales", "Credit"]}
+              value={billType}
             />
           </div>
         </div>
-        <div className="mt-10 flex space-x-2">
+        <div className="md:mt-10 md:flex md:space-x-2">
           <div className="flex-1">
             <label
               htmlFor=""
@@ -130,7 +131,9 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
               onChange={(e) => {
                 setVendorName(e.target.value);
               }}
-              className="p-2 flex-1 border border-gray-400 rounded w-full text-sm"
+              className={`p-2 flex-1 border ${
+                vendorName ? "border-gray-400" : "border-red-500"
+              }  rounded w-full text-sm`}
             >
               <option className="capitalize"></option>
               {vendorList.map((d1) => (

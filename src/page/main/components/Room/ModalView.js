@@ -65,6 +65,7 @@ const ModalView = ({
                 "2 Single Bed",
               ]}
               setValue={setRoomType}
+              value={roomType}
             />
           </div>
           <ErrorMessage

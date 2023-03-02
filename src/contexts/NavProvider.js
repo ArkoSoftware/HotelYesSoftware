@@ -35,7 +35,7 @@ const NavProvider = ({ children }) => {
     });
     setAllUser(ar);
   }; 
-  const activeUser = allUser.find((u) => u.email === user.email); 
+  const activeUser = allUser?.find((u) => u?.email === user?.email); 
  
 
   useEffect(() => {

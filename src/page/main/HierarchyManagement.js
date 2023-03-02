@@ -109,7 +109,7 @@ const HierarchyManagement = () => {
                   </td>
                   <td className="text-center border border-gray-200 p-2 text-[10px]">
                     <select onChange={(e) => setRole(e.target.value)}>
-                      <option selected disabled>
+                      <option selected={true} disabled>
                         {data.role}
                       </option>
                       <option value="Admin">Admin</option>
@@ -118,7 +118,7 @@ const HierarchyManagement = () => {
                     </select>
                   </td>
                   <td className="text-center border border-gray-200 p-2 text-[10px]">
-                    siddharthaghimire@gmail.com
+                    {data.email}
                   </td>
                   <td className="text-center border border-gray-200 p-2 text-[10px]">
                     {loading ? (

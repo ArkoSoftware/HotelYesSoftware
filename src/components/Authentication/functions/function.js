@@ -1,13 +1,8 @@
 import { auth } from "../../../config/adminFirebase";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  sendEmailVerification,
+import { 
   signInWithEmailAndPassword,
   signOut,
-} from "firebase/auth";
-import { useEffect } from "react";
-import { useState } from "react";
+} from "firebase/auth"; 
 
 
 export const createNewAccount = async (email, password) => {

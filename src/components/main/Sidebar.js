@@ -17,26 +17,7 @@ const Sidebar = () => {
         isDark ? "bg-slate-800 border-slate-700" : "bg-gray-100"
       } fixed z-10`}
     >
-      <div className="my-5">
-        <div className="flex gap-2 px-4">
-          {activeUser?.role === "Admin" ? (
-            <button
-              className="p-3 bg-green-600 text-white mx-auto rounded my-2 w-[50%]"
-              onClick={() => setValue(true)}
-              style={{ fontSize: 8 }}
-            >
-              Admin Access
-            </button>
-          ) : (
-            <button
-              className="p-3 bg-green-600 text-white  mx-auto rounded my-2 w-[50%]"
-              onClick={() => setValue(false)}
-              style={{ fontSize: 8 }}
-            >
-              Front Access
-            </button>
-          )}
-        </div>
+      <div className="my-5"> 
         {value && activeUser?.role==="Admin" ? (
           <>
             {sidebar.tab.map((val, idx) => (

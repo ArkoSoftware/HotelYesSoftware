@@ -53,7 +53,7 @@ const NewPurchaseBill = ({ isOpen, toggleModal }) => {
           <span className="text-xl tracking-tighter  ">Purchase Bill</span>
           <div className="ml-auto flex space-x-3">
             <button
-              className="bg-green-700 disabled:bg-green-400 text-white rounded px-3 md:px-5 text-xs md:text-sm"
+              className="bg-green-700 disabled:bg-green-300 text-white rounded px-3 md:px-5 text-xs md:text-sm"
               disabled={!(billNumber && vendorName && invoiceNumber) && true}
               onClick={async () => {
                 const res = await addPurchaseBill(

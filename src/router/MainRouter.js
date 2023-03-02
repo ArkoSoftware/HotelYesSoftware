@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Sidebar from "../components/main/Sidebar";
 import * as TabPage from "../page/main";
@@ -6,10 +6,29 @@ import * as LowPage from "../page/secondary";
 import { UserContext } from "../contexts/context";
 import Navbar from "../components/main/Navbar";
 import { NavContext } from "../contexts/NavProvider";
+import { db } from "../config/adminFirebase";
+import { collection, getDocs } from "firebase/firestore/lite"; 
 
 const MainRouter = () => {
   const value = React.useContext(UserContext).admin;
-  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+  const { sideBarOn, setSideBarOn, user } = useContext(NavContext);
+  const { isAdmin, setIsAdmin } = useState({});
+
+  const getUsers = async () => {
+    const ar =[]
+    const querySnapshot = await getDocs(collection(db, "usersList"));
+    querySnapshot.forEach((doc) => {
+      if (doc?.data()?.email == user?.email) {
+        setIsAdmin(doc.data());
+      }
+    });
+  };
+
+  console.log(isAdmin)
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div className="">

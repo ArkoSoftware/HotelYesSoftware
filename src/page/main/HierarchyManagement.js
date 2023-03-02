@@ -2,8 +2,7 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDocs,
-  getFirestore,
+  getDocs, 
   updateDoc,
 } from "firebase/firestore/lite";
 import React from "react";

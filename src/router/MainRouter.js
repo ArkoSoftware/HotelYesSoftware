@@ -7,28 +7,11 @@ import { UserContext } from "../contexts/context";
 import Navbar from "../components/main/Navbar";
 import { NavContext } from "../contexts/NavProvider";
 import { db } from "../config/adminFirebase";
-import { collection, getDocs } from "firebase/firestore/lite"; 
+import { collection, getDocs } from "firebase/firestore/lite";
 
 const MainRouter = () => {
   const value = React.useContext(UserContext).admin;
-  const { sideBarOn, setSideBarOn, user } = useContext(NavContext);
-  const { isAdmin, setIsAdmin } = useState({});
-
-  const getUsers = async () => {
-    const ar =[]
-    const querySnapshot = await getDocs(collection(db, "usersList"));
-    querySnapshot.forEach((doc) => {
-      if (doc?.data()?.email == user?.email) {
-        setIsAdmin(doc.data());
-      }
-    });
-  };
-
-  console.log(isAdmin)
-
-  useEffect(() => {
-    getUsers();
-  }, []);
+  const { sideBarOn, setSideBarOn, user, activeUser } = useContext(NavContext);
 
   return (
     <div className="">
@@ -44,7 +27,7 @@ const MainRouter = () => {
           <div className="drawer-content z-50">
             {/* <!-- Page content here --> */}
             <div className="flex flex-row duration-500 relative h-full">
-              {value ? (
+              {value && activeUser?.role === "Admin" ? (
                 <Routes>
                   <Route path="/" element={<TabPage.Dashboard />} />
                   <Route

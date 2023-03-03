@@ -73,6 +73,7 @@ const NewMenuEntry = ({ isOpen, toggleModal, rerender, setRerender }) => {
               setValue={setCategory}
               label={"Category"}
               data={categoryList}
+              value={category}
             />
           </div>
           <div className="flex-1">

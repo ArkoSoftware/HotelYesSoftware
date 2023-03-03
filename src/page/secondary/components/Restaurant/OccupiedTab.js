@@ -13,8 +13,8 @@ export const OccupiedTab = ({ tableData, rerender, setRerender }) => {
   return (
     <div className=" flex flex-col">
       <div className="grid grid-cols-3 md:flex flex-row ">
-        {tableData.map((data) => (
-          <button
+        {tableData.map((data,idx) => (
+          <button key={idx}
             onClick={() => {
               setTableInfo(data);
               toggleModal();

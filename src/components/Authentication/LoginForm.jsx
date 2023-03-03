@@ -1,16 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { signIn } from "./functions/function";
-import { extreSmallFont, smallFont } from "../../theme"; 
+import { extreSmallFont, smallFont } from "../../theme";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
+
   const submitForm = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const form = event.target;
     const email = form.email.value;
-    const password = form.password.value; 
-    if (email != "" && password != "") {
+    const password = form.password.value;
+    if (email !== "" && password !== "") { 
       signIn(email, password)
+        .then((result) => {
+          toast.success("Login Successfully");
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
     }
   };
   return (
@@ -25,51 +33,54 @@ const LoginForm = () => {
         >
           Enter with correct credentials to avoid getting locked out
         </p>
-        <form className=" flex flex-col space-y-6" onSubmit={(e)=>submitForm(e)}>
-        <div className="">
-          <div className="flex flex-row">
-            <p
-              className=" tracking-tighter text-gray-600"
-              style={{ fontSize: extreSmallFont }}
-            >
-              You Email
-            </p>
-            <p className="text-sm text-red-600 ml-1">*</p>
-          </div>
-          <input
-            type="text"
-            name="email"
-            id=""
-            className="p-2 border border-gray-300 rounded mx-auto w-full"
-            style={{ fontSize: smallFont }}
-          />
-        </div>
-        <div className="">
-          <div className="flex flex-row">
-            <p
-              className=" tracking-tighter text-gray-600"
-              style={{ fontSize: extreSmallFont }}
-            >
-              You Password
-            </p>
-            <p className="text-sm text-red-600 ml-1">*</p>
-          </div>
-          <input
-            type="text"
-            name="password"
-            id=""
-            className="p-2 border border-gray-300 rounded mx-auto w-full"
-            style={{ fontSize: smallFont }}
-          />
-        </div>
-
-        <button 
-          className="bg-[#632F56] p-3 rounded-lg"
-          style={{ fontSize: smallFont }}
+        <form
+          className=" flex flex-col space-y-6"
+          onSubmit={(e) => submitForm(e)}
         >
-          <p className="text-white">Submit</p>
-        </button>
+          <div className="">
+            <div className="flex flex-row">
+              <p
+                className=" tracking-tighter text-gray-600"
+                style={{ fontSize: extreSmallFont }}
+              >
+                You Email
+              </p>
+              <p className="text-sm text-red-600 ml-1">*</p>
+            </div>
+            <input
+              type="text"
+              name="email"
+              id=""
+              className="p-2 border border-gray-300 rounded mx-auto w-full"
+              style={{ fontSize: smallFont }}
+            />
+          </div>
+          <div className="">
+            <div className="flex flex-row">
+              <p
+                className=" tracking-tighter text-gray-600"
+                style={{ fontSize: extreSmallFont }}
+              >
+                You Password
+              </p>
+              <p className="text-sm text-red-600 ml-1">*</p>
+            </div>
+            <input
+              type="text"
+              name="password"
+              id=""
+              className="p-2 border border-gray-300 rounded mx-auto w-full"
+              style={{ fontSize: smallFont }}
+            />
+          </div>
 
+          <button
+            className="bg-[#632F56] p-3 rounded-lg text-white"
+            style={{ fontSize: smallFont }}
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
 
         <div className=" border-t pt-3">

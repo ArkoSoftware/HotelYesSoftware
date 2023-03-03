@@ -10,39 +10,18 @@ import { NavContext } from "../../contexts/NavProvider";
 const Sidebar = () => {
   const value = React.useContext(UserContext).admin;
   const setValue = React.useContext(UserContext).setAdmin;
-  const { isDark, themeToggleHandler } = useContext(NavContext);
-
+  const { isDark, activeUser } = useContext(NavContext);  
   return (
     <div
       className={`w-60 h-screen dark:overflow-auto overflow-auto duration-300 border-t ${
         isDark ? "bg-slate-800 border-slate-700" : "bg-gray-100"
       } fixed z-10`}
     >
-      <div className="my-5">
-        
-        <div className="flex gap-2 px-4">
-          <button
-            className="p-3 bg-green-600 text-white mx-auto rounded my-2 w-[50%]"
-            onClick={() => setValue(true)} 
-            style={{ fontSize: 8 }}
-          >
-            Admin Access
-          </button>
-          <button
-            className="p-3 bg-green-600 text-white  mx-auto rounded my-2 w-[50%]"
-            onClick={() => setValue(false)}
-            style={{ fontSize: 8 }}
-          >
-            Front Access
-          </button>
-        </div>
-        {value ? (
+      <div className="my-5"> 
+        {value && activeUser?.role==="Admin" ? (
           <>
             {sidebar.tab.map((val, idx) => (
-              <Link
-                to={val[1]} 
-                key={idx}
-              >
+              <Link to={val[1]} key={idx}>
                 <div
                   className={` mx-4 rounded px-3 py-3  tracking-tighter ${
                     isDark

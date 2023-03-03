@@ -21,11 +21,18 @@ const DatePicker = ({ label, setValue, value }) => {
   return (
     <>
       <label htmlFor="" className="text-gray-600" style={{ fontSize: 12 }}>
-        {label}
+        {label}{" "}
+        {(!value || value == "Select Date") && (
+          <span className="text-red-500 text-[10px]">* Select {label}</span>
+        )}
       </label>
       <button
         onClick={toggleModal}
-        className="p-2 border text-sm border-gray-400 rounded w-full text-left text-black"
+        className={`p-2 border text-sm ${
+          !value || value == "Select Date"
+            ? "border-red-500"
+            : "border-gray-400"
+        }  rounded w-full text-left text-black`}
       >
         {value == "Select Date"
           ? value

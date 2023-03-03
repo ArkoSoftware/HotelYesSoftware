@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Sidebar from "../components/main/Sidebar";
 import * as TabPage from "../page/main";
@@ -6,10 +6,12 @@ import * as LowPage from "../page/secondary";
 import { UserContext } from "../contexts/context";
 import Navbar from "../components/main/Navbar";
 import { NavContext } from "../contexts/NavProvider";
+import { db } from "../config/adminFirebase";
+import { collection, getDocs } from "firebase/firestore/lite";
 
 const MainRouter = () => {
   const value = React.useContext(UserContext).admin;
-  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+  const { sideBarOn, setSideBarOn, user, activeUser } = useContext(NavContext);
 
   return (
     <div className="">
@@ -25,7 +27,7 @@ const MainRouter = () => {
           <div className="drawer-content z-50">
             {/* <!-- Page content here --> */}
             <div className="flex flex-row duration-500 relative h-full">
-              {value ? (
+              {value && activeUser?.role === "Admin" ? (
                 <Routes>
                   <Route path="/" element={<TabPage.Dashboard />} />
                   <Route

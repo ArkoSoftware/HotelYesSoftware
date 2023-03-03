@@ -21,7 +21,7 @@ const InputView = ({ label, setValue, value }) => {
         value={value}
         placeholder={label}
         type="text"
-        className="p-2 border border-gray-400 rounded w-full"
+        className={`p-2 border ${value?"border-gray-400":"border-red-500 placeholder:text-red-400"}  rounded w-full`}
         style={{ fontSize: smallFont }}
         name=""
         id=""

@@ -7,7 +7,6 @@ import {
 } from "./functions/function";
 import { db } from "../../../../config/adminFirebase";
 import { collection, getDocs } from "firebase/firestore/lite";
-
 const EntryRow = ({
   data,
   index,
@@ -19,7 +18,6 @@ const EntryRow = ({
 }) => {
   const [name, setName] = useState(data[0]);
   const [quantity, setQuantity] = useState(data[1] || 1);
-
   const getTotal = (temp) => {
     let sum = 0;
     for (let i = 0; i < temp.length; i++) {
@@ -29,9 +27,7 @@ const EntryRow = ({
   };
   const addValue = function (val, field) {
     var value;
-
     const temp = numRows;
-
     temp[index][field] = val;
     setNumRows(temp);
     setValue(temp);
@@ -51,7 +47,7 @@ const EntryRow = ({
         onClick={() => removeRow(index)}
         className="w-20 text-sm border border-gray-200 p-3 flex"
       >
-        <IoCloseCircle className="my-auto" color="#2f2f2f" />
+        <IoCloseCircle className="my-auto" color="#2F2F2F" />
         <span className="ml-auto " style={{ fontSize: 10 }}>
           {index + 1}
         </span>
@@ -74,7 +70,6 @@ const EntryRow = ({
         value={quantity}
         onChange={(e) => {
           setQuantity(e.target.value);
-
           addValue(e.target.value, 1);
         }}
         className="flex-1 text-sm border border-gray-200 p-3"
@@ -90,7 +85,6 @@ const EntryRow = ({
     </div>
   );
 };
-
 const OrderTable = ({
   setValue,
   total,
@@ -110,7 +104,6 @@ const OrderTable = ({
     snap.forEach((docs) => {
       arr.push(docs.data());
     });
-
     setFoodList(arr);
   };
   useEffect(() => {
@@ -134,7 +127,6 @@ const OrderTable = ({
     setNumRows([...arr]);
     getTotal(numRows, setTotal);
   }
-
   return (
     <div className="rounded-xl">
       <div className="flex w-screen md:w-full bg-gray-200 border border-gray-300 p-3">
@@ -207,5 +199,4 @@ const OrderTable = ({
     </div>
   );
 };
-
 export default OrderTable;

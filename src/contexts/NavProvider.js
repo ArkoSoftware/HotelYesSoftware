@@ -1,7 +1,8 @@
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { collection, getDocs } from "firebase/firestore/lite";
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
-import { auth } from "../config/adminFirebase";
+import { auth, db } from "../config/adminFirebase";
 
 export const NavContext = createContext();
 
@@ -24,12 +25,28 @@ const NavProvider = ({ children }) => {
     return updateProfile(auth.currentUser, profile);
   };
 
+  const [allUser, setAllUser] = useState([]); 
+
+  const getUsers = async () => {
+    const ar = [];
+    const querySnapshot = await getDocs(collection(db, "usersList"));
+    querySnapshot.forEach((doc) => {
+      ar.push(doc.data());
+    });
+    setAllUser(ar);
+  }; 
+  const activeUser = allUser?.find((u) => u?.email === user?.email); 
+ 
+
+  useEffect(() => {
+    getUsers();
+  }, [user]);
+
   // code for get the logged in user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-
     return () => unsubscribe();
   }, [user]);
 
@@ -39,7 +56,7 @@ const NavProvider = ({ children }) => {
     user,
     isDark,
     themeToggleHandler,
-    updateUserProfile,
+    updateUserProfile,activeUser
   };
   return <NavContext.Provider value={navInfo}>{children}</NavContext.Provider>;
 };

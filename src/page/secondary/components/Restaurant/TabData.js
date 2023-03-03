@@ -18,8 +18,9 @@ export const TabData = ({ tableData, rerender, setRerender }) => {
   return (
     <div className=" flex flex-col">
       <div className="grid grid-cols-3 md:flex flex-row  flex-wrap ">
-        {tableData.map((data) => (
+        {tableData.map((data, idx) => (
           <button
+            key={idx}
             onClick={() => {
               setTableInfo(data);
               toggleModal();

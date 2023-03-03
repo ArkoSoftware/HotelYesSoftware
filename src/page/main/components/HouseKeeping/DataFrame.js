@@ -3,28 +3,37 @@ import { IoChevronDown } from "react-icons/io5";
 
 const DataFrame = ({ data, title }) => {
   return (
-    <div className="w-full border border-gray-300 flex flex-col">
-      <div className="w-full bg-gray-300 p-2" style={{ display: "flex" }}>
-        <div className="md:w-16">S.N.</div>
-        {title.map((t) => (
-          <div className="flex-1 text-center">{t}</div>
-        ))}
-      </div>
-      {data.map((t, index) => (
-        <div className="w-full" style={{ display: "flex", fontSize: 12 }}>
-          <div className="md:w-16 border border-gray-100 p-3">{index + 1}</div>
-          <div className="flex-1 border border-gray-100 p-3">{t.billId}</div>
-          <div className="flex-1 border border-gray-100 p-3">{t.rooms}</div>
-          <div className="flex-1 border border-gray-100 p-3">{t.date}</div>
-          <div className="flex-1 border border-gray-100 p-3">{t.price}</div>
-          <div className="flex-1 border border-gray-100 flex">
-            <div className=" p-3">{t.delivered}</div>
-            <button className="ml-auto bg-black rounded m-1 px-2">
-              <IoChevronDown size={12} color="#fff" />
-            </button>
-          </div>
-        </div>
-      ))}
+    <div className="overflow-x-auto">
+      <table className="table-normal w-full border">
+        <thead className="bg-gray-300 border">
+          <tr>
+            <th className="text-center font-normal py-2">S.N.</th>
+            {title.map((t) => (
+              <th className="text-center font-normal py-2">{t}</th>
+            ))}
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((t, index) => (
+            <tr>
+              <th className="font-normal text-center text-xs py-2 border">
+                {index + 1}
+              </th>
+              <td className="text-center text-xs py-2 border">{t.billId}</td>
+              <td className="text-center text-xs py-2 border">{t.rooms}</td>
+              <td className="text-center text-xs py-2 border">{t.date}</td>
+              <td className="text-center text-xs py-2 border">{t.price}</td>
+              <td className="text-center text-xs py-2 border">{t.delivered}</td>
+              <td className="py-2 border">
+                <button className="flex mx-auto p-1 bg-black rounded ">
+                  <IoChevronDown size={12} color="#fff" />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

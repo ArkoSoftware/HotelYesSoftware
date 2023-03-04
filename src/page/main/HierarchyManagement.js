@@ -101,7 +101,7 @@ const HierarchyManagement = () => {
                     {data.name}
                   </td>
                   <td className="text-center border border-gray-200 p-2 text-[10px]">
-                    <select onChange={(e) => setRole(e.target.value)}>
+                    <select onChange={(e) => setRole(e.target.value)} className="outline-none">
                       <option selected={true} disabled>
                         {data.role}
                       </option>

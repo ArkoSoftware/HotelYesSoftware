@@ -121,7 +121,7 @@ export const RoomTab = ({
           )}
         </div>
       )}
-      {isOpen ? (
+      {isOpen ? ( 
         <ModalView
           rerender={rerender}
           setRerender={setRerender}

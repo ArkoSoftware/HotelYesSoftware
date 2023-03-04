@@ -15,6 +15,7 @@ const EntryRow = ({
   setNumRows,
   setValue,
   setTotal,
+  foodList,
 }) => {
   const [name, setName] = useState(data[0]);
   const [quantity, setQuantity] = useState(data[1] || 1);

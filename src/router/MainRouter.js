@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+import React, { useContext } from "react";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import Sidebar from "../components/main/Sidebar";
 import * as TabPage from "../page/main";
 import * as LowPage from "../page/secondary";
 import { UserContext } from "../contexts/context";
 import Navbar from "../components/main/Navbar";
 import { NavContext } from "../contexts/NavProvider";
-import { db } from "../config/adminFirebase";
-import { collection, getDocs } from "firebase/firestore/lite";
+import ErrorPage from "../page/ErrorPage";
 
 const MainRouter = () => {
   const value = React.useContext(UserContext).admin;
@@ -60,6 +59,7 @@ const MainRouter = () => {
                     path="/vendor/info/bill"
                     element={<TabPage.BillPage />}
                   />
+                  <Route path="*" element={<ErrorPage />} />
                 </Routes>
               ) : (
                 <Routes>
@@ -97,8 +97,8 @@ const MainRouter = () => {
                     path="/vendor/info/bill"
                     element={<TabPage.BillPage />}
                   />
-
                   <Route path="/setting" element={<LowPage.Setting />} />
+                  <Route path="*" element={<ErrorPage />} />
                 </Routes>
               )}
             </div>

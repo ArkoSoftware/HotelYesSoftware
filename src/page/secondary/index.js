@@ -7,4 +7,4 @@ export { default as Setting } from "./Setting";
 export { default as Checkout } from "./components/Restaurant/Checkout";
 export { default as CheckoutRoom } from "./components/Room/Checkout";
 export { default as Finance } from "./Finance";
-export { default as DailyBook } from "./DailyBook";
+export { default as DailyBook } from "./DailyBook"; 

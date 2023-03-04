@@ -78,7 +78,6 @@ const ModalView = ({
   const [showError, setShowError] = useState("");
 
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
-
   const emptyField = () => {
     setCustomerName("");
     setPhoneNumber("");
@@ -131,7 +130,27 @@ const ModalView = ({
     }
   };
   const validateData = () => {
-    if (customerName == "" || checkInDate == "") {
+    if (
+      customerName == "" ||
+      checkInDate == "" ||
+      phoneNumber == "" ||
+      nationality == "" ||
+      idNo == "" ||
+      address == "" ||
+      email == "" ||
+      noOfNights == "" ||
+      advance == "" ||
+      goingTo == "" ||
+      purpose == "" ||
+      occupation == "" ||
+      method == "" ||
+      billNo == "" ||
+      vehicleNo == "" ||
+      roomRate == "" ||
+      advance == "" ||
+      noOfGuests == "" ||
+      checkOutDate == ""
+    ) {
       setShowError(true);
     } else {
       return true;
@@ -174,27 +193,41 @@ const ModalView = ({
                   required={true}
                   label={"Customer Name"}
                   value={customerName}
+                  error={showError}
                   setValue={setCustomerName}
                 />
                 <InputView
                   label={"Phone Number"}
                   value={phoneNumber}
+                  error={showError}
                   setValue={setPhoneNumber}
                 />
                 <InputView
                   label={"Nationality"}
                   value={nationality}
                   setValue={setNationality}
+                  error={showError}
                 />
               </div>
               <div className="flex flex-col md:flex-row md:space-x-6">
-                <InputView label={"Id No:"} value={idNo} setValue={setIdNo} />
+                <InputView
+                  label={"Id No:"}
+                  value={idNo}
+                  error={showError}
+                  setValue={setIdNo}
+                />
                 <InputView
                   label={"Address"}
                   value={address}
                   setValue={setAddress}
+                  error={showError}
                 />
-                <InputView label={"Email:"} value={email} setValue={setEmail} />
+                <InputView
+                  label={"Email:"}
+                  value={email}
+                  error={showError}
+                  setValue={setEmail}
+                />
               </div>
               <div className="flex flex-col md:flex-row md:space-x-6">
                 <div className="flex flex-col w-full">
@@ -210,6 +243,7 @@ const ModalView = ({
                     label={"Check Out Date"}
                     setValue={setCheckOutDate}
                     value={checkOutDate}
+                    error={showError}
                   />
                 </div>
 
@@ -217,6 +251,7 @@ const ModalView = ({
                   label={"No. of Nights:"}
                   value={noOfNights}
                   setValue={setNoOfNights}
+                  error={showError}
                 />
               </div>
             </div>
@@ -226,22 +261,26 @@ const ModalView = ({
               label={"Arrived From:"}
               value={arrivedFrom}
               setValue={setArrivedFrom}
+              error={showError}
             />
             <InputView
               label={"Going To:"}
               value={goingTo}
               setValue={setGoingTo}
+              error={showError}
             />
             <InputView
               label={"Purpose Of Visit:"}
               value={purpose}
               setValue={setPurpose}
+              error={showError}
             />
 
             <InputView
               label={"Occupation:"}
               value={occupation}
               setValue={setOccupation}
+              error={showError}
             />
           </div>
 
@@ -250,12 +289,19 @@ const ModalView = ({
               label={"Method Of Payment"}
               value={method}
               setValue={setMethod}
+              error={showError}
             />
-            <InputView label={"Bill No."} value={billNo} setValue={setBillNo} />
+            <InputView
+              label={"Bill No."}
+              error={showError}
+              value={billNo}
+              setValue={setBillNo}
+            />
             <InputView
               label={"Vehicle No."}
               value={vehicleNo}
               setValue={setVehicleNo}
+              error={showError}
             />
           </div>
           <div className="my-4 mb-0 flex flex-col md:flex-row md:space-x-8 border border-gray-700 bg-gray-200 p-4 rounded-xl">
@@ -263,21 +309,24 @@ const ModalView = ({
               label={"Room Rate"}
               value={roomRate}
               setValue={setRoomRate}
+              error={showError}
             />
             <InputView
               label={"Advance Payment"}
               value={advance}
               setValue={setAdvance}
+              error={showError}
             />
             <SelectView
               label={"Room Rate Type"}
               data={["EP", "BB", "MAP", "AP"]}
-              setValue={setRoomRateType}
+              setValue={setRoomRateType} 
             />
             <InputView
               label={"No. Of Guests"}
               value={noOfGuests}
               setValue={setNoOfGuests}
+              error={showError}
             />
           </div>
           <div className="mt-3">

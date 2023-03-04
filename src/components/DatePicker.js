@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-const DatePicker = ({ label, setValue, value, required }) => {
+const DatePicker = ({ label, setValue, value, error, required }) => {
   const [selected, setSelected] = React.useState(new Date());
   const [isDateOpen, setDateIsOpen] = useState(false);
   function toggleModal(e) {
@@ -24,7 +24,7 @@ const DatePicker = ({ label, setValue, value, required }) => {
         <label htmlFor="" className="text-gray-600" style={{ fontSize: 11 }}>
           {label}
         </label>
-        {!value ? (
+        {!value && error ? (
           <span className="text-[10px] text-red-600">* Select {label}</span>
         ) : (
           <>
@@ -34,7 +34,9 @@ const DatePicker = ({ label, setValue, value, required }) => {
       </div>
       <button
         onClick={toggleModal}
-        className={`p-2 border ${value?"border-gray-400":"border-red-500"}  rounded w-full text-left text-gray-400`}
+        className={`p-2 border ${
+          !value && error ? "border-red-500" : "border-gray-400"
+        }  rounded w-full text-left text-gray-400`}
         style={{ fontSize: 10 }}
       >
         {value == "" ? "Select Date" : new Date(parseInt(value)).toDateString()}

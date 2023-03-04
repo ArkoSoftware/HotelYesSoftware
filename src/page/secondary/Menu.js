@@ -7,6 +7,7 @@ import { collection, getDocs } from "firebase/firestore/lite";
 import { db } from "../../config/adminFirebase";
 import { largeFont } from "../../theme"; 
 import DataFrame from "./components/Menu/DataFrame";
+import Loader from "../../components/Loader/Loader";
 
 let title = ["Food Name", "Category", "Recipe", "Price"];
 const Menu = () => {
@@ -72,13 +73,7 @@ const Menu = () => {
         </div>
         {!dataList.length ? (
           <div className="absolute top-[30%] left-0 right-0 mx-auto flex justify-center">
-            <RotatingLines
-              strokeColor="#00af41"
-              strokeWidth="5"
-              animationDuration="0.75"
-              width="76"
-              visible={true}
-            />
+            <Loader/>
           </div>
         ) : (
           <div className="pl-1 md:px-12 md:pb-8">

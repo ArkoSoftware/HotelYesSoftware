@@ -5,7 +5,7 @@ const Loader = () => {
   return (
     <div className="flex justify-center py-2">
       <RotatingLines
-        strokeColor="#4fa94d"
+        strokeColor="#00af41"
         strokeWidth="5"
         animationDuration="0.75"
         width="46"

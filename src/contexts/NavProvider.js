@@ -11,6 +11,8 @@ const NavProvider = ({ children }) => {
   const [sideBarOn, setSideBarOn] = useState(true);
   const [user, setUser] = useState(null);
   const [isDark, setIsDark] = useState(false);
+  const [allUser, setAllUser] = useState([]); 
+
 
   useEffect(() => {
     setIsDark(JSON.parse(localStorage.getItem("colorTheme") || false));
@@ -25,7 +27,6 @@ const NavProvider = ({ children }) => {
     return updateProfile(auth.currentUser, profile);
   };
 
-  const [allUser, setAllUser] = useState([]); 
 
   const getUsers = async () => {
     const ar = [];
@@ -35,7 +36,7 @@ const NavProvider = ({ children }) => {
     });
     setAllUser(ar);
   }; 
-  const activeUser = allUser?.find((u) => u?.email === user?.email); 
+  const activeUser = allUser?.find((u) => u?.email === user?.email);  
  
 
   useEffect(() => {

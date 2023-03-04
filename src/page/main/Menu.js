@@ -10,16 +10,15 @@ import { extreSmallFont, largeFont } from "../../theme";
 import { NavContext } from "../../contexts/NavProvider";
 import { CiSearch } from "react-icons/ci";
 import { RotatingLines } from "react-loader-spinner";
+import Loader from "../../components/Loader/Loader";
 
- 
 let title = ["Food Name", "Category", "Recipe", "Price", "Action"];
 const Menu = () => {
-  const [rerender, setRerender] = useState(false); 
+  const [rerender, setRerender] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [openPurchaseBill, setOpenPurchaseBill] = useState(false);
   const [openAddCategory, setAddCategory] = useState(false);
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
-
 
   function toggleModal3(e) {
     setOpenPurchaseBill(!openPurchaseBill);
@@ -35,7 +34,7 @@ const Menu = () => {
     const arr = [];
     snap.forEach((docs) => {
       arr.push({ ...docs.data(), id: docs.id });
-    });  
+    });
     setDataList(arr);
   };
 
@@ -103,15 +102,7 @@ const Menu = () => {
           </div>
         </div>
         {!dataList.length ? (
-          <div className="absolute top-[30%] left-0 right-0 mx-auto flex justify-center">
-            <RotatingLines
-              strokeColor="#00af41"
-              strokeWidth="5"
-              animationDuration="0.75"
-              width="76"
-              visible={true}
-            />
-          </div>
+          <Loader />
         ) : (
           <div className="pl-1 md:px-12 md:pb-8">
             <DataFrame

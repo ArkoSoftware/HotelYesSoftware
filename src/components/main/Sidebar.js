@@ -1,6 +1,6 @@
 import React from "react";
 import sidebar from "../../data/sidebar.json";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { signOutFromAccount } from "../Authentication/functions/function";
 import { UserContext } from "../../contexts/context";
 import { extreSmallFont } from "../../theme";
@@ -10,24 +10,30 @@ import { NavContext } from "../../contexts/NavProvider";
 const Sidebar = () => {
   const value = React.useContext(UserContext).admin;
   const setValue = React.useContext(UserContext).setAdmin;
-  const { isDark, activeUser } = useContext(NavContext);  
+  const { isDark, activeUser } = useContext(NavContext);
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <div
       className={`w-60 h-screen dark:overflow-auto overflow-auto duration-300 border-t ${
         isDark ? "bg-slate-800 border-slate-700" : "bg-gray-100"
       } fixed z-10`}
     >
-      <div className="my-5"> 
-        {value && activeUser?.role==="Admin" ? (
+      <div className="my-5">
+        {value && activeUser?.role === "Admin" ? (
           <>
             {sidebar.tab.map((val, idx) => (
               <Link to={val[1]} key={idx}>
                 <div
                   className={` mx-4 rounded px-3 py-3  tracking-tighter ${
-                    isDark
-                      ? "text-white hover:bg-gray-700"
-                      : "hover:bg-gray-300 text-gray-700"
-                  } `}
+                    (location.pathname == val[1] && isDark && "bg-gray-700") ||
+                    (location.pathname == val[1] && !isDark && "bg-gray-300")
+                  }
+                   ${
+                     isDark
+                       ? "text-white hover:bg-gray-700"
+                       : "hover:bg-gray-300 text-gray-700"
+                   } `}
                   style={{ fontSize: extreSmallFont }}
                 >
                   {val[0]}

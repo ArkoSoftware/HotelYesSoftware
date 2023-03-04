@@ -2,7 +2,7 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDocs, 
+  getDocs,
   updateDoc,
 } from "firebase/firestore/lite";
 import React from "react";
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { db } from "../../config/adminFirebase";
 import { Bars, RotatingLines } from "react-loader-spinner";
+import Loader from "../../components/Loader/Loader";
 
 const HierarchyManagement = () => {
   const [usersList, setUsersList] = useState([]);
@@ -68,15 +69,7 @@ const HierarchyManagement = () => {
 
       <div className="overflow-x-auto px-12 pb-8">
         {!usersList.length ? (
-          <div className="absolute top-[30%] left-0 right-0 mx-auto flex justify-center">
-            <RotatingLines
-              strokeColor="#00af41"
-              strokeWidth="5"
-              animationDuration="0.75"
-              width="76"
-              visible={true}
-            />
-          </div>
+          <Loader />
         ) : (
           <table className="w-full">
             <thead>

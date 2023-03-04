@@ -12,7 +12,6 @@ const Sidebar = () => {
   const setValue = React.useContext(UserContext).setAdmin;
   const { isDark, activeUser } = useContext(NavContext);
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <div
       className={`w-60 h-screen dark:overflow-auto overflow-auto duration-300 border-t ${
@@ -46,7 +45,11 @@ const Sidebar = () => {
             {sidebar.secondary.map((val, idx) => (
               <Link to={val[1]} key={idx}>
                 <div
-                  className={`mx-4 rounded px-3 py-3 text-sm  tracking-tighter ${
+                  className={`mx-4 rounded px-3 py-3 text-sm  tracking-tighter
+                  ${
+                    (location.pathname == val[1] && isDark && "bg-gray-700") ||
+                    (location.pathname == val[1] && !isDark && "bg-gray-300")
+                  } ${
                     isDark
                       ? "text-white hover:bg-gray-700"
                       : "hover:bg-gray-300 text-gray-700"

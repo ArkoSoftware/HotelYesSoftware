@@ -16,7 +16,7 @@ const CheckoutRoom = () => {
   const [orderList, setOrderList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [itemList, setItemList] = useState([]);
-  const [numOfNights, setNumOfNights] = useState();
+  const [numOfNights, setNumOfNights] = useState(0);
   const state = useLocation().state;
   const [displayTotal, setDisplayTotal] = useState(0);
   const [price, setPrice] = useState();
@@ -36,6 +36,9 @@ const CheckoutRoom = () => {
         discount,
     });
   };
+
+  console.log(data);
+
   const getAllData = async () => {
     let order;
     let allKeys = {};
@@ -61,9 +64,14 @@ const CheckoutRoom = () => {
         (new Date().getTime() - 86400000 - data.checkInDate) / 86400000;
 
       setNumOfNights(Math.round(numOfNights));
+    } else {
+      setNumOfNights(data.noOfNights);
     }
     if (state.roomRate == null || state.roomRate == "") {
       setPrice(parseInt(state.roomOriginalPrice));
+    }
+    else{
+      setPrice(data.roomRate)
     }
     setOrderBillTotal(total);
     setOrderList(arr);

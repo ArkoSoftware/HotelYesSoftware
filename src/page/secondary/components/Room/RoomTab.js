@@ -17,7 +17,7 @@ export const RoomTab = ({
   const [type, setType] = useState();
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
-  const toggleModal = () => {
+  const toggleModal = () => { 
     setIsOpen(!isOpen);
     setSideBarOn(!sideBarOn);
   };

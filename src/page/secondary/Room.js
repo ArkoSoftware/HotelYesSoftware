@@ -33,19 +33,6 @@ const Room = () => {
     setDirty(arr.arr4);
   };
 
-  const deleteRoom = async (id) => {
-    setLoading(true);
-    await deleteDoc(doc(db, "roomList", id))
-      .then(() => {
-        toast.success("Room Deleted Successfully.");
-        setLoading(false);
-      })
-      .catch((err) => {
-        toast.error("Room isn't Deleted");
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
     getAllData();
   }, [rerender, loading]);
@@ -89,8 +76,7 @@ const Room = () => {
             available={available}
             booked={booked}
             reserved={reserved}
-            dirty={dirty}
-            deleteRoom={deleteRoom}
+            dirty={dirty} 
           />
         </div>
       </div>

@@ -245,14 +245,7 @@ const ModalView = ({
                     value={checkOutDate}
                     error={showError}
                   />
-                </div>
-
-                <InputView
-                  label={"No. of Nights:"}
-                  value={noOfNights}
-                  setValue={setNoOfNights}
-                  error={showError}
-                />
+                </div> 
               </div>
             </div>
           </div>

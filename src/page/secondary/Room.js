@@ -4,11 +4,7 @@ import { RoomTab } from "./components/Room/RoomTab";
 import { useEffect } from "react";
 import { getRoomList } from "./components/Room/functions/function";
 import { useState } from "react";
-import DatePicker from "./components/Room/components/DatePicker";
-import { deleteDoc, doc } from "firebase/firestore/lite";
-import { db } from "../../config/adminFirebase";
-import toast from "react-hot-toast";
-import { setDate } from "date-fns";
+import DatePicker from "./components/Room/components/DatePicker"; 
 
 const Room = () => {
   const [rerender, setRerender] = useState(false);
@@ -16,8 +12,7 @@ const Room = () => {
   const [booked, setBooked] = useState([]);
   const [reserved, setReserved] = useState([]);
   const [dirty, setDirty] = useState([]);
-  const [selectDate, setSelectDate] = useState(new Date().getTime());
-  const [todayAvailable, setTodayAvailable] = useState([]);
+  const [selectDate, setSelectDate] = useState(new Date().getTime()); 
 
   const [loading, setLoading] = useState(false);
 

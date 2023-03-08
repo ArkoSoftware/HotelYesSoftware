@@ -38,7 +38,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Available Room
               </h4>
-              <div className="grid grid-cols-2 gap-4 md:flex flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {available.map((item, idx) => (
                   <div className="md:p-4" key={idx}>
                     <RoomCard
@@ -58,7 +58,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Reserved Room
               </h4>
-              <div className="flex flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {reserved.map((item, idx) => (
                   <div
                     className="p-4"
@@ -83,7 +83,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Booked Room
               </h4>
-              <div className="flex flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {booked.map((item, idx) => (
                   <div
                     className="p-4"
@@ -108,7 +108,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Dirty Room
               </h4>
-              <div className="flex flex-row flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {dirty.map((item, idx) => (
                   <div className="p-4" key={idx}>
                     <RoomCardDirty item={item} />
@@ -148,7 +148,7 @@ export const RoomCard = ({ item, setState, setIsOpen, isOpen, setType }) => {
           setType("NewRoom");
           setSideBarOn(!sideBarOn);
         }}
-        className="bg-gray-200 w-36 h-36 rounded-2xl flex flex-col p-4"
+        className="bg-gray-200 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4"
       >
         <div
           className="text-2xl text-center my-3 mx-auto"
@@ -189,7 +189,7 @@ export const RoomCardReserved = ({
         setIsOpen(!isOpen);
         setType("Reserve");
       }}
-      className="border border-orange-500 bg-orange-100 w-36 h-36 rounded-2xl flex flex-col p-4"
+      className="border border-orange-500 bg-orange-100 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4"
     >
       <div
         className="text-2xl text-center my-3 mx-auto"
@@ -229,7 +229,7 @@ export const RoomCardBooked = ({
         setIsOpen(!isOpen);
         setType("Booked");
       }}
-      className="border border-green-500 bg-green-100 w-36 h-36 rounded-2xl flex flex-col p-4"
+      className="border border-green-500 bg-green-100 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4"
     >
       <div
         className="text-2xl text-center my-3 mx-auto"
@@ -257,7 +257,7 @@ export const RoomCardBooked = ({
 };
 export const RoomCardDirty = ({ item }) => {
   return (
-    <div className="border border-red-500 bg-red-100 w-36 h-36 rounded-2xl flex flex-col p-4">
+    <div className="border border-red-500 bg-red-100 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4">
       <div
         className="text-2xl text-center my-3 mx-auto"
         style={{ fontSize: mediumFont }}

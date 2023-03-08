@@ -76,6 +76,7 @@ const ModalView = ({
   const [roomRateType, setRoomRateType] = useState("EP");
   const [noOfGuests, setNoOfGuests] = useState("");
   const [showError, setShowError] = useState("");
+  const [showErrorReserve, setShowErrorReserve] = useState("");
 
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
   const emptyField = () => {
@@ -147,11 +148,17 @@ const ModalView = ({
       billNo == "" ||
       vehicleNo == "" ||
       roomRate == "" ||
-      advance == "" ||
-      noOfGuests == "" ||
-      checkOutDate == ""
+      !(/^\d+$/.test(advance))
     ) {
       setShowError(true);
+    } else {
+      return true;
+    }
+  };
+  const validateReserveData = () => {
+    if (customerName == "" || !(/^\d+$/.test(advance)) || !(/^\d+$/.test(roomRate))) { 
+      alert(!(/^\d+$/.test("f")))
+      setShowErrorReserve(true);
     } else {
       return true;
     }
@@ -193,7 +200,7 @@ const ModalView = ({
                   required={true}
                   label={"Customer Name"}
                   value={customerName}
-                  error={showError}
+                  error={showError || showErrorReserve}
                   setValue={setCustomerName}
                 />
                 <InputView
@@ -246,13 +253,6 @@ const ModalView = ({
                     error={showError}
                   />
                 </div>
-
-                <InputView
-                  label={"No. of Nights:"}
-                  value={noOfNights}
-                  setValue={setNoOfNights}
-                  error={showError}
-                />
               </div>
             </div>
           </div>
@@ -309,18 +309,18 @@ const ModalView = ({
               label={"Room Rate"}
               value={roomRate}
               setValue={setRoomRate}
-              error={showError}
+              error={showError || showErrorReserve}
             />
             <InputView
               label={"Advance Payment"}
               value={advance}
               setValue={setAdvance}
-              error={showError}
+              error={showError || showErrorReserve}
             />
             <SelectView
               label={"Room Rate Type"}
               data={["EP", "BB", "MAP", "AP"]}
-              setValue={setRoomRateType} 
+              setValue={setRoomRateType}
             />
             <InputView
               label={"No. Of Guests"}
@@ -332,7 +332,7 @@ const ModalView = ({
           <div className="mt-3">
             <ErrorMessage
               message={"Complete all the field with * "}
-              show={showError}
+              show={showError || showErrorReserve}
             />
           </div>
           {type == "NewRoom" && (
@@ -380,7 +380,7 @@ const ModalView = ({
               </button>
               <button
                 onClick={() => {
-                  if (validateData()) {
+                  if (validateReserveData()) {
                     addData({
                       customerName,
                       phoneNumber,

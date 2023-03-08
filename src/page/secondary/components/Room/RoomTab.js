@@ -11,14 +11,13 @@ export const RoomTab = ({
   dirty,
   rerender,
   setRerender,
-  deleteRoom,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState([]);
   const [type, setType] = useState();
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
-  const toggleModal = () => {
+  const toggleModal = () => { 
     setIsOpen(!isOpen);
     setSideBarOn(!sideBarOn);
   };
@@ -39,7 +38,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Available Room
               </h4>
-              <div className="grid grid-cols-2 gap-4 md:flex flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {available.map((item, idx) => (
                   <div className="md:p-4" key={idx}>
                     <RoomCard
@@ -48,7 +47,6 @@ export const RoomTab = ({
                       setIsOpen={setIsOpen}
                       isOpen={isOpen}
                       setType={setType}
-                      deleteRoom={deleteRoom}
                     />
                   </div>
                 ))}
@@ -60,7 +58,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Reserved Room
               </h4>
-              <div className="flex flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {reserved.map((item, idx) => (
                   <div
                     className="p-4"
@@ -85,7 +83,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Booked Room
               </h4>
-              <div className="flex flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {booked.map((item, idx) => (
                   <div
                     className="p-4"
@@ -110,7 +108,7 @@ export const RoomTab = ({
               <h4 className=" pb-0 mt-4 text-xl" style={{ fontSize: 12 }}>
                 Dirty Room
               </h4>
-              <div className="flex flex-row flex-wrap">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-8 gap-5 md:gap-0">
                 {dirty.map((item, idx) => (
                   <div className="p-4" key={idx}>
                     <RoomCardDirty item={item} />
@@ -138,37 +136,11 @@ export const RoomTab = ({
   );
 };
 
-export const RoomCard = ({
-  item,
-  setState,
-  setIsOpen,
-  isOpen,
-  setType,
-  deleteRoom,
-}) => {
+export const RoomCard = ({ item, setState, setIsOpen, isOpen, setType }) => {
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
   return (
     <div className="relative">
-      <div className="dropdown dropdown-left absolute right-3 top-1">
-        <button
-          tabIndex={0}
-          className="border duration-500 border-transparent hover:border-green-600 hover:bg-green-500 hover:text-white p-1 rounded-full"
-        >
-          <IoEllipsisVertical size={10} />
-        </button>
-        <div
-          tabIndex={0}
-          className="dropdown-content menu bg-base-100 p-2 shadow rounded-box w-20 mr-4"
-        >
-          <button
-            onClick={() => deleteRoom(item.id)}
-            className="py-2 bg-red-700 hover:bg-red-800 rounded text-white text-center"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
       <button
         onClick={() => {
           setState(item);
@@ -176,7 +148,7 @@ export const RoomCard = ({
           setType("NewRoom");
           setSideBarOn(!sideBarOn);
         }}
-        className="bg-gray-200 w-36 h-36 rounded-2xl flex flex-col p-4"
+        className="bg-gray-200 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4"
       >
         <div
           className="text-2xl text-center my-3 mx-auto"
@@ -198,12 +170,7 @@ export const RoomCard = ({
           >
             {item.type}
           </div>
-        )}
-
-        <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
-          <div className="mr-2 ">Price:</div>
-          <div className="">Rs.{item.price}</div>
-        </div>
+        )} 
       </button>
     </div>
   );
@@ -222,11 +189,8 @@ export const RoomCardReserved = ({
         setIsOpen(!isOpen);
         setType("Reserve");
       }}
-      className="border border-orange-500 bg-orange-100 w-36 h-36 rounded-2xl flex flex-col p-4"
+      className="border border-orange-500 bg-orange-100 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4"
     >
-      <div className="ml-auto">
-        <IoEllipsisVertical size={10} />
-      </div>
       <div
         className="text-2xl text-center my-3 mx-auto"
         style={{ fontSize: mediumFont }}
@@ -247,12 +211,7 @@ export const RoomCardReserved = ({
         >
           {item.roomType}
         </div>
-      )}
-
-      <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
-        <div className="mr-2 ">Price:</div>
-        <div className="">Rs.{item.roomOriginalPrice}</div>
-      </div>
+      )} 
     </button>
   );
 };
@@ -270,11 +229,8 @@ export const RoomCardBooked = ({
         setIsOpen(!isOpen);
         setType("Booked");
       }}
-      className="border border-green-500 bg-green-100 w-36 h-36 rounded-2xl flex flex-col p-4"
+      className="border border-green-500 bg-green-100 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4"
     >
-      <div className="ml-auto">
-        <IoEllipsisVertical size={10} />
-      </div>
       <div
         className="text-2xl text-center my-3 mx-auto"
         style={{ fontSize: mediumFont }}
@@ -295,21 +251,13 @@ export const RoomCardBooked = ({
         >
           {item.roomType}
         </div>
-      )}
-
-      <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
-        <div className="mr-2 ">Price:</div>
-        <div className="">Rs.{item.roomRate}</div>
-      </div>
+      )} 
     </button>
   );
 };
 export const RoomCardDirty = ({ item }) => {
   return (
-    <div className="border border-red-500 bg-red-100 w-36 h-36 rounded-2xl flex flex-col p-4">
-      <div className="ml-auto">
-        <IoEllipsisVertical size={10} />
-      </div>
+    <div className="border border-red-500 bg-red-100 w-36 h-36 md:w-28 md:h-28 rounded-2xl flex flex-col p-4">
       <div
         className="text-2xl text-center my-3 mx-auto"
         style={{ fontSize: mediumFont }}
@@ -330,12 +278,7 @@ export const RoomCardDirty = ({ item }) => {
         >
           {item.roomType}
         </div>
-      )}
-
-      <div className="flex m-1 mt-2" style={{ fontSize: 8 }}>
-        <div className="mr-2 ">Price:</div>
-        <div className="">Rs.{item.roomRate}</div>
-      </div>
+      )} 
     </div>
   );
 };

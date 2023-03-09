@@ -40,7 +40,7 @@ const CheckoutRoom = () => {
     });
   };
 
-  console.log(data);
+  console.log(numOfNights);
 
   const getAllData = async () => {
     let order;

@@ -77,8 +77,8 @@ const ModalView = ({
   const [noOfGuests, setNoOfGuests] = useState("");
   const [showError, setShowError] = useState("");
   const [showErrorReserve, setShowErrorReserve] = useState("");
-
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
   const emptyField = () => {
     setCustomerName("");
     setPhoneNumber("");
@@ -138,8 +138,7 @@ const ModalView = ({
       nationality == "" ||
       idNo == "" ||
       address == "" ||
-      email == "" ||
-      noOfNights == "" ||
+      email == "" || 
       advance == "" ||
       goingTo == "" ||
       purpose == "" ||
@@ -148,7 +147,7 @@ const ModalView = ({
       billNo == "" ||
       vehicleNo == "" ||
       roomRate == "" ||
-      !(/^\d+$/.test(advance))
+      !/^\d+$/.test(advance)
     ) {
       setShowError(true);
     } else {
@@ -156,8 +155,11 @@ const ModalView = ({
     }
   };
   const validateReserveData = () => {
-    if (customerName == "" || !(/^\d+$/.test(advance)) || !(/^\d+$/.test(roomRate))) { 
-      alert(!(/^\d+$/.test("f")))
+    if (
+      customerName == "" ||
+      !/^\d+$/.test(advance) ||
+      !/^\d+$/.test(roomRate)
+    ) {
       setShowErrorReserve(true);
     } else {
       return true;
@@ -370,6 +372,7 @@ const ModalView = ({
                     });
 
                     setIsOpen(!isOpen);
+                    setSideBarOn(!sideBarOn);
                     setRerender(!rerender);
                   }
                 }}
@@ -411,8 +414,8 @@ const ModalView = ({
                     });
 
                     setRerender(!rerender);
+                    setSideBarOn(!sideBarOn);
                     setIsOpen(!isOpen);
-                    setSideBarOn(!isOpen);
                   }
                 }}
                 style={{ fontSize: 12 }}
@@ -504,7 +507,7 @@ const ModalView = ({
 
                       setRerender(!rerender);
                       setIsOpen(!isOpen);
-                      setSideBarOn(!isOpen);
+                      setSideBarOn(!sideBarOn);
                     }
                   }}
                   style={{ fontSize: 12 }}

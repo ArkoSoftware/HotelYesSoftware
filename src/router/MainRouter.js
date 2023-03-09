@@ -23,7 +23,7 @@ const MainRouter = () => {
             type="checkbox"
             className="drawer-toggle"
           />
-          <div className="drawer-content z-50">
+          <div className="drawer-content">
             {/* <!-- Page content here --> */}
             <div className="flex flex-row duration-500 relative h-full">
               {value && activeUser?.role === "Admin" ? (
@@ -109,7 +109,7 @@ const MainRouter = () => {
               onClick={() => setSideBarOn(!sideBarOn)}
               className="drawer-overlay"
             ></label>
-            <ul className="menu w-60 bg-transparent text-base-content">
+            <ul className="menu w-60 bg-transparent text-base-content z-10">
               {/*  <!-- Sidebar content here --> */}
               <Sidebar />
             </ul>

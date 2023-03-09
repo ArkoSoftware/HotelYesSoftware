@@ -24,7 +24,6 @@ const CheckoutRoom = () => {
   const [discount, setDiscount] = useState(0);
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
-
   const checkOutRoom = () => {
     const ad = parseInt(state.advance) || 0;
     confirmCheckout({
@@ -62,19 +61,20 @@ const CheckoutRoom = () => {
       }
     }
     let numOfNights = 0;
-    if (data.checkOutDate == "" || data.checkOutDate == null) {
-      numOfNights =
-        (new Date().getTime() - 86400000 - data.checkInDate) / 86400000;
-
-      setNumOfNights(Math.round(numOfNights));
+    if (!data.checkOutDate == "" || !data.checkOutDate == null) {
+      // numOfNights = (new Date().getTime() - 86400000 - data.checkInDate) / 86400000;
+      numOfNights = Math.ceil(
+        (data.checkOutDate - data.checkInDate) / 86400000
+      );
+      setNumOfNights(numOfNights);
+      // setNumOfNights(Math.round(numOfNights));
     } else {
       setNumOfNights(data.noOfNights);
     }
     if (state.roomRate == null || state.roomRate == "") {
       setPrice(parseInt(state.roomOriginalPrice));
-    }
-    else{
-      setPrice(data.roomRate)
+    } else {
+      setPrice(data.roomRate);
     }
     setOrderBillTotal(total);
     setOrderList(arr);
@@ -83,7 +83,7 @@ const CheckoutRoom = () => {
 
   useEffect(() => {
     getAllData();
-    setSideBarOn(true)
+    setSideBarOn(true);
   }, []);
   return (
     <ModalProvider>

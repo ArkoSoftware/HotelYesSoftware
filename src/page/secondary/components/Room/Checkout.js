@@ -1,5 +1,5 @@
 import { child, get, ref } from "firebase/database";
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { database } from "../../../../config/adminFirebase";
@@ -8,6 +8,7 @@ import { useState } from "react";
 import ConfirmTransferModal2 from "./components/ConfirmTransferModal2";
 import { ModalProvider } from "styled-react-modal";
 import { confirmCheckout } from "./functions/function";
+import { NavContext } from "../../../../contexts/NavProvider";
 
 const CheckoutRoom = () => {
   const data = useLocation().state;
@@ -21,6 +22,8 @@ const CheckoutRoom = () => {
   const [displayTotal, setDisplayTotal] = useState(0);
   const [price, setPrice] = useState();
   const [discount, setDiscount] = useState(0);
+  const { sideBarOn, setSideBarOn } = useContext(NavContext);
+
 
   const checkOutRoom = () => {
     const ad = parseInt(state.advance) || 0;
@@ -80,6 +83,7 @@ const CheckoutRoom = () => {
 
   useEffect(() => {
     getAllData();
+    setSideBarOn(true)
   }, []);
   return (
     <ModalProvider>

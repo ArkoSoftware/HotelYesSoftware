@@ -17,10 +17,10 @@ export const RoomTab = ({
   const [type, setType] = useState();
   const { sideBarOn, setSideBarOn } = useContext(NavContext);
 
-  const toggleModal = () => { 
+  const toggleModal = () => {
     setIsOpen(!isOpen);
     setSideBarOn(!sideBarOn);
-  }; 
+  };
 
   return (
     <div className=" flex flex-col">
@@ -170,7 +170,7 @@ export const RoomCard = ({ item, setState, setIsOpen, isOpen, setType }) => {
           >
             {item.type}
           </div>
-        )} 
+        )}
       </button>
     </div>
   );
@@ -211,7 +211,7 @@ export const RoomCardReserved = ({
         >
           {item.roomType}
         </div>
-      )} 
+      )}
     </button>
   );
 };
@@ -251,7 +251,7 @@ export const RoomCardBooked = ({
         >
           {item.roomType}
         </div>
-      )} 
+      )}
     </button>
   );
 };
@@ -278,7 +278,7 @@ export const RoomCardDirty = ({ item }) => {
         >
           {item.roomType}
         </div>
-      )} 
+      )}
     </div>
   );
 };

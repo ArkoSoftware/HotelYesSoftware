@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "styled-react-modal";
+import Modal from "styled-react-modal"; 
 
-const ConfirmTransferModal2 = ({ isOpen, setIsOpen, callFunction }) => {
+const ConfirmTransferModal2 = ({ isOpen, setIsOpen, callFunction }) => { 
+
   const navigate = useNavigate();
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -20,7 +21,7 @@ const ConfirmTransferModal2 = ({ isOpen, setIsOpen, callFunction }) => {
             <button
               onClick={() => {
                 callFunction();
-                navigate("/room", { replace: true });
+                navigate("/room");
               }}
               className="bg-green-700 p-3 rounded-xl  text-white"
               style={{ fontSize: 12 }}

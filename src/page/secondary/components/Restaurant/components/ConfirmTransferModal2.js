@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import Modal from "styled-react-modal";
 import {
   assignBillToRoom,
   confirmCheckout,
   getTableList,
-} from "../functions/function";
-import { getRoomList } from "../../Room/functions/function";
+} from "../functions/function"; 
+import { useNavigate } from "react-router-dom";
 
 const ConfirmTransferModal2 = ({ isOpen, setIsOpen, tableNumber, state }) => {
+  const navigate = useNavigate()
+
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
@@ -23,7 +25,11 @@ const ConfirmTransferModal2 = ({ isOpen, setIsOpen, tableNumber, state }) => {
         <div className="mt-auto flex flex-row space-x-3 w-full">
           <div className="flex-1">
             <button
-              onClick={() => confirmCheckout(tableNumber, state)}
+              onClick={() => {
+                confirmCheckout(tableNumber, state);
+                toggleModal();
+                navigate("/restaurant")
+              }}
               className="bg-green-700 p-3 rounded-xl  text-white"
               style={{ fontSize: 12 }}
             >

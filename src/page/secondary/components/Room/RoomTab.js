@@ -20,7 +20,7 @@ export const RoomTab = ({
   const toggleModal = () => { 
     setIsOpen(!isOpen);
     setSideBarOn(!sideBarOn);
-  };
+  }; 
 
   return (
     <div className=" flex flex-col">

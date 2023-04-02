@@ -17,91 +17,200 @@ import { set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-export const getRoomList = async function (selectDate) {
+export const getRoomList = async function (selectDate, checkOutDate) {
   const realRef = ref(database);
   const arr2 = [];
   const arr3 = [];
   const arr = [];
   const arr4 = [];
   const filterRoom = [""];
-
-  await get(child(realRef, `liveBooking/`)).then(async (snapshot) => {
-    if (snapshot.exists()) {
-      const keys = Object.keys(snapshot.val());
-      const iterator = keys.values();
-      for (var key of iterator) {
-        await get(child(realRef, `liveBooking/` + key)).then((snapshot) => {
-          if (snapshot.exists()) {
-            if (
-              snapshot.val().checkOutDate == "" ||
-              snapshot.val().checkOutDate == null
-            ) {
-              arr3.push(snapshot.val());
-              filterRoom.push(snapshot.val().roomNumber);
-            } else {
-              if (selectDate >= snapshot.val().checkOutDate) {
-                console.log("More");
-              } else if (
-                selectDate >= snapshot.val().checkInDate &&
-                selectDate <= snapshot.val().checkOutDate
+  if (checkOutDate == "SelectDate") {
+    await get(child(realRef, `liveBooking/`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        const keys = Object.keys(snapshot.val());
+        const iterator = keys.values();
+        for (var key of iterator) {
+          await get(child(realRef, `liveBooking/` + key)).then((snapshot) => {
+            if (snapshot.exists()) {
+              if (
+                snapshot.val().checkOutDate == "" ||
+                snapshot.val().checkOutDate == null
               ) {
-                console.log("Between");
                 arr3.push(snapshot.val());
                 filterRoom.push(snapshot.val().roomNumber);
+              } else {
+                console.log(selectDate, checkOutDate);
+                console.log(
+                  snapshot.val().checkInDate,
+                  snapshot.val().checkOutDate
+                );
+
+                if (selectDate >= snapshot.val().checkOutDate) {
+                } else if (
+                  selectDate >= snapshot.val().checkInDate &&
+                  selectDate <= snapshot.val().checkOutDate
+                ) {
+                  arr3.push(snapshot.val());
+                  filterRoom.push(snapshot.val().roomNumber);
+                }
               }
             }
-          }
-        });
+          });
+        }
       }
-    }
-  });
+    });
 
-  (await getDocs(collection(db, "reserved"))).forEach((docs) => {
-    const data = docs.data();
-    if (data.checkOutDate == "") {
-      arr2.push(data);
-      filterRoom.push(data.roomNumber);
-    } else {
-      if (selectDate == data.checkOutDate || selectDate > data.checkOutDate) {
-        return;
+    (await getDocs(collection(db, "reserved"))).forEach((docs) => {
+      const data = docs.data();
+      if (checkOutDate == null || checkOutDate == "") {
+        if (data.checkOutDate == "") {
+          arr2.push(data);
+          filterRoom.push(data.roomNumber);
+        } else {
+          if (
+            selectDate >= data.checkOutDate
+          ) {
+            return;
+          }
+          if (
+            selectDate >= data.checkInDate &&
+            selectDate < data.checkOutDate
+          ) {
+            arr2.push(data);
+            filterRoom.push(data.roomNumber);
+          }
+        }
+      }else{
+        if (
+          selectDate >= data.checkInDate && checkOutDate<=data.checkOutDate
+        ) {
+          return;
+        }
       }
-      if (selectDate >= data.checkInDate && selectDate < data.checkOutDate) {
+    });
+    await get(child(realRef, `liveDirty/`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        const keys = Object.keys(snapshot.val());
+        const iterator = keys.values();
+        for (var key of iterator) {
+          await get(child(realRef, `liveDirty/` + key)).then((snapshot) => {
+            if (snapshot.exists()) {
+              arr4.push(snapshot.val());
+              filterRoom.push(snapshot.val().roomNumber);
+            }
+          });
+        }
+      }
+    });
+    (
+      await getDocs(
+        query(
+          collection(db, "roomList"),
+          where("roomNumber", "not-in", filterRoom)
+        )
+      )
+    ).forEach((docs) => {
+      const data = docs.data();
+      arr.push(data);
+    });
+  } else {
+    await get(child(realRef, `liveBooking/`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        const keys = Object.keys(snapshot.val());
+        const iterator = keys.values();
+        for (var key of iterator) {
+          await get(child(realRef, `liveBooking/` + key)).then((snapshot) => {
+            if (snapshot.exists()) {
+              if (
+                snapshot.val().checkOutDate == "" ||
+                snapshot.val().checkOutDate == null
+              ) {
+                arr3.push(snapshot.val());
+                filterRoom.push(snapshot.val().roomNumber);
+              } else {
+                if (checkOutDate == "Select Date") {
+                  if (selectDate >= snapshot.val().checkOutDate) {
+                  } else if (
+                    selectDate >= snapshot.val().checkInDate &&
+                    selectDate <= snapshot.val().checkOutDate
+                  ) {
+                    arr3.push(snapshot.val());
+                    filterRoom.push(snapshot.val().roomNumber);
+                  }
+                } else {
+                  console.log(snapshot.val().roomNumber);
+                  console.log(
+                    new Date(selectDate),
+                    new Date(snapshot.val().checkInDate)
+                  );
+                  console.log(
+                    new Date(checkOutDate),
+                    new Date(snapshot.val().checkOutDate)
+                  );
+                  console.log(selectDate, snapshot.val().checkInDate);
+                  console.log(checkOutDate, snapshot.val().checkOutDate);
+                  if (
+                    selectDate >= snapshot.val().checkInDate &&
+                    checkOutDate <= snapshot.val().checkOutDate
+                  ) {
+                    arr3.push(snapshot.val());
+                    filterRoom.push(snapshot.val().roomNumber);
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+    });
+
+    (await getDocs(collection(db, "reserved"))).forEach((docs) => {
+      const data = docs.data();
+      console.log(selectDate,checkOutDate)
+      if (data.checkOutDate == "") {
         arr2.push(data);
         filterRoom.push(data.roomNumber);
+      } else {
+        if (selectDate == data.checkOutDate || selectDate > data.checkOutDate) {
+          return;
+        }
+        if (selectDate >= data.checkInDate || selectDate <= data.checkOutDate) {
+          arr2.push(data);
+          filterRoom.push(data.roomNumber);
+        }
       }
-    }
-  });
-  await get(child(realRef, `liveDirty/`)).then(async (snapshot) => {
-    if (snapshot.exists()) {
-      const keys = Object.keys(snapshot.val());
-      const iterator = keys.values();
-      for (var key of iterator) {
-        await get(child(realRef, `liveDirty/` + key)).then((snapshot) => {
-          if (snapshot.exists()) {
-            arr4.push(snapshot.val());
-            filterRoom.push(snapshot.val().roomNumber);
-          }
-        });
+    });
+    await get(child(realRef, `liveDirty/`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        const keys = Object.keys(snapshot.val());
+        const iterator = keys.values();
+        for (var key of iterator) {
+          await get(child(realRef, `liveDirty/` + key)).then((snapshot) => {
+            if (snapshot.exists()) {
+              arr4.push(snapshot.val());
+              filterRoom.push(snapshot.val().roomNumber);
+            }
+          });
+        }
       }
-    }
-  });
-  (
-    await getDocs(
-      query(
-        collection(db, "roomList"),
-        where("roomNumber", "not-in", filterRoom)
+    });
+    (
+      await getDocs(
+        query(
+          collection(db, "roomList"),
+          where("roomNumber", "not-in", filterRoom)
+        )
       )
-    )
-  ).forEach((docs) => {
-    const data = docs.data();
-    arr.push(data);
-  });
+    ).forEach((docs) => {
+      const data = docs.data();
+      arr.push(data);
+    });
+  }
 
   return { arr, arr3, arr2, arr4 };
 };
 
 export const addData = async function (form) {
-  console.log(form);
   const data = form;
   const doc1 = collection(db, "reserved");
   const ref1 = doc(doc1);
@@ -110,7 +219,6 @@ export const addData = async function (form) {
   const snap = await setDoc(doc2, data);
 };
 export const updateData = async function (state) {
-  console.log(state);
   const doc1 = doc(db, "reserved", state.id);
 
   const snap = await updateDoc(doc1, state);
@@ -121,9 +229,19 @@ export const checkIn = async function (form) {
     .catch((error) => console.log("Error adding data:", error));
 };
 export const checkInReserve = async function (form) {
-  await set(ref(database, "liveBooking/" + form.roomNumber), form)
-    .then(() => console.log("Data added successfully"))
-    .catch((error) => console.log("Error adding data:", error));
+  const formData = form;
+  console.log(new Date(1680373108359));
+  formData.checkInDate = new Date().getTime();
+
+  if (form.checkInDate == null || form.checkInDate == "") {
+    await set(ref(database, "liveBooking/" + formData.roomNumber), formData)
+      .then(() => console.log("Data added successfully"))
+      .catch((error) => console.log("Error adding data:", error));
+  } else {
+    await set(ref(database, "liveBooking/" + form.roomNumber), form)
+      .then(() => console.log("Data added successfully"))
+      .catch((error) => console.log("Error adding data:", error));
+  }
   const doc1 = doc(db, "reserved", form.id);
   const snap = await deleteDoc(doc1);
 };

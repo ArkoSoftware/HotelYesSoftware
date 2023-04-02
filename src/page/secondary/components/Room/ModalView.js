@@ -55,13 +55,15 @@ const ModalView = ({
   rerender,
   setRerender,
 }) => {
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
   const [customerName, setCustomerName] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [nationality, setNationality] = React.useState("");
   const [idNo, setIdNo] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
-  const [checkInDate, setCheckInDate] = useState(new Date().getTime());
+  const [checkInDate, setCheckInDate] = useState(startOfDay.getTime());
   const [checkOutDate, setCheckOutDate] = useState("");
   const [noOfNights, setNoOfNights] = useState("");
   const [arrivedFrom, setArrivedFrom] = useState("");
@@ -99,7 +101,7 @@ const ModalView = ({
     setAdvance("");
     setRoomRateType("");
     setNoOfGuests("");
-    setCheckInDate(new Date().getTime());
+    setCheckInDate(startOfDay.getTime());
     setCheckOutDate("");
   };
   const changeData = () => {
@@ -131,35 +133,14 @@ const ModalView = ({
     }
   };
   const validateData = () => {
-    if (
-      customerName == "" ||
-      checkInDate == "" ||
-      phoneNumber == "" ||
-      nationality == "" ||
-      idNo == "" ||
-      address == "" ||
-      email == "" || 
-      advance == "" ||
-      goingTo == "" ||
-      purpose == "" ||
-      occupation == "" ||
-      method == "" ||
-      billNo == "" ||
-      vehicleNo == "" ||
-      roomRate == "" ||
-      !/^\d+$/.test(advance)
-    ) {
-      setShowError(true);
+    if (customerName == "") {
+      setShowErrorReserve(true);
     } else {
       return true;
     }
   };
   const validateReserveData = () => {
-    if (
-      customerName == "" ||
-      !/^\d+$/.test(advance) ||
-      !/^\d+$/.test(roomRate)
-    ) {
+    if (customerName == "") {
       setShowErrorReserve(true);
     } else {
       return true;
@@ -311,13 +292,13 @@ const ModalView = ({
               label={"Room Rate"}
               value={roomRate}
               setValue={setRoomRate}
-              error={showError || showErrorReserve}
+              error={showError}
             />
             <InputView
               label={"Advance Payment"}
               value={advance}
               setValue={setAdvance}
-              error={showError || showErrorReserve}
+              error={showError}
             />
             <SelectView
               label={"Room Rate Type"}
